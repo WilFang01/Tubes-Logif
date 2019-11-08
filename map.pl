@@ -1,5 +1,14 @@
 :- dynamic(lebar/1).
 :- dynamic(panjang/1).
+:- dynamic(positionX/1).
+:- dynamic(positionY/1).
+
+
+isPlayer(X,Y) :-
+    positionX(A),
+    positionY(B),
+    X =:= A,
+    Y =:= B.
 
 isGym(X,Y) :-
     X =:= 20,
@@ -25,6 +34,12 @@ printX(X,Y) :-
     isBawah(X,Y),
     isKanan(X,Y),
     write('X').
+    
+printX(X,Y) :-
+    isPlayer(X,Y),
+    write('P'),
+    NextX is (X+1),
+    printX(NextX,Y).
 
 printX(X,Y) :-
     isGym(X,Y),
@@ -70,4 +85,8 @@ initMap(X,Y) :-
     asserta(lebar(Y)),
     asserta(panjang(X)).
 
-showMap :- printX(0,0).
+initPlayer(X,Y) :-
+    asserta(positionX(X)),
+    asserta(positionY(Y)).
+
+showMap :- printX(0,0),!.
