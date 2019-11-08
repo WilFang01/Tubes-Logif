@@ -78,3 +78,6 @@ start :-
     \+init(_),
     title,
     initPlayer.
+
+quit :-
+    retract(init(A)).
