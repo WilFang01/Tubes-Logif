@@ -1,8 +1,6 @@
 :- dynamic(tokemon/8).      /* Data pokemon di inventory*/
 :- dynamic(init/1).         /* Mark game dimulai */
 :- dynamic(player/2).
-:- dynamic(inventory/1).    /* inventory(NamaTokemon) */
-:- dynamic(maxInventory/1).			/* maxInventory(Maks) */
 
 :- include('map.pl').
 /* tokemon(Name, Type, MaxHealth, Level, Health, Element, Attack, Special) */
@@ -10,7 +8,6 @@
 
 tokemon(agus, normal, 100, 1, 100, fire, 5, 10).
 
-maxInventory(6).
 title :- 
     write('                                      ,\\                     '),nl,
     write('    _.----.        ____         ,  _\\   ___    ___     ____  '),nl,
