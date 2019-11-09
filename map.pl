@@ -11,6 +11,7 @@ isPlayer(X,Y) :-
     Y =:= B.
 
 isGym(X,Y) :-
+    \+cure(_),
     X =:= 20,
     Y =:= 20.
 
