@@ -1,8 +1,7 @@
-/* tokedex(Name, Type, Health, Element, Attack, Special) */
+/* tokedex(ID, Name, Type, MaxHealth, Level, Element, Attack, Special) */
 
-tokedex(agus,normal,100,fire,5,10).
-tokedex(yodi,normal,200,water,10,20).
-tokedex(yoga,legendary,100000,grass,500,800).
-tokedex(setiawan,legendary,200000,water,800,1600).
-tokedex(ricky,normal,5,grass,1,2).
-
+tokedex(1,bulsabaur,normal,200,1,grass,20,40).
+tokedex(2,charamder,normal,200,1,fire,20,40).
+tokedex(3,squirtrel,normal,200,1,water,20,40).
+tokedex(100,sangemon,legendary,100000,90,water,3000,6000).
+tokedex(101,probul,legendary,133243,90,fire,2843,4000).

@@ -1,12 +1,12 @@
-:- dynamic(tokemon/8).      /* Data pokemon di inventory*/
+:- dynamic(tokemon/10).      /* Data pokemon di inventory*/
 :- dynamic(init/1).         /* Mark game dimulai */
 :- dynamic(player/2).
 
 :- include('map.pl').
-/* tokemon(Name, Type, MaxHealth, Level, Health, Element, Attack, Special) */
+/* tokemon(ID, Name, Type, MaxHealth, Level, Health, Element, Attack, Special, EXP) */
 /* player(username, tokemon) */
 
-tokemon(agus, normal, 100, 1, 100, fire, 5, 10).
+tokemon(agus, normal, 100, 1, 100, fire, 5, 10, 0).
 
 title :- 
     write('                                      ,\\                     '),nl,
