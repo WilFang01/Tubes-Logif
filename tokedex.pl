@@ -1,4 +1,4 @@
-/* tokedex(ID, Name, Type, MaxHealth, Level, Element, Attack, Special) */
+/* tokedex(ID, Name, Type, MaxHealth, Level, Element, Attack, Skill) */
 
 tokedex(1,bulsabaur,normal,200,1,grass,20,40).
 tokedex(2,charamder,normal,200,1,fire,20,40).

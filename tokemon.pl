@@ -1,6 +1,5 @@
 :- dynamic(tokemon/10).      /* Data pokemon di inventory*/
-:- dynamic(init/1).         /* Mark game dimulai */
-:- dynamic(player/2).
+:- dynamic(init/1).          /* Mark game dimulai */
 
 :- include('map.pl').
 /* tokemon(ID, Name, Type, MaxHealth, Level, Health, Element, Attack, Special, EXP) */
@@ -54,30 +53,24 @@ initPlayer :-
     read(Username),
     write('Hello '), write(Username), nl,
     write('Choose your tokemon!'), nl,
-    write('1. Agus'), nl, write('Type: babi'), nl, nl,
-    write('2. Yodi'), nl, write('Type: ajig'), nl, nl,
-    write('3. Jovan'), nl, write('Type: bego'), nl, nl,
+    write('1. bulsabaur'), nl, write('Type: grass'), nl, nl,
+    write('2. charamder'), nl, write('Type: fire'), nl, nl,
+    write('3. squirtrel'), nl, write('Type: water'), nl, nl,
     write('Insert tokemon: '),
     read(Tokemonawal), nl,
-    asserta(player(Username, Tokemonawal)),
-    read(Tokemonawal), nl,
+    tokedex(ID,Tokemonawal,Type,_,_,_,_,_),
+    addTokemon(ID),
 
-    player(Username, Tokemonawal),
-    A is Username,
-    B is Tokemonawal,
     write('Your information, trainer'), nl,
-    write('Username: T'), write(A), nl,
-    write('List of Tokemons: '), nl,
-    write(B), nl, nl, nl.
+    write('Username: '), write(Username), nl,nl,
+    statusInventory.
 
 start :- 
     init(_),
-    write('Game sudah dimulai').
+    write('Game sudah dimulai'),!.
 
 start :-
     \+init(_),
     title,
-    initPlayer.
-
-quit :-
-    retract(init(A)).
+    initPlayer,
+    asserta(init(1)).

@@ -7,7 +7,7 @@ maxInventory(6).
 
 cekPanjang(Length) :-
     findall(Name, inventory(_,Name,_,_,_,_,_,_,_,_), List),
-    length(List,Length).
+    length(List,Length).    
 
 addTokemon(_,_,_,_,_,_,_,_,_,_) :-
     cekPanjang(Length),
@@ -62,3 +62,8 @@ status :-
     makeListLegendary(NamaLegend,HealthLegend,ElementLegend),
     write('Your Enemy'),nl,nl,
     stt(NamaLegend,HealthLegend,ElementLegend).
+
+statusInventory :-
+    makeListPokemon(ListNama,ListHealth,ListElement),
+    write('Your Pokemon'),nl,nl,
+    stt(ListNama,ListHealth,ListElement).
