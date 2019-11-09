@@ -150,16 +150,20 @@ initMap(X,Y) :-
     asserta(lebar(Y)),
     asserta(panjang(X)).
 
-initPlayer(X,Y) :-
+initPlayer :-
     asserta(cure(1)),
-    asserta(positionX(X)),
-    asserta(positionY(Y)).
+    random(1,20,A),
+    random(1,20,B),
+    asserta(positionX(A)),
+    asserta(positionY(B)).
 
-showMap :- 
+map :- 
+    init(_),
     \+adaTembok(_),
     generateTembok,
     printX(0,0),!.
 
-showMap :- 
+map :- 
+    init(_),
     adaTembok(_),
     printX(0,0),!.

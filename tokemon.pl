@@ -1,11 +1,11 @@
 :- dynamic(tokemon/10).      /* Data pokemon di inventory*/
 :- dynamic(init/1).          /* Mark game dimulai */
 
-:- include('map.pl').
+:- include('command.pl').
+:- include('player.pl').
+:- include('battle.pl').
 /* tokemon(ID, Name, Type, MaxHealth, Level, Health, Element, Attack, Special, EXP) */
 /* player(username, tokemon) */
-
-tokemon(agus, normal, 100, 1, 100, fire, 5, 10, 0).
 
 title :- 
     write('                                      ,\\                     '),nl,
@@ -47,7 +47,7 @@ title :-
     write('       - X = Pagar'),nl,
     write('       - P = Player'),nl, nl.
 
-initPlayer :-
+initFirst :-
     write('We welcome you to Tokemon'), nl,
     write('What is your name, Tokemon trainer?'), nl,
     read(Username),
@@ -58,12 +58,12 @@ initPlayer :-
     write('3. squirtrel'), nl, write('Type: water'), nl, nl,
     write('Insert tokemon: '),
     read(Tokemonawal), nl,
-    tokedex(ID,Tokemonawal,Type,_,_,_,_,_),
+    tokedex(ID,Tokemonawal,_,_,_,_,_,_),
     addTokemon(ID),
 
     write('Your information, trainer'), nl,
     write('Username: '), write(Username), nl,nl,
-    statusInventory.
+    statusInventory,!.
 
 start :- 
     init(_),
@@ -72,5 +72,8 @@ start :-
 start :-
     \+init(_),
     title,
-    initPlayer,
-    asserta(init(1)).
+    asserta(init(1)),
+    initLegendary(100),
+    initLegendary(101),
+    initFirst,
+    initPlayer,!.

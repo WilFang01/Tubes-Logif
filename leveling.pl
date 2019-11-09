@@ -10,4 +10,4 @@ levelUp(ID) :-
     TempExp is 0,
     retract(inventory(ID,_,_,_,Level,_,_,_,_,_)),
     asserta(inventory(ID,Name,Type,TempMaxHealth,TempLevel,TempHealth,Element,TempAttack,TempSpecial,TempExp)).
-
+    

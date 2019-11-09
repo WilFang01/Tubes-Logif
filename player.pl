@@ -9,6 +9,10 @@ cekPanjang(Length) :-
     findall(Name, inventory(_,Name,_,_,_,_,_,_,_,_), List),
     length(List,Length).    
 
+isFull :-
+    cekPanjang(Length),
+    Length == 6.
+
 addTokemon(_,_,_,_,_,_,_,_,_,_) :-
     cekPanjang(Length),
     maxInventory(Max),
@@ -44,7 +48,7 @@ makeListPokemon(ListNama,ListHealth,ListElement) :-
 makeListLegendary(ListNama,ListHealth,ListElement) :-
     findall(Name, legendary(_,Name,_,_,_,_,_,_,_), ListNama),
     findall(Health, legendary(_,_,_,_,_,Health,_,_,_), ListHealth),
-    findall(Element, legendary(_,_,_,_,_,_,Element  ,_,_), ListElement).
+    findall(Element, legendary(_,_,_,_,_,_,Element,_,_), ListElement).
 
 stt([],[],[]).
 stt([A|X],[B|Y],[C|Z]) :-
@@ -56,6 +60,7 @@ stt([A|X],[B|Y],[C|Z]) :-
     stt(X,Y,Z).
 
 status :-
+    init(_),
     makeListPokemon(ListNama,ListHealth,ListElement),
     write('Your Pokemon'),nl,nl,
     stt(ListNama,ListHealth,ListElement),
@@ -64,6 +69,7 @@ status :-
     stt(NamaLegend,HealthLegend,ElementLegend).
 
 statusInventory :-
+    init(_),
     makeListPokemon(ListNama,ListHealth,ListElement),
-    write('Your Pokemon'),nl,nl,
+    write('Your Pokemon:'),nl,nl,
     stt(ListNama,ListHealth,ListElement).
