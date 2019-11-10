@@ -1,11 +1,12 @@
 :- dynamic(tokemon/10).      /* Data pokemon di inventory*/
 :- dynamic(init/1).          /* Mark game dimulai */
+:- dynamic(player/1).
 
 :- include('command.pl').
 :- include('player.pl').
 :- include('battle.pl').
+:- include('eksternal.pl').
 /* tokemon(ID, Name, Type, MaxHealth, Level, Health, Element, Attack, Special, EXP) */
-/* player(username, tokemon) */
 
 title :- 
     write('                                      ,\\                     '),nl,
@@ -20,7 +21,6 @@ title :-
     write('       \\    \\ `.__,|  |`-._    `|      |__| \\/ |  `.__,|  | |   |'),nl,
     write('        \\_.-       |__|    `-._ |              -.|     -.| |   |'),nl,
     write('                                `                            -._|'),nl,nl,
-    
     write(' ____  _____  _  _  ____  __  __  _____  _  _ '),nl,
     write('(_  _)(  _  )( )/ )( ___)(  \\/  )(  _  )( \\( )'),nl,
     write('  )(   )(_)(  )  (  )__)  )    (  )(_)(  )  ( '),nl,
@@ -51,8 +51,9 @@ initFirst :-
     write('We welcome you to Tokemon'), nl,
     write('What is your name, Tokemon trainer?'), nl,
     read(Username),
+    asserta(player(Username)), nl,
     write('Hello '), write(Username), nl,
-    write('Choose your tokemon!'), nl,
+    write('Choose your tokemon!'), nl, nl,
     write('1. bulsabaur'), nl, write('Type: grass'), nl, nl,
     write('2. charamder'), nl, write('Type: fire'), nl, nl,
     write('3. squirtrel'), nl, write('Type: water'), nl, nl,
@@ -60,7 +61,7 @@ initFirst :-
     read(Tokemonawal), nl,
     tokedex(ID,Tokemonawal,_,_,_,_,_,_),
     addTokemon(ID),
-
+    
     write('Your information, trainer'), nl,
     write('Username: '), write(Username), nl,nl,
     statusInventory,!.
@@ -77,3 +78,31 @@ start :-
     initLegendary(101),
     initFirst,
     initPlayer,!.
+
+
+load(FileName) :-
+	init(_),
+	write('Kamu tidak bisa memulai game lainnya ketika ada game yang sudah dimulai.'), nl, !.
+
+load(FileName) :-
+	\+file_exists(FileName),
+	write('File tersebut tidak ada.'), nl, !.
+
+load(FileName) :-
+	open(FileName, read, Str),
+    readFileLines(Str,Lines),
+    close(Str),
+    assertaList(Lines), !.
+
+save(_) :-
+	\+init(_),
+	write('Command ini hanya bisa dipakai setelah game dimulai.'), nl,
+	write('Gunakan command "start." untuk memulai game.'), nl, !.
+
+save(FileName) :-
+    tell(FileName),
+		player(Username),
+		write(player(Username)),write('.'),nl,
+		/* write semua factnya */
+	told, !.
+    
