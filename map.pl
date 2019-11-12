@@ -146,9 +146,9 @@ printX(X,Y) :-
     NextX is (X+1),
     printX(NextX,Y).
 
-initMap(X,Y) :-
-    asserta(lebar(Y)),
-    asserta(panjang(X)).
+initMap(X, Y) :-
+    asserta(lebar(X)),
+    asserta(panjang(Y)).
 
 initPlayer :-
     asserta(cure(1)),

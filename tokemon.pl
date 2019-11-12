@@ -1,11 +1,11 @@
 :- dynamic(tokemon/10).      /* Data pokemon di inventory*/
 :- dynamic(init/1).          /* Mark game dimulai */
 :- dynamic(player/1).
+:- dynamic(saved/1).
 
 :- include('command.pl').
 :- include('player.pl').
-:- include('battle.pl').
-:- include('eksternal.pl').
+:- include('battle2.pl').
 /* tokemon(ID, Name, Type, MaxHealth, Level, Health, Element, Attack, Special, EXP) */
 
 title :- 
@@ -59,9 +59,11 @@ initFirst :-
     write('3. squirtrel'), nl, write('Type: water'), nl, nl,
     write('Insert tokemon: '),
     read(Tokemonawal), nl,
+    random(15,30,Sizex),
+    random(15,30,Sizey),
+    initMap(Sizex, Sizey),
     tokedex(ID,Tokemonawal,_,_,_,_,_,_),
     addTokemon(ID),
-    
     write('Your information, trainer'), nl,
     write('Username: '), write(Username), nl,nl,
     statusInventory,!.
@@ -79,15 +81,67 @@ start :-
     initFirst,
     initPlayer,!.
 
+
+
+
+
+/* EKSTERNAL FILE CONFIG */
+
 save(_) :-
 	\+init(_),
 	write('Command ini hanya bisa dipakai setelah game dimulai.'), nl,
 	write('Gunakan command "start." untuk memulai game.'), nl, !.
 
+save(_) :-
+    saved(_),
+    write('File sudah disave'), nl, !.
+
 save(FileName) :-
-    tell(FileName),
-		player(Username),
-		write(player(Username)),write('.'),nl,
-		/* write semua factnya */
-	told, !.
+    \+ saved(_),
+    player(Username),
+        tell(FileName),
+            write('player('), write(Username),write(').'),nl,
+            writeInventory,
+        told, 
+    !, saved(1).
+
+writeInventory:-
+	\+inventory(_, _, _, _, _, _, _, _, _, _),
+	!.
+
+writeInventory:-
+	forall(inventory(ID, Name, Type, MaxHealth, Level, Health, Element, Attack, Special, EXP),(
+		write('inventory('), write(ID), write(', '), write(Name), write(', '), write(Type), write(', '),
+        write(MaxHealth), write(', '), write(Level), write(', '), write(Health), write(', '), 
+        write(Element), write(', '), write(Attack), write(', '), write(Special), write(', '), write(EXP), write(').'), nl
+	)), !.
+
+loadGame(_) :-
+	init(_),
+	write('Kamu tidak bisa memulai game lainnya ketika ada game yang sudah dimulai.'), nl, !.
+
+loadGame(FileName):-
+	\+file_exists(FileName),
+	write('File tidak ada woi WKWK.'), nl, !.
     
+loadGame(FileName):-
+	open(FileName, read, Stream),
+        readFileLines(Stream,Lines),
+    close(Stream),
+    assertaList(Lines), 
+    asserta(init(1)), !.
+
+assertaList([]) :- !.
+
+assertaList([X|L]):-
+	asserta(X),
+	assertaList(L), !.
+
+
+readFileLines(Stream,[]) :-
+    at_end_of_stream(Stream).
+
+readFileLines(Stream,[X|L]) :-
+    \+ at_end_of_stream(Stream),
+    read(Stream,X),
+    readFileLines(Stream,L).

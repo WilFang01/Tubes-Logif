@@ -13,7 +13,7 @@ isFull :-
     cekPanjang(Length),
     Length == 6.
 
-addTokemon(_,_,_,_,_,_,_,_,_,_) :-
+addTokemon(_) :-
     cekPanjang(Length),
     maxInventory(Max),
     Length >= Max,
