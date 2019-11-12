@@ -79,21 +79,6 @@ start :-
     initFirst,
     initPlayer,!.
 
-
-load(FileName) :-
-	init(_),
-	write('Kamu tidak bisa memulai game lainnya ketika ada game yang sudah dimulai.'), nl, !.
-
-load(FileName) :-
-	\+file_exists(FileName),
-	write('File tersebut tidak ada.'), nl, !.
-
-load(FileName) :-
-	open(FileName, read, Str),
-    readFileLines(Str,Lines),
-    close(Str),
-    assertaList(Lines), !.
-
 save(_) :-
 	\+init(_),
 	write('Command ini hanya bisa dipakai setelah game dimulai.'), nl,
