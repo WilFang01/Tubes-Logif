@@ -128,14 +128,14 @@ loadGame(FileName):-
 	open(FileName, read, Stream),
         readFileLines(Stream,Lines),
     close(Stream),
-    assertaList(Lines), 
+    assertaLine(Lines), 
     asserta(init(1)), !.
 
-assertaList([]) :- !.
+assertaLine([]) :- !.
 
-assertaList([X|L]):-
+assertaLine([X|L]):-
 	asserta(X),
-	assertaList(L), !.
+	assertaLine(L), !.
 
 
 readFileLines(Stream,[]) :-
