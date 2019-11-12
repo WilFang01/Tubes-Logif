@@ -1,0 +1,21 @@
+
+save(_) :-
+	\+init(_),
+	write('Command ini hanya bisa dipakai setelah game dimulai.'), nl,
+	write('Gunakan command "start." untuk memulai game.'), nl, !.
+
+save(FileName) :-
+    tell(FileName),
+		player(Username),
+		write(Username),write('.'),nl,
+		writeInventory,
+        /* writee semua factnya */
+	told, !.
+
+writeInventory:-
+	\+tokemon(_, _, _, _, _, _, _, _, _, _),
+	!.
+writeInventory:-
+	forall(inventory(ID, Name, Type, MaxHealth, Level, Health, Element, Attack, Special, EXP),(
+		write('inventory('), write(ID),write(').'), nl
+	)), !.

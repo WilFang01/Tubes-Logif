@@ -1,9 +1,10 @@
 :- dynamic(tokemon/10).      /* Data pokemon di inventory*/
 :- dynamic(init/1).          /* Mark game dimulai */
+:- dynamic(player/1).
 
 :- include('command.pl').
 :- include('player.pl').
-:- include('battle.pl').
+:- include('battle2.pl').
 /* tokemon(ID, Name, Type, MaxHealth, Level, Health, Element, Attack, Special, EXP) */
 /* player(username, tokemon) */
 
@@ -58,6 +59,9 @@ initFirst :-
     write('3. squirtrel'), nl, write('Type: water'), nl, nl,
     write('Insert tokemon: '),
     read(Tokemonawal), nl,
+    random(15,30,Sizex),
+    random(15,30,Sizey),
+    initMap(Sizex, Sizey),
     tokedex(ID,Tokemonawal,_,_,_,_,_,_),
     addTokemon(ID),
 
@@ -77,3 +81,26 @@ start :-
     initLegendary(101),
     initFirst,
     initPlayer,!.
+
+save(_) :-
+	\+init(_),
+	write('Command ini hanya bisa dipakai setelah game dimulai.'), nl,
+	write('Gunakan command "start." untuk memulai game.'), nl, !.
+
+save(FileName) :-
+    open(Filename, write, Stream),
+    /* tell(FileName), */
+		/* player(Username), */
+		write(Stream, 'rfeghiwufur'),write('.'),nl(Stream),
+		/* writeInventory, */ 
+    close(Stream).
+        /* writee semua factnya */
+	/* told, !. */
+
+writeInventory:-
+	\+tokemon(_, _, _, _, _, _, _, _, _, _),
+	!.
+writeInventory:-
+	forall(inventory(ID, Name, Type, MaxHealth, Level, Health, Element, Attack, Special, EXP),(
+		write('inventory('), write(ID),write(').'), nl
+	)), !.
