@@ -65,29 +65,28 @@ run :-
     write('E-e-eh! Kamu sudah gagal run lo ya... Ayo, semangat~!'), nl,
     cont.
 
-/* ---------- FIGHT -------- */
+/* ---------- PICK ---------- */
+pick(X) :-
+    inventory(ID,X,Type,MaxHealth,Level,Health,Element,Attack,Special,Exp),
+    asserta(myTokemon(ID,X,Type,MaxHealth,Level,Health,Element,Attack,Special,Exp)),
+    write('Kamu memilih '), write(X), write(' dengan health '), write(Health), nl,
+    asserta(isSkill(1)),
+    cont.
+
+
+/* ---------- FIGHT ---------- */
 fight :-
     asserta(isRun(_)),
     battle(_),
     asserta(isEnemySkill(1)),
     write('Tokemon yang tersedia:'), nl,
     statusInventory,
-    read(Name),nl,
-    inventory(ID,Name,Type,MaxHealth,Level,Health,Element,Attack,Special,Exp),
-    asserta(myTokemon(ID,Name,Type,MaxHealth,Level,Health,Element,Attack,Special,Exp)),
-    write('Kamu memilih '), write(Name), write(' dengan health '), write(Health), nl,
-    asserta(isSkill(1)),
-    cont.
+    !.
 
 fightChance :-
     write('Tokemon yang tersedia:'), nl,
     statusInventory,
-    read(Name),nl,
-    inventory(ID,Name,Type,MaxHealth,Level,Health,Element,Attack,Special,Exp),
-    asserta(myTokemon(ID,Name,Type,MaxHealth,Level,Health,Element,Attack,Special,Exp)),
-    write('Kamu memilih '), write(Name), write(' dengan health '), write(Health), nl,
-    asserta(isSkill(1)),
-    cont.
+    !.
 
 /* ---------- CONTINUE/END TURN ---------- */
 cont :-
@@ -188,9 +187,15 @@ skill :-
     retract(enemyTokemon(EnemyID,EnemyName,EnemyType,EnemyMaxHealth,EnemyLevel,EnemyHealth,EnemyElement,EnemyAttack,EnemySpecial)),
     asserta(enemyTokemon(EnemyID,EnemyName,EnemyType,EnemyMaxHealth,EnemyLevel,NewEnemyHealth,EnemyElement,EnemyAttack,EnemySpecial)),
     write(MyName), write(' menggunakan Skill!'), nl,
+    retract(isSkill(_)),
     attackComment,!.
 
 /* ----- LESS EFFECTIVE ----- */
+skill :-
+    \+ isSkill(_),
+    write('Kamu sudah memakai skill. Pilih yang lain ya...'), nl,
+    !.
+
 skill :-
     battle(_),
     myTokemon(_, MyName, _, _, _, _, MyElement, _, MySpecial, _),
@@ -201,6 +206,7 @@ skill :-
     retract(enemyTokemon(EnemyID,EnemyName,EnemyType,EnemyMaxHealth,EnemyLevel,EnemyHealth,EnemyElement,EnemyAttack,EnemySpecial)),
     asserta(enemyTokemon(EnemyID,EnemyName,EnemyType,EnemyMaxHealth,EnemyLevel,NewEnemyHealth,EnemyElement,EnemyAttack,EnemySpecial)),
     write(MyName), write(' menggunakan Skill!'), nl,
+    retract(isSkill(_)),
     attackComment,!.
 
 /* ----- ELEMEN SAMA ----- */
@@ -214,9 +220,14 @@ skill :-
     retract(enemyTokemon(EnemyID,EnemyName,EnemyType,EnemyMaxHealth,EnemyLevel,EnemyHealth,EnemyElement,EnemyAttack,EnemySpecial)),
     asserta(enemyTokemon(EnemyID,EnemyName,EnemyType,EnemyMaxHealth,EnemyLevel,NewEnemyHealth,EnemyElement,EnemyAttack,EnemySpecial)),
     write(MyName), write(' menggunakan Skill!'), nl,
+    retract(isSkill(_)),
     attackComment,!.
 
 /* ---------- ENEMY SKILL ---------- */
+enemySkill :-
+    \+ isEnemySkill(_),
+    enemyAttack.
+    
 /* ----- SUPER EFFECTIVE ----- */
 enemySkill :-
     enemyTokemon(_, EnemyName, _, _, _, _, EnemyElement, _, EnemySkill),
