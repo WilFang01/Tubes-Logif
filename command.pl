@@ -213,3 +213,10 @@ triggered :-
         -> enemyTriggered
         ; !
     ).
+
+loop(1,_).
+loop(X,ID) :-
+    X > 0,
+    levelUpEnemy(ID),
+    M is N-1,
+    loop(M,ID).

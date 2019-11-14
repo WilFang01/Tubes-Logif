@@ -13,27 +13,29 @@ isPlayer(X,Y) :-
 
 isGym(X,Y) :-
     cure(_),
-    X =:= 13,
-    Y =:= 12.
+    X =:= 4,
+    Y =:= 9.
 
 generateTembok :-
     asserta(adaTembok(1)),
-    random(1,20,TempX1),
-    random(1,20,TempX2),
-    random(1,20,TempX3),
-    random(1,20,TempX4),
-    random(1,20,TempX5),
-    random(1,20,TempX6),
-    random(1,20,TempX7),
-    random(1,20,TempX8),
-    random(1,20,TempY1),
-    random(1,20,TempY2),
-    random(1,20,TempY3),
-    random(1,20,TempY4),
-    random(1,20,TempY5),
-    random(1,20,TempY6),
-    random(1,20,TempY7),
-    random(1,20,TempY8),
+    lebar(L),
+    panjang(J),
+    random(6,J,TempX1),
+    random(6,J,TempX2),
+    random(6,J,TempX3),
+    random(6,J,TempX4),
+    random(6,J,TempX5),
+    random(6,J,TempX6),
+    random(6,J,TempX7),
+    random(6,J,TempX8),
+    random(6,L,TempY1),
+    random(6,L,TempY2),
+    random(6,L,TempY3),
+    random(6,L,TempY4),
+    random(6,L,TempY5),
+    random(6,L,TempY6),
+    random(6,L,TempY7),
+    random(6,L,TempY8),
     asserta(tembok(TempX1,TempY1,TempX2,TempY2,TempX3,TempY3,TempX4,TempY4,TempX5,TempY5,TempX6,TempY6,TempX7,TempY7,TempX8,TempY8)).
 
 isTembok(X1,Y1,X2,Y2,X3,Y3,X4,Y4,X5,Y5,X6,Y6,X7,Y7,X8,Y8) :-
@@ -152,8 +154,8 @@ initMap(X, Y) :-
 
 initPlayer :-
     asserta(cure(1)),
-    random(1,20,A),
-    random(1,20,B),
+    random(1,5,A),
+    random(1,5,B),
     asserta(positionX(A)),
     asserta(positionY(B)).
 

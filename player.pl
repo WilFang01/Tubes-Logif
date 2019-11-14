@@ -1,8 +1,6 @@
 :- dynamic(inventory/10).            /* inventory(NamaTokemon) */
 :- dynamic(legendary/9).            /* legendary */
 
-:- include('tokedex.pl').
-
 maxInventory(6).
 
 cekPanjang(Length) :-
@@ -61,11 +59,13 @@ stt([A|X],[B|Y],[C|Z]) :-
 
 status :-
     init(_),
+    player(Username),
+    write('Your username is '), write(Username), nl, nl,
     makeListPokemon(ListNama,ListHealth,ListElement),
     write('Your Pokemon'),nl,nl,
     stt(ListNama,ListHealth,ListElement),
     makeListLegendary(NamaLegend,HealthLegend,ElementLegend),
-    write('Your Enemy'),nl,nl,
+    write('Your Final Enemy'),nl,nl,
     stt(NamaLegend,HealthLegend,ElementLegend).
 
 statusInventory :-
