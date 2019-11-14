@@ -1,12 +1,12 @@
 :- dynamic(tokemon/10).      /* Data pokemon di inventory*/
 :- dynamic(init/1).          /* Mark game dimulai */
 :- dynamic(player/1).
+:- dynamic(saved/1).
 
 :- include('command.pl').
 :- include('player.pl').
 :- include('battle2.pl').
 /* tokemon(ID, Name, Type, MaxHealth, Level, Health, Element, Attack, Special, EXP) */
-/* player(username, tokemon) */
 
 title :- 
     write('                                      ,\\                     '),nl,
@@ -21,7 +21,6 @@ title :-
     write('       \\    \\ `.__,|  |`-._    `|      |__| \\/ |  `.__,|  | |   |'),nl,
     write('        \\_.-       |__|    `-._ |              -.|     -.| |   |'),nl,
     write('                                `                            -._|'),nl,nl,
-    
     write(' ____  _____  _  _  ____  __  __  _____  _  _ '),nl,
     write('(_  _)(  _  )( )/ )( ___)(  \\/  )(  _  )( \\( )'),nl,
     write('  )(   )(_)(  )  (  )__)  )    (  )(_)(  )  ( '),nl,
@@ -52,8 +51,9 @@ initFirst :-
     write('We welcome you to Tokemon'), nl,
     write('What is your name, Tokemon trainer?'), nl,
     read(Username),
+    asserta(player(Username)), nl,
     write('Hello '), write(Username), nl,
-    write('Choose your tokemon!'), nl,
+    write('Choose your tokemon!'), nl, nl,
     write('1. bulsabaur'), nl, write('Type: grass'), nl, nl,
     write('2. charamder'), nl, write('Type: fire'), nl, nl,
     write('3. squirtrel'), nl, write('Type: water'), nl, nl,
@@ -64,7 +64,6 @@ initFirst :-
     initMap(Sizex, Sizey),
     tokedex(ID,Tokemonawal,_,_,_,_,_,_),
     addTokemon(ID),
-
     write('Your information, trainer'), nl,
     write('Username: '), write(Username), nl,nl,
     statusInventory,!.
@@ -82,25 +81,67 @@ start :-
     initFirst,
     initPlayer,!.
 
+
+
+
+
+/* EKSTERNAL FILE CONFIG */
+
 save(_) :-
 	\+init(_),
 	write('Command ini hanya bisa dipakai setelah game dimulai.'), nl,
 	write('Gunakan command "start." untuk memulai game.'), nl, !.
 
+save(_) :-
+    saved(_),
+    write('File sudah disave'), nl, !.
+
 save(FileName) :-
-    open(Filename, write, Stream),
-    /* tell(FileName), */
-		/* player(Username), */
-		write(Stream, 'rfeghiwufur'),write('.'),nl(Stream),
-		/* writeInventory, */ 
-    close(Stream).
-        /* writee semua factnya */
-	/* told, !. */
+    \+ saved(_),
+    player(Username),
+        tell(FileName),
+            write('player('), write(Username),write(').'),nl,
+            writeInventory,
+        told, 
+    !, saved(1).
 
 writeInventory:-
-	\+tokemon(_, _, _, _, _, _, _, _, _, _),
+	\+inventory(_, _, _, _, _, _, _, _, _, _),
 	!.
+
 writeInventory:-
 	forall(inventory(ID, Name, Type, MaxHealth, Level, Health, Element, Attack, Special, EXP),(
-		write('inventory('), write(ID),write(').'), nl
+		write('inventory('), write(ID), write(', '), write(Name), write(', '), write(Type), write(', '),
+        write(MaxHealth), write(', '), write(Level), write(', '), write(Health), write(', '), 
+        write(Element), write(', '), write(Attack), write(', '), write(Special), write(', '), write(EXP), write(').'), nl
 	)), !.
+
+loadGame(_) :-
+	init(_),
+	write('Kamu tidak bisa memulai game lainnya ketika ada game yang sudah dimulai.'), nl, !.
+
+loadGame(FileName):-
+	\+file_exists(FileName),
+	write('File tidak ada woi WKWK.'), nl, !.
+    
+loadGame(FileName):-
+	open(FileName, read, Stream),
+        readFileLines(Stream,Lines),
+    close(Stream),
+    assertaLine(Lines), 
+    asserta(init(1)), !.
+
+assertaLine([]) :- !.
+
+assertaLine([X|L]):-
+	asserta(X),
+	assertaLine(L), !.
+
+
+readFileLines(Stream,[]) :-
+    at_end_of_stream(Stream).
+
+readFileLines(Stream,[X|L]) :-
+    \+ at_end_of_stream(Stream),
+    read(Stream,X),
+    readFileLines(Stream,L).
