@@ -8,7 +8,7 @@
 :- include('tokedex2.pl').
 :- include('battle2.pl').
 :- include('map.pl').
-/* tokemon(ID, Name, Type, MaxHealth, Level, Health, Element, Attack, Special, EXP) */
+
 
 title :-
     write(' ____  _____  _  _  ____  __  __  _____  _  _ '),nl,
@@ -55,7 +55,111 @@ initFirst :-
     write('Insert tokemon: '),
     read(Tokemonawal), nl,
     tokedex(ID,Tokemonawal,_,_,_,_,_,_),
+    (
+        ID =:= 1 ->
+            write('                                           /'), nl,
+            write('                        _,.------....___,.\' \',.-.'), nl,
+            write('                     ,-\'          _,.--"        |'), nl,
+            write('                   ,\'         _.-\'              .'), nl,
+            write('                  /   ,     ,\'                   `'), nl,
+            write('                 .   /     /                     ``.'), nl,
+            write('                 |  |     .                       \\.\\ '), nl,
+            write('       ____      |___._.  |       __               \\ `.'), nl,
+            write('     .\'    `---""       ``"-.--"\'`  \\               .  \\ '), nl,
+            write('    .  ,            __               `              |   .'), nl,
+            write('    `,\'         ,-"\'  .               \\             |    L'), nl,
+            write('   ,\'          \'    _.\'                -._          /    |'), nl,
+            write('  ,`-.    ,".   `--\'                      >.      ,\'     |'), nl,
+            write(' . .\'\'   `-\'       __    ,  ,-.         /  `.__.-      ,\' '), nl,
+            write(' ||:, .           ,\'  ;  /  / \\ `        `.    .      .\'/'), nl,
+            write(' j|:D  \\          `--\'  \' ,\'_  . .         `.__, \\   , /'), nl,
+            write('/ L:_  |                 .  "\' :_;                `.\'.\' '), nl,
+            write('.    ""\'                  """""\'                    V'), nl,
+            write(' `.                                 .    `.   _,..  `'), nl,
+            write('   `,_   .    .                _,-\'/    .. `,\'   __  `'), nl,
+            write('    ) \\`._        ___....----"\'  ,\'   .\'  \\ |   \'  \\  .'), nl,
+            write('   /   `. "`-.--"\'         _,\' ,\'     `---\' |    `./  |'), nl,
+            write('  .   _  `""\'--.._____..--"   ,             \'         |'), nl,
+            write('  | ." `. `-.                /-.           /          ,'), nl,
+            write('  | `._.\'    `,_            ;  /         ,\'          .'), nl,
+            write(' .\'          /| `-.        . ,\'         ,           ,'), nl,
+            write(' \'-.__ __ _,\',\'    \'`-..___;-...__   ,.\'\\ ____.___.\' '), nl,
+            write(' `"^--\'..\'   \'-`-^-\'"--    `-^-\'`.\'\'"""""`.,^.`.--\' '), nl, nl
+            ;
+            (
+                ID =:= 3 ->
+                    write('               _,........__'), nl,
+                    write('            ,-\'            "`-.'), nl,
+                    write('          ,\'                   `-.'), nl,
+                    write('        ,\'                        \\ '), nl,
+                    write('      ,\'                           .'), nl,
+                    write('      .\'\\               ,"".       `'), nl,
+                    write('     ._.\'|             / |  `       \\ '), nl,
+                    write('     |   |            `-.\'  ||       `.'), nl,
+                    write('     |   |            \'-._,\'||       | \\ '), nl,
+                    write('     .`.,\'             `..,\'.\'       , |`-. '), nl,
+                    write('     l                       .\'`.  _/  |   `. '), nl,
+                    write('     `-.._\'-   ,          _ _\'   -" \\  .     `'), nl,
+                    write('`."""""\'-.`-...,---------\',\'         `. `....__.'), nl,
+                    write('.\'        `"-..___      __,\'\\          \\  \\     \\ '), nl,
+                    write('\\_ .          |   `""""\'    `.           . \\     \\ '), nl,
+                    write('  `.          |              `.          |  .     L'), nl,
+                    write('    `.        |`--...________.\'.        j   |     |'), nl,
+                    write('      `._    .\'      |          `.     .|   ,     |'), nl,
+                    write('         `--,\\       .            `7""\' |  ,      |'), nl,
+                    write('            ` `      `            /     |  |      |    _,-\'"""`-.'), nl,
+                    write('             \\ `.     .          /      |  \'      |  ,\'          `.'), nl,
+                    write('              \\  v.__  .        \'       .   \\    /| /              \\ '), nl,
+                    write('               \\/    `""\\"""""""`.       \\   \\  /.\'\'                |'), nl,
+                    write('                `        .        `._ ___,j.  `/ .-       ,---.     |'), nl,
+                    write('                ,`-.      \\         ."     `.  |/        j     `    |'), nl,
+                    write('               /    `.     \\       /         \\ /         |     /    j'), nl,
+                    write('              |       `-.   7-.._ .          |"          \'         /'), nl,
+                    write('              |          `./_    `|          |            .     _,\' '), nl,
+                    write('              `.           / `----|          |-............`---\' '), nl,
+                    write('                \\          \\      |          |'), nl,
+                    write('               ,\'           )     `.         |'), nl,
+                    write('                7____,,..--\'      /          |'), nl,
+                    write('                                  `---.__,--.\' '), nl, nl
+                ;
+                    write('              _.--""`-..'), nl,
+                    write('            ,\'          `.'), nl,
+                    write('          ,\'          __  `.'), nl,
+                    write('         /|          " __   \\ '), nl,
+                    write('        , |           / |.   .'), nl,
+                    write('        |,\'          !_.\'|   |'), nl,
+                    write('      ,\'             \'   |   |'), nl,
+                    write('     /              |`--\'|   |'), nl,
+                    write('    |                `---\'   |'), nl,
+                    write('     .   ,                   |                       ,".'), nl,
+                    write('      ._     \'           _\'  |                    , \' \\ `'), nl,
+                    write('  `.. `.`-...___,...---""    |       __,.        ,`"   L,|'), nl,
+                    write('  |, `- .`._        _,-,.\'   .  __.-\'-. /        .   ,    \\ '), nl,
+                    write('-:..     `. `-..--_.,.<       `"      / `.        `-/ |   .'), nl,
+                    write('  `,         """"\'     `.              ,\'         |   |  \',,'), nl,
+                    write('    `.      \'            \'            /          \'    |\'. |/'), nl,
+                    write('      `.   |              \\       _,-\'           |       \'\' '), nl,
+                    write('        `._\'               \\   \'"\\                .      |'), nl,
+                    write('           |                \'     \\                `._  ,\' '), nl,
+                    write('           |                 \'     \\                 .\'|'), nl,
+                    write('           |                 .      \\                | |'), nl,
+                    write('           |                 |       L              ,\' |'), nl,
+                    write('           `                 |       |             /   \' '), nl,
+                    write('            \\                |       |           ,\'   /'), nl,
+                    write('          ,\' \\               |  _.._ ,-..___,..-\'    ,\' '), nl,
+                    write('         /     .             .      `!             ,j\' '), nl,
+                    write('        /       `.          /        .           .\'/ '), nl,
+                    write('       .          `.       /         |        _.\'.\' '), nl,
+                    write('        `.          7`\'---\'          |------"\'_.\' '), nl,
+                    write('       _,.`,_     _\'                ,\'\'-----"\' '), nl,
+                    write('   _,-_    \'       `.     .\'      ,\\ '), nl,
+                    write('   -" /`.         _,\'     | _  _  _.| '), nl,
+                    write('    ""--\'---"""""\'        `\' \'! |! / '), nl,
+                    write('                            `" " -\' '), nl, nl
+            )
+    ),
     do(ID), nl,
+    status,
     end_condition(ID).
 
 end_condition(end).
@@ -70,11 +174,9 @@ end_condition(X) :-
     write('Username: '), write(Username), nl,nl,
     statusInventory,!.
 
-do(X) :-
-    have(X), !.
+do(X) :- have(X), !.
 do(end).
-do(_) :-
-    write('Itu bukan tokemon yang ada di list, cek lagi ya...').
+do(_) :- write('Itu bukan tokemon yang ada di list, cek lagi ya...').
 
 have(X) :-
     X =< 6, !.
@@ -128,8 +230,6 @@ save(FileName) :-
             writeLebarPanjang,
             writePosisiPlayer,
             writeTembok,
-            writeLegendary1,
-            writeLegendary2,
         told, !.
 
 writeLebarPanjang :-
@@ -137,20 +237,6 @@ writeLebarPanjang :-
     panjang(J),
     write('lebar('), write(L), write(').'), nl,
     write('panjang('), write(J), write(').'), nl, !.
-
-writeLegendary1 :-
-    legendary1(X,Y),
-    write('legendary1('), write(X), write(','), write(Y), write(').'), nl.
-
-writeLegendary1 :-
-    \+ legendary1(_,_), !.
-
-writeLegendary2 :-
-    legendary2(X,Y),
-    write('legendary2('), write(X), write(','), write(Y), write(').'), nl.
-
-writeLegendary2 :-
-    \+ legendary2(_,_), !.
 
 writeTembok :-
     tembok(TempX1,TempY1,TempX2,TempY2,TempX3,TempY3,TempX4,TempY4,TempX5,TempY5,TempX6,TempY6,TempX7,TempY7,TempX8,TempY8),
@@ -202,7 +288,6 @@ assertaLine([]) :- !.
 assertaLine([X|L]):-
 	asserta(X),
 	assertaLine(L), !.
-
 
 readFileLines(Stream,[]) :-
     at_end_of_stream(Stream).

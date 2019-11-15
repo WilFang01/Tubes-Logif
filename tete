@@ -1,0 +1,14 @@
+player(yoga).
+inventory(7, fullpics, normal, 300, 1, 300, fire, 40, 115, 0).
+inventory(7, volteo, normal, 525.0, 2, 525.0, electric, 90.0, 222.0, 1100).
+inventory(13, flareo, normal, 350, 1, 350, fire, 55, 185, 0).
+inventory(13, aquoeo, normal, 525.0, 2, 525.0, water, 90.0, 222.0, 840).
+inventory(22, lightkid, normal, 270, 1, 270, electric, 40, 135, 0).
+inventory(22, bulsabaur, normal, 540.0, 2, 540.0, grass, 84.0, 132.0, 135).
+cure(1).
+lebar(24).
+panjang(23).
+positionX(18).
+positionY(16).
+tembok(9,17,13,14,19,7,14,18,22,15,18,8,11,23,8,8).
+legendary2(13,15).

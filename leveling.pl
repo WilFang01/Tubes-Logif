@@ -1,13 +1,29 @@
 levelUp(ID) :-
     inventory(ID,Name,Type,MaxHealth,Level,_,Element,Attack,Special,Exp),
     TempLevel is (Level+1),
-    TempMaxHealth is (MaxHealth*1.5),
-    TempHealth is TempMaxHealth,
-    TempAttack is (Attack*1.2),
-    TempSpecial is (Special*1.2),
-    retract(inventory(ID,_,_,_,Level,_,_,_,_,_)),
-    asserta(inventory(ID,Name,Type,TempMaxHealth,TempLevel,TempHealth,Element,TempAttack,TempSpecial,Exp)).
-
+    (
+        (TempLevel == 4; TempLevel == 7)
+        -> 
+        (
+            evolve(ID),
+            TempMaxHealth is (MaxHealth*1.5),
+            TempHealth is TempMaxHealth,
+            TempAttack is (Attack*1.2),
+            TempSpecial is (Special*1.2),
+            retract(inventory(ID,_,_,_,Level,_,_,_,_,_)),
+            asserta(inventory(ID,Name,Type,TempMaxHealth,TempLevel,TempHealth,Element,TempAttack,TempSpecial,Exp))
+        )
+        ;
+        (
+            TempMaxHealth is (MaxHealth*1.5),
+            TempHealth is TempMaxHealth,
+            TempAttack is (Attack*1.2),
+            TempSpecial is (Special*1.2),
+            retract(inventory(ID,_,_,_,Level,_,_,_,_,_)),
+            asserta(inventory(ID,Name,Type,TempMaxHealth,TempLevel,TempHealth,Element,TempAttack,TempSpecial,Exp))
+        )
+    ).
+    
 levelUpEnemy(ID) :-
     enemyTokemon(ID,Name,Type,MaxHealth,Level,_,Element,Attack,Special),
     TempLevel is (Level+1),
@@ -17,6 +33,14 @@ levelUpEnemy(ID) :-
     TempSpecial is (Special*1.2),
     retract(enemyTokemon(ID,_,_,_,Level,_,_,_,_)),
     asserta(enemyTokemon(ID,Name,Type,TempMaxHealth,TempLevel,TempHealth,Element,TempAttack,TempSpecial)).
+
+evolve(ID) :-
+    inventory(ID,Name,Type,MaxHealth,Level,_,Element,Attack,Special,Exp),
+    TempID is (ID + 30),
+    tokedex(TempID, TempName, _, _, _, _, _, _),
+    TempHealth is MaxHealth,
+    retract(inventory(ID,Name,Type,MaxHealth,Level,_,Element,Attack,Special,Exp)),
+    asserta(inventory(TempID, TempName, Type, MaxHealth, Level, TempHealth, Element, Attack, Special, Exp)).
 
 markLevelUp(ID,Level,Exp) :-
     Level =:= 1,

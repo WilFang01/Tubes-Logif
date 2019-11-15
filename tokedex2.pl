@@ -1,6 +1,9 @@
 /* Tokedex buat Tokemon starter */
 /* Rencananya, bakal ada 6 Tokemon starter, 1 buat tiap Element */
 /* Player milih 1 starter, yang gak dipilih gabisa didapetin dari cara lain */
+/* tokedex(ID, Name, Type, MaxHealth, Level, Element, Attack, Special) */
+
+tokedex(-999, cheat, normal, 999999, 9, earth, 9999999, 9999999).
 
 tokedex(1, bulsabaur, normal, 360, 1, grass, 70, 110).
 tokedex(2, charamder, normal, 355, 1, fire, 75, 120).
@@ -24,7 +27,7 @@ tokedex(14, aquoeo, normal, 350, 1, water, 75, 185).
 tokedex(15, natureo, normal, 350, 1, grass, 75, 185).
 tokedex(16, volteo, normal, 350, 1, electric, 75, 185).
 tokedex(17, aereo, normal, 350, 1, wind, 75, 185).
-tokedex(18, terreo, normal, 350, 1, earth, 75, 185).
+tokedex(18, terreo, normal, 350, 1, earth, 55, 135).
 tokedex(19, camcam, normal, 280, 1, fire, 50, 110).
 tokedex(20, frogfrog, normal, 290, 1, water, 40, 115).
 tokedex(21, busew, normal, 280, 1, grass, 40, 120).
@@ -37,7 +40,69 @@ tokedex(27, telorcute, normal, 320, 1, grass, 50, 95).
 tokedex(28, proton, normal, 280, 1, electric, 35, 150).
 tokedex(29, dodol, normal, 270, 1, wind, 65, 110).
 tokedex(30, oneng, normal, 270, 1, earth, 80, 90).
-tokedex(31, tes, normal, 999999, 9, earth, 9999999, 9999999).
+
+tokedex(31, istigfaur, normal, 360, 1, grass, 70, 110).
+tokedex(32, charmelon, normal, 355, 1, fire, 75, 120).
+tokedex(33, squirting, normal, 345, 1, water, 85, 100).
+tokedex(34, ssssscupi, normal, 370, 1, electric, 65, 115).
+tokedex(35, yogaday, normal, 355, 1, wind, 70, 100).
+tokedex(36, veryhorny, normal, 400, 1, earth, 80, 95).
+tokedex(37, fullscreenpics, normal, 300, 1, fire, 40, 115).
+tokedex(38, garadyos, normal, 300, 1, grass, 60, 105).
+tokedex(39, breastcancer, normal, 300, 1, grass, 60, 105).
+tokedex(40, helicoptile, normal, 300, 1, electric, 40, 125).
+tokedex(41, sarung, normal, 300, 1, wind, 55, 110).
+tokedex(42, tytyt, normal, 300, 1, earth, 50, 85).
+tokedex(43, glareo, normal, 350, 1, fire, 55, 185).
+tokedex(44, tsunamio, normal, 350, 1, water, 75, 185).
+tokedex(45, annyeonghaseo, normal, 350, 1, grass, 75, 185).
+tokedex(46, kesetrumeo, normal, 350, 1, electric, 75, 185).
+tokedex(47, kademenoooo, normal, 350, 1, wind, 75, 185).
+tokedex(48, stereo, normal, 350, 1, earth, 75, 185).
+tokedex(49, feby_et, normal, 280, 1, fire, 50, 110).
+tokedex(50, swikeswike, normal, 290, 1, water, 40, 115).
+tokedex(51, wesub, normal, 280, 1, grass, 40, 120).
+tokedex(52, darkadult, normal, 270, 1, electric, 40, 135).
+tokedex(53, skyglow, normal, 300, 1, wind, 55, 100).
+tokedex(54, gembel, normal, 320, 1, earth, 55, 85).
+tokedex(55, kecetak, normal, 300, 1, fire, 45, 115).
+tokedex(56, hode, normal, 260, 1, water, 45, 135).
+tokedex(57, telorkucute, normal, 320, 1, grass, 50, 95).
+tokedex(58, elektron, normal, 280, 1, electric, 35, 150).
+tokedex(59, jenangdodol, normal, 270, 1, wind, 65, 110).
+tokedex(60, nengoneng, normal, 270, 1, earth, 80, 90).
+
+tokedex(61, khilaf, normal, 360, 1, grass, 70, 110).
+tokedex(62, charlize_wendy, normal, 355, 1, fire, 75, 120).
+tokedex(63, squirting, normal, 345, 1, water, 85, 100).
+tokedex(64, varioooooo, normal, 370, 1, electric, 65, 115).
+tokedex(65, cibayday, normal, 355, 1, wind, 70, 100).
+tokedex(66, superhorny, normal, 400, 1, earth, 80, 95).
+tokedex(67, minimizedpics, normal, 300, 1, fire, 40, 115).
+tokedex(68, garasi, normal, 300, 1, grass, 60, 105).
+tokedex(69, bigbreast, normal, 300, 1, grass, 60, 105).
+tokedex(70, helicopter, normal, 300, 1, electric, 40, 125).
+tokedex(71, arung, normal, 300, 1, wind, 55, 110).
+tokedex(72, tytytbesar, normal, 300, 1, earth, 50, 85).
+tokedex(73, trespaseo, normal, 350, 1, fire, 55, 185).
+tokedex(74, ndemekeo, normal, 350, 1, water, 75, 185).
+tokedex(75, yeppeoseo, normal, 350, 1, grass, 75, 185).
+tokedex(76, akumaumasukpower, normal, 350, 1, electric, 75, 185).
+tokedex(77, bekunoooo, normal, 350, 1, wind, 75, 185).
+tokedex(78, steroid, normal, 350, 1, earth, 75, 185).
+tokedex(79, patricia, normal, 280, 1, fire, 50, 110).
+tokedex(80, pepesswikee, normal, 290, 1, water, 40, 115).
+tokedex(81, subew, normal, 280, 1, grass, 40, 120).
+tokedex(82, nigga, normal, 270, 1, electric, 40, 135).
+tokedex(83, earthglow, normal, 300, 1, wind, 55, 100).
+tokedex(84, wedusgembel, normal, 320, 1, earth, 55, 85).
+tokedex(85, kecoak, normal, 300, 1, fire, 45, 115).
+tokedex(86, jones, normal, 260, 1, water, 45, 135).
+tokedex(87, ganeshaoperation, normal, 320, 1, grass, 50, 95).
+tokedex(88, neutron, normal, 280, 1, electric, 35, 150).
+tokedex(89, jenangdodoldurian, normal, 270, 1, wind, 65, 110).
+tokedex(90, anengoneng, normal, 270, 1, earth, 80, 90).
+
 
 tokedex(100,sangemon,legendary,100000,90,water,3000,6000).
 tokedex(101,icanmon,legendary,133243,90,fire,2843,4000).
