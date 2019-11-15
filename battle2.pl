@@ -193,9 +193,8 @@ attackComment :-
                 ; (retract(legendary2(_,_)), retract(legendary(ID,_,_,_,_,_,_,_,_)))
             )
         ;
-            
-            retract(myTokemon(ID, _, _, _, _, MyHealth, _, _, _, _)),
-            retract(inventory(ID, Name, Type, MaxHealth, Level, _, Element, Attack, Special, Exp)),
+            retract(myTokemon(MyID, _, _, _, _, MyHealth, _, _, _, _)),
+            retract(inventory(MyID, Name, Type, MaxHealth, Level, _, Element, Attack, Special, Exp)),
             maxExp(EnemyName, ExpGiven),
             NewExpGiven is EnemyLevel*ExpGiven,
             TempExp is Exp + NewExpGiven,
