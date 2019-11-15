@@ -104,8 +104,8 @@ tokedex(89, jenangdodoldurian, normal, 270, 1, wind, 65, 110).
 tokedex(90, anengoneng, normal, 270, 1, earth, 80, 90).
 
 
-tokedex(100,sangemon,legendary,100000,90,water,3000,6000).
-tokedex(101,icanmon,legendary,133243,90,fire,2843,4000).
+tokedex(100, sangemon, legendary,100000,90,water,3000,6000).
+tokedex(101, icanmon, legendary,133243,90,fire,2843,4000).
 
 namaSkill(bulsabaur, onyong-onyong).
 namaSkill(charamder, blar-blar).
