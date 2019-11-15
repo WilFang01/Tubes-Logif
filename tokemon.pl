@@ -230,6 +230,8 @@ save(FileName) :-
             writeLebarPanjang,
             writePosisiPlayer,
             writeTembok,
+            writeLegendary1,
+            writeLegendary2,
         told, !.
 
 writeLebarPanjang :-
@@ -237,6 +239,20 @@ writeLebarPanjang :-
     panjang(J),
     write('lebar('), write(L), write(').'), nl,
     write('panjang('), write(J), write(').'), nl, !.
+
+writeLegendary1 :-
+    legendary1(X,Y),
+    write('legendary1('), write(X), write(','), write(Y), write(').'), nl.
+
+writeLegendary1 :-
+    \+ legendary1(_,_), !.
+
+writeLegendary2 :-
+    legendary2(X,Y),
+    write('legendary2('), write(X), write(','), write(Y), write(').'), nl.
+
+writeLegendary2 :-
+    \+ legendary2(_,_), !.
 
 writeTembok :-
     tembok(TempX1,TempY1,TempX2,TempY2,TempX3,TempY3,TempX4,TempY4,TempX5,TempY5,TempX6,TempY6,TempX7,TempY7,TempX8,TempY8),

@@ -7,7 +7,9 @@
 :- dynamic(isEnemyAlive/1).
 :- dynamic(battle/1).
 :- dynamic(isPick/1).
+:- dynamic(isFight/1).
 :- dynamic(temp/1).
+:- dynamic(isAfterFight/1).
 
 superEffective(fire, grass).
 superEffective(fire, wind).
@@ -54,8 +56,7 @@ enemyTriggered :-
     random(1, 10, P),
     asserta(peluang(P)),
     asserta(battle(1)),
-    asserta(isEnemyAlive(1)),
-    asserta(isEnemySkill(1)).
+    asserta(isEnemyAlive(1)).
 
 legendaryTriggered1 :-
     ID is 100,
@@ -70,7 +71,7 @@ legendaryTriggered1 :-
 legendaryTriggered2 :-
     ID is 101,
     tokedex(ID, Name, Type, MaxHealth, _, Element, Attack, Special),
-    Health is MaxHealth,
+    Health is MaxHealth,    
     asserta(enemyTokemon(ID,Name,Type,MaxHealth,Level,Health,Element,Attack,Special)),nl,
     write('Kamu bertemu Legendary Pokemon '), write(Name), write('!!!'), nl,nl,
     asserta(battle(1)),
@@ -129,19 +130,37 @@ run :-
 
 /* ---------- PICK ---------- */
 pick(X) :-
+    (
+        isPick(_);
+        \+isFight(_)
+    ),
+    write('Kamu tidak bisa memilih pokemon sekarang'),nl,
+    !.
+
+pick(X) :-
+    \+ battle(_),
+    write('Kamu belum bertemu tokemon liar, sehingga kamu tidak bisa memilih tokemon dari inventori.'), nl,
+    write('Start atau jalan sampai bertemu tokemon liar. Good luck~!'), nl,
+    !.
+
+pick(X) :-
+    battle(_),
+    isFight(_),
     \+ inventory(_,X,_,_,_,_,_,_,_,_),
     write('Kamu ga punya tokemon itu. Perhatikan daftar tokemon di inventori!'),
     fightChance, 
     !.
 
 pick(X) :-
+    battle(_),
+    isFight(_),
+    \+ isPick(_),
     inventory(ID,X,Type,MaxHealth,Level,Health,Element,Attack,Special,Exp),
     asserta(myTokemon(ID,X,Type,MaxHealth,Level,Health,Element,Attack,Special,Exp)),
     write('Kamu memilih '), write(X), write(' dengan health '), write(Health), nl,
     asserta(isSkill(1)),
     asserta(isPick(1)),
     cont, !.
-
 
 /* ---------- FIGHT ---------- */
 fight :-
@@ -151,7 +170,9 @@ fight :-
 
 fight :-
     asserta(isRun(_)),
+    asserta(isFight(_)),
     battle(_),
+    asserta(isEnemySkill(1)),
     write('Tokemon yang tersedia:'), nl,
     statusInventory,
     !.
@@ -171,6 +192,7 @@ cont :-
 /* ---------- ATTACK ---------- */
 
 /* ----- COMMENT ----- */
+
 attackComment :-
     enemyTokemon(_, EnemyName, _, _, _, EnemyHealth, _, _, _),
     EnemyHealth > 0,
@@ -187,6 +209,7 @@ attackComment :-
     positionY(Y),
     EnemyHealth =< 0,
     write(EnemyName), write(' pingsan!'), nl,
+    asserta(isAfterFight(1)),
     (
         EnemyType == legendary 
         -> 
@@ -201,8 +224,9 @@ attackComment :-
             maxExp(EnemyName, ExpGiven),
             NewExpGiven is EnemyLevel*ExpGiven,
             TempExp is Exp + NewExpGiven,
-            asserta(inventory(ID, Name, Type, MaxHealth, Level, MyHealth, Element, Attack, Special, TempExp)),
-            markLevelUp(ID,Level,TempExp),
+            asserta(inventory(MyID, Name, Type, MaxHealth, Level, MyHealth, Element, Attack, Special, TempExp)),
+            write(Name), write(' '),
+            markLevelUp(MyID,Level,TempExp),
             write('Apakah kamu mau menangkap '), write(EnemyName), write('?'), nl,
             write('- capture'), nl,
             write('- skip'), nl
@@ -214,14 +238,11 @@ attackComment :-
         retract(isRun(_))
     ), !.
 
-/* ---------- ATTACK ---------- */
-/* ----- BELUM BATTLE INPUT ATTACK ----- */
 attack :-
     \+ battle(_),
-    write('Kamu belum bertemu tokemon liar. Cek penulisanmu ya...'),
+    write('Uda start blom? Atau blom fight ato run? Hayolooo'), nl,
     !.
 
-/* ----- UDAH BATTLE BELOM PICK ----- */
 attack :-
     battle(_),
     \+ isPick(_),
@@ -280,6 +301,8 @@ enemyAttackComment :-
     write('Kamu sudah tidak memiliki tokemon lagi di inventori!'), nl,
     retract(battle(_)),
     retract(isRun(_)),
+    retract(isFight(_)),
+    retract(isPick(_)),
     lose.
 
 enemyAttackComment :-
@@ -288,9 +311,11 @@ enemyAttackComment :-
     myTokemon(MyID, MyName, _, _, _, MyHealth, _, _, _, _),
     MyHealth =< 0,
     retract(myTokemon(_, _, _, _, _, _, _, _, _, _)),
+    write(MyID),
     delTokemon(MyID),
     write(MyName), write(' pingsan!'), nl,
     write('Pilih Tokemon yang lain di inventorimu'), nl,
+    retract(isPick(_)),
     fightChance,
     !.
 
@@ -458,15 +483,32 @@ drop(Name) :-
 
 /* ---------- CAPTURE ---------- */
 capture :-
+    \+ isFight(_),
+    write('Uda start blom? Blom ketemu tokemon liar tuh, mau nangkep apa bos?'), nl,
+    !.
+
+
+capture :-
+    \+ isAfterFight(_),
+    write('Buat enemy pingsan agar bisa ditangkap.'), nl,
+    !.
+
+capture :-
+    isAfterFight(_),
     \+ isFull,
+    battle(_),
     retract(enemyTokemon(EnemyID, EnemyName, _, _, _, _, _, _, _)),
     addTokemon(EnemyID),
     write(EnemyName), write(' berhasil dimasukkan ke inventorimu!'), nl,
     retract(battle(_)),
     retract(isRun(_)),
+    retract(isFight(_)),
     !.
 
 capture :-
+    isAfterFight(_),
+    battle(_),
+    isFull,
     retract(enemyTokemon(EnemyID, EnemyName, _, _, _, _, _, _, _)),
     asserta(temp(EnemyID)),
     write('Inventorimu penuh! Pilih satu tokemonmu untuk ditukar dengan '), write(EnemyName), nl,
@@ -474,12 +516,26 @@ capture :-
     write('Buang tokemonmu dengan perintah \'drop(nama tokemon)\' '), nl,
     !.
 
+/* ---------- SKIP ---------- */
 skip :-
+    \+ isAfterFight,
+    write('Buat enemy pingsan dulu baru bisa sekip'), nl,
+    !.
+
+skip :-
+    \+ isFight(_),
+    write('Uda start blom? Belum ketemu tokemon liar tu, mau sekip apa bos? Hearing cakahim?'), nl,
+    !.
+
+skip :-
+    isAfterFight(_),
+    battle(_),
     retract(enemyTokemon(EnemyID,EnemyName,EnemyType,EnemyMaxHealth,EnemyLevel,EnemyHealth,EnemyElement,EnemyAttack,EnemySpecial)),
     write(EnemyName), write(' terbangun dan segera berlari ke semak-semak, menghilang dari pandanganmu.'), nl,
     write('Kamu pun melanjutkan perjalananmu.'), 
     retract(battle(_)),
     retract(isRun(_)),
+    retract(isFight(_)),
     !.
 
 /* ---------- WIN ---------- */

@@ -5,13 +5,14 @@ levelUp(ID) :-
         (TempLevel == 4; TempLevel == 7)
         -> 
         (
-            evolve(ID),
             TempMaxHealth is (MaxHealth*1.5),
             TempHealth is TempMaxHealth,
             TempAttack is (Attack*1.2),
             TempSpecial is (Special*1.2),
-            retract(inventory(ID,_,_,_,Level,_,_,_,_,_)),
-            asserta(inventory(ID,Name,Type,TempMaxHealth,TempLevel,TempHealth,Element,TempAttack,TempSpecial,Exp))
+            evolve(ID),
+            NewID is ID+30,
+            retract(inventory(NewID,NewName,Type,MaxHealth,Level,_,Element,Attack,Special,Exp)),
+            asserta(inventory(NewID,NewName,Type,TempMaxHealth,TempLevel,TempHealth,Element,TempAttack,TempSpecial,Exp))
         )
         ;
         (
