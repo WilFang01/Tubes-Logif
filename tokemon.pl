@@ -10,19 +10,7 @@
 :- include('map.pl').
 /* tokemon(ID, Name, Type, MaxHealth, Level, Health, Element, Attack, Special, EXP) */
 
-title :- 
-    write('                                      ,\\                     '),nl,
-    write('    _.----.        ____         ,  _\\   ___    ___     ____  '),nl,
-    write('_,-        `.    |    |  /`.   \\,-    |   \\  /   |   |    \\  |`.'),nl,
-    write('\\      __    \\    -.  | /   `.  ___    |    \\/    |    -.   \\ |  |'),nl,
-    write(' \\.    \\ \\   |  __  |  |/    , _  `.  |          | __  |    \\|  |'),nl,
-    write('   \\    \\/   /, _`.|      , / / / /   |          , _`.|     |  |'),nl,
-    write('    \\     ,-/  /   \\    ,   | \\/ / ,`.|         /  /   \\  |     |'),nl,
-    write('     \\    \\ |   \\_/  |   `-.  \\    `  /|  |    ||   \\_/  | |\\    |'),nl,
-    write('      \\    \\ \\      /       `-.`.___,- |  |\\  /| \\      /  | |   |'),nl,
-    write('       \\    \\ `.__,|  |`-._    `|      |__| \\/ |  `.__,|  | |   |'),nl,
-    write('        \\_.-       |__|    `-._ |              -.|     -.| |   |'),nl,
-    write('                                `                            -._|'),nl,nl,
+title :-
     write(' ____  _____  _  _  ____  __  __  _____  _  _ '),nl,
     write('(_  _)(  _  )( )/ )( ___)(  \\/  )(  _  )( \\( )'),nl,
     write('  )(   )(_)(  )  (  )__)  )    (  )(_)(  )  ( '),nl,
@@ -56,20 +44,40 @@ initFirst :-
     read(Username),
     asserta(player(Username)), nl,
     write('Hello '), write(Username), nl,
+    repeat,
     write('Choose your tokemon!'), nl, nl,
     write('1. bulsabaur'), nl, write('Type: grass'), nl, nl,
     write('2. charamder'), nl, write('Type: fire'), nl, nl,
     write('3. squirtrel'), nl, write('Type: water'), nl, nl,
+    write('4. cupi'), nl, write('Type: electric'), nl, nl,
+    write('5. pigday'), nl, write('Type: wind'), nl, nl,
+    write('6. smackhorny'), nl, write('Type: earth'), nl, nl,
     write('Insert tokemon: '),
     read(Tokemonawal), nl,
+    tokedex(ID,Tokemonawal,_,_,_,_,_,_),
+    do(ID), nl,
+    end_condition(ID).
+
+end_condition(end).
+end_condition(X) :- 
+    have(X), !,
+    addTokemon(X),
     random(15,30,Sizex),
     random(15,30,Sizey),
     initMap(Sizex, Sizey),
-    tokedex(ID,Tokemonawal,_,_,_,_,_,_),
-    addTokemon(ID),
+    player(Username),
     write('Your information, trainer'), nl,
     write('Username: '), write(Username), nl,nl,
     statusInventory,!.
+
+do(X) :-
+    have(X), !.
+do(end).
+do(_) :-
+    write('Itu bukan tokemon yang ada di list, cek lagi ya...').
+
+have(X) :-
+    X =< 6, !.
 
 start :- 
     init(_),
@@ -89,19 +97,20 @@ quit :-
     write('Game belum dimulai kok diquit sih WKWK gimana aja'),!.
 
 quit :-
-    positionX(A), positionY(B), lebar(L), panjang(J), cure(1), player(Username),
+    write('Selamat tinggal! Kamu akan dikenang'), nl,
     retract(positionX(_)),
-    retract(positionX(_)),
+    retract(positionY(_)),
     retract(lebar(_)),
     retract(panjang(_)),
-    retract(tembok(TempX1,TempY1,TempX2,TempY2,TempX3,TempY3,TempX4,TempY4,TempX5,TempY5,TempX6,TempY6,TempX7,TempY7,TempX8,TempY8)),
+    retract(tembok(_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_)),
     retract(cure(_)),
     forall( inventory(ID, Name, Type, MaxHealth, Level, Health, Element, Attack, Special, EXP), (
         retract(inventory(_, _, _, _, _, _, _, _, _, _))
 	)),
+    retract(legendary1(_,_)),
+    retract(legendary2(_,_)),
     retract(player(_)),
-    write('Selamat tinggal! Kamu akan dikenang'), nl.
-
+    retract(init(_)).
 
 /* EKSTERNAL FILE CONFIG */
 
@@ -119,6 +128,8 @@ save(FileName) :-
             writeLebarPanjang,
             writePosisiPlayer,
             writeTembok,
+            writeLegendary1,
+            writeLegendary2,
         told, !.
 
 writeLebarPanjang :-
@@ -126,6 +137,20 @@ writeLebarPanjang :-
     panjang(J),
     write('lebar('), write(L), write(').'), nl,
     write('panjang('), write(J), write(').'), nl, !.
+
+writeLegendary1 :-
+    legendary1(X,Y),
+    write('legendary1('), write(X), write(','), write(Y), write(').'), nl.
+
+writeLegendary1 :-
+    \+ legendary1(_,_), !.
+
+writeLegendary2 :-
+    legendary2(X,Y),
+    write('legendary2('), write(X), write(','), write(Y), write(').'), nl.
+
+writeLegendary2 :-
+    \+ legendary2(_,_), !.
 
 writeTembok :-
     tembok(TempX1,TempY1,TempX2,TempY2,TempX3,TempY3,TempX4,TempY4,TempX5,TempY5,TempX6,TempY6,TempX7,TempY7,TempX8,TempY8),

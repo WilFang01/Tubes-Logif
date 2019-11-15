@@ -2,12 +2,12 @@
 /* Rencananya, bakal ada 6 Tokemon starter, 1 buat tiap Element */
 /* Player milih 1 starter, yang gak dipilih gabisa didapetin dari cara lain */
 
-tokedex(1, bulsabaur, normal, 360, 1, grass, 50, 110).
-tokedex(2, charamder, normal, 355, 1, fire, 45, 120).
-tokedex(3, squirtrel, normal, 345, 1, water, 55, 100).
-tokedex(4, cupi, normal, 370, 1, electric, 45, 115).
-tokedex(5, pigday, normal, 355, 1, wind, 50, 100).
-tokedex(6, smackhorny, normal, 400, 1, earth, 50, 95).
+tokedex(1, bulsabaur, normal, 360, 1, grass, 70, 110).
+tokedex(2, charamder, normal, 355, 1, fire, 75, 120).
+tokedex(3, squirtrel, normal, 345, 1, water, 85, 100).
+tokedex(4, cupi, normal, 370, 1, electric, 65, 115).
+tokedex(5, pigday, normal, 355, 1, wind, 70, 100).
+tokedex(6, smackhorny, normal, 400, 1, earth, 80, 95).
 
 /* Tokedex buat Tokemon normal yang bisa ditemuin di wild */
 /* Rencananya, starter Tokemon gabisa ditemuin di wild kayak di Pokemon */
@@ -18,8 +18,8 @@ tokedex(8, magicrap, normal, 300, 1, water, 50, 120).
 tokedex(9, cancera, normal, 300, 1, grass, 60, 105).
 tokedex(10, helicoptile, normal, 300, 1, electric, 40, 125).
 tokedex(11, sperong, normal, 300, 1, wind, 55, 110).
-tokedex(12, tylite, normal, 300, 1, earth, 70, 85).
-tokedex(13, flareo, normal, 350, 1, fire, 75, 185).
+tokedex(12, tylite, normal, 300, 1, earth, 50, 85).
+tokedex(13, flareo, normal, 350, 1, fire, 55, 185).
 tokedex(14, aquoeo, normal, 350, 1, water, 75, 185).
 tokedex(15, natureo, normal, 350, 1, grass, 75, 185).
 tokedex(16, volteo, normal, 350, 1, electric, 75, 185).
@@ -37,7 +37,7 @@ tokedex(27, telorcute, normal, 320, 1, grass, 50, 95).
 tokedex(28, proton, normal, 280, 1, electric, 35, 150).
 tokedex(29, dodol, normal, 270, 1, wind, 65, 110).
 tokedex(30, oneng, normal, 270, 1, earth, 80, 90).
-tokedex(99, tolol, normal, 1, 1, earth, 1, 1).
+tokedex(31, tes, normal, 999999, 9, earth, 9999999, 9999999).
 
 tokedex(100,sangemon,legendary,100000,90,water,3000,6000).
 tokedex(101,icanmon,legendary,133243,90,fire,2843,4000).
@@ -51,7 +51,7 @@ namaSkill(smackhorny, horny).
 namaSkill(ponytak, entak-entul).
 namaSkill(trapezoidyu, zung).
 namaSkill(telorcute, crot).
-namaSkill(proton, kimia-E).
+namaSkill(proton, kimia-e).
 namaSkill(dodol, manis).
 namaSkill(oneng, neng).
 namaSkill(fullpics, foto-bugil).

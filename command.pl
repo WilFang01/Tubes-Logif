@@ -4,6 +4,7 @@
 
 s :-
     init(_),
+    \+ battle(_),
     positionX(TempX),
     positionY(Temp),
     Next is (Temp+1),
@@ -12,6 +13,8 @@ s :-
     \+isKanan(TempX,Next),
     \+isKiri(TempX,Next),
     \+isGym(TempX,Next),
+    \+isLegendary1(TempX,Next),
+    \+isLegendary2(TempX,Next),
     \+isTembok(TempX,Next,TempX,Next,TempX,Next,TempX,Next,TempX,Next,TempX,Next,TempX,Next,TempX,Next),
     triggered,
     retract(positionY(_)),
@@ -19,6 +22,7 @@ s :-
 
 s :- 
     init(_),
+    \+ battle(_),
     positionX(TempX),
     positionY(Temp),
     Next is (Temp+1),
@@ -33,6 +37,7 @@ s :-
 
 s :-
     init(_),
+    \+ battle(_),
     positionX(TempX),
     positionY(Temp),
     Next is (Temp+1),
@@ -42,11 +47,34 @@ s :-
     asserta(positionY(Next)),!.
 
 s :-
+    init(_),
+    \+ battle(_),
+    positionX(TempX),
+    positionY(Temp),
+    Next is (Temp+1),
+    isLegendary1(TempX,Next),
+    legendaryTriggered1,
+    retract(positionY(_)),
+    asserta(positionY(Next)),!.
+
+s :-
+    init(_),
+    \+ battle(_),
+    positionX(TempX),
+    positionY(Temp),
+    Next is (Temp+1),
+    isLegendary2(TempX,Next),
+    legendaryTriggered1,
+    retract(positionY(_)),
+    asserta(positionY(Next)),!.
+
+s :-
     \+init(_),
     write('Game belum dimulai').
 
 n :-
     init(_),
+    \+ battle(_),
     positionX(TempX),
     positionY(Temp),
     Next is (Temp-1),
@@ -56,12 +84,15 @@ n :-
     \+isKiri(TempX,Next),
     \+isGym(TempX,Next),
     \+isTembok(TempX,Next,TempX,Next,TempX,Next,TempX,Next,TempX,Next,TempX,Next,TempX,Next,TempX,Next),
+    \+isLegendary1(TempX,Next),
+    \+isLegendary2(TempX,Next),
     triggered,
     retract(positionY(_)),
     asserta(positionY(Next)),!.
 
 n :-
     init(_),
+    \+ battle(_),
     positionX(TempX),
     positionY(Temp),
     Next is (Temp-1),
@@ -76,6 +107,7 @@ n :-
 
 n :-
     init(_),
+    \+ battle(_),
     positionX(TempX),
     positionY(Temp),
     Next is (Temp-1),
@@ -85,11 +117,34 @@ n :-
     asserta(positionY(Next)),!.
 
 n :-
+    init(_),
+    \+ battle(_),
+    positionX(TempX),
+    positionY(Temp),
+    Next is (Temp-1),
+    isLegendary1(TempX,Next),
+    legendaryTriggered1,
+    retract(positionY(_)),
+    asserta(positionY(Next)),!.
+
+n :-
+    init(_),
+    \+ battle(_),
+    positionX(TempX),
+    positionY(Temp),
+    Next is (Temp-1),
+    isLegendary2(TempX,Next),
+    legendaryTriggered2,
+    retract(positionY(_)),
+    asserta(positionY(Next)),!.
+
+n :-
     \+init(_),
     write('Game belum dimulai').
 
 e :-
     init(_),
+    \+ battle(_),
     positionX(TempX),
     positionY(Temp),
     Next is (TempX+1),
@@ -97,14 +152,17 @@ e :-
     \+isBawah(Next,Temp),
     \+isKanan(Next,Temp),
     \+isKiri(Next,Temp),
-    \+isGym(TempX,Next),
-    \+isTembok(TempX,Next,TempX,Next,TempX,Next,TempX,Next,TempX,Next,TempX,Next,TempX,Next,TempX,Next),
+    \+isGym(Next,Temp),
+    \+isLegendary1(Next,Temp),
+    \+isLegendary2(Next,Temp),
+    \+isTembok(Next,Temp,Next,Temp,Next,Temp,Next,Temp,Next,Temp,Next,Temp,Next,Temp,Next,Temp),
     triggered,
     retract(positionX(_)),
     asserta(positionX(Next)),!.
 
 e :-
     init(_),
+    \+ battle(_),
     positionX(TempX),
     positionY(Temp),
     Next is (TempX+1),
@@ -113,12 +171,13 @@ e :-
         isBawah(Next,Temp);
         isKanan(Next,Temp);
         isKiri(Next,Temp);
-        isTembok(TempX,Next,TempX,Next,TempX,Next,TempX,Next,TempX,Next,TempX,Next,TempX,Next,TempX,Next)
+        isTembok(Next,Temp,Next,Temp,Next,Temp,Next,Temp,Next,Temp,Next,Temp,Next,Temp,Next,Temp)
     ),
     write('Ada Tembok'),!.
 
 e :-
     init(_),
+    \+ battle(_),
     positionX(TempX),
     positionY(Temp),
     Next is (TempX+1),
@@ -128,11 +187,34 @@ e :-
     asserta(positionX(Next)),!.
 
 e :-
+    init(_),
+    \+ battle(_),
+    positionX(TempX),
+    positionY(Temp),
+    Next is (TempX+1),
+    isLegendary1(Next,Temp),
+    legendaryTriggered1,
+    retract(positionX(_)),
+    asserta(positionX(Next)),!.
+
+e :-
+    init(_),
+    \+ battle(_),
+    positionX(TempX),
+    positionY(Temp),
+    Next is (TempX+1),
+    isLegendary2(Next,Temp),
+    legendaryTriggered2,
+    retract(positionX(_)),
+    asserta(positionX(Next)),!.
+
+e :-
     \+init(_),
     write('Game belum dimulai').
 
 w :-
     init(_),
+    \+ battle(_),
     positionX(TempX),
     positionY(Temp),
     Next is (TempX-1),
@@ -141,13 +223,16 @@ w :-
     \+isKanan(Next,Temp),
     \+isKiri(Next,Temp),
     \+isGym(Next,Temp),
-    \+isTembok(TempX,Next,TempX,Next,TempX,Next,TempX,Next,TempX,Next,TempX,Next,TempX,Next,TempX,Next),
+    \+isLegendary1(Next,Temp),
+    \+isLegendary2(Next,Temp),
+    \+isTembok(Next,Temp,Next,Temp,Next,Temp,Next,Temp,Next,Temp,Next,Temp,Next,Temp,Next,Temp),
     triggered,
     retract(positionX(_)),
     asserta(positionX(Next)),!.
 
 w :-
     init(_),
+    \+ battle(_),
     positionX(TempX),
     positionY(Temp),
     Next is (TempX-1),
@@ -156,17 +241,40 @@ w :-
         isBawah(Next,Temp);
         isKanan(Next,Temp);
         isKiri(Next,Temp);
-        isTembok(TempX,Next,TempX,Next,TempX,Next,TempX,Next,TempX,Next,TempX,Next,TempX,Next,TempX,Next)
+        isTembok(Next,Temp,Next,Temp,Next,Temp,Next,Temp,Next,Temp,Next,Temp,Next,Temp,Next,Temp)
     ),
     write('Ada Tembok'),!.
 
 w :-
     init(_),
+    \+ battle(_),
     positionX(TempX),
     positionY(Temp),
     Next is (TempX-1),
     isGym(Next,Temp),
     write('Anda sekarang berada di gym'),
+    retract(positionX(_)),
+    asserta(positionX(Next)),!.
+
+w :-
+    init(_),
+    \+ battle(_),
+    positionX(TempX),
+    positionY(Temp),
+    Next is (TempX-1),
+    isLegendary1(Next,Temp),
+    legendaryTriggered1,
+    retract(positionX(_)),
+    asserta(positionX(Next)),!.
+
+w :-
+    init(_),
+    \+ battle(_),
+    positionX(TempX),
+    positionY(Temp),
+    Next is (TempX-1),
+    isLegendary2(Next,Temp),
+    legendaryTriggered2,
     retract(positionX(_)),
     asserta(positionX(Next)),!.
 
@@ -218,5 +326,5 @@ loop(1,_).
 loop(X,ID) :-
     X > 0,
     levelUpEnemy(ID),
-    M is N-1,
+    M is X-1,
     loop(M,ID).

@@ -6,7 +6,7 @@
 :- dynamic(isEnemySkill/1).
 :- dynamic(isEnemyAlive/1).
 :- dynamic(battle/1).
-
+:- dynamic(isPick/1).
 
 superEffective(fire, grass).
 superEffective(fire, wind).
@@ -42,9 +42,9 @@ enemyTriggered :-
     cekPanjang(Level),
     asserta(enemyTokemon(ID, Name, Type, MaxHealth, Level, _, Element, Attack, Special)),
     loop(Level,ID),
-    Health is MaxHealth,
-    retract(enemyTokemon(ID,_,_,_,Level,_,_,_,_)),
-    asserta(enemyTokemon(ID,Name,Type,MaxHealth,Level,Health,Element,Attack,Special)),
+    retract(enemyTokemon(ID,Name2,Type,MaxHealth2,Level2,_,Element,Attack2,Special2)),
+    Health is MaxHealth2,
+    asserta(enemyTokemon(ID,Name2,Type,MaxHealth2,Level2,Health,Element,Attack2,Special2)),
     write('Kamu ketemu '), write(Name), write(' liar dengan level '), write(Level), write('!'), nl,
     write('Apa yang akan kamu lakukan?'), nl,
     write('- fight'), nl,
@@ -55,6 +55,26 @@ enemyTriggered :-
     asserta(battle(1)),
     asserta(isEnemyAlive(1)).
 
+legendaryTriggered1 :-
+    ID is 100,
+    tokedex(ID, Name, Type, MaxHealth, _, Element, Attack, Special),
+    Health is MaxHealth,
+    asserta(enemyTokemon(ID,Name,Type,MaxHealth,Level,Health,Element,Attack,Special)),nl,
+    write('Kamu bertemu Legendary Pokemon '), write(Name), write('!!!'), nl,nl,
+    asserta(battle(1)),
+    asserta(isEnemyAlive(1)),
+    fight, !.
+
+legendaryTriggered2 :-
+    ID is 101,
+    tokedex(ID, Name, Type, MaxHealth, _, Element, Attack, Special),
+    Health is MaxHealth,
+    asserta(enemyTokemon(ID,Name,Type,MaxHealth,Level,Health,Element,Attack,Special)),nl,
+    write('Kamu bertemu Legendary Pokemon '), write(Name), write('!!!'), nl,nl,
+    asserta(battle(1)),
+    asserta(isEnemyAlive(1)), 
+    fight, !.
+
 /* ---------- RUN ---------- */
 
 /* ----- RUN GAGAL ----- */
@@ -64,6 +84,7 @@ run :-
     peluang(P), 
     P < 5,
     write('Kamu gagal lari, jadi kamu harus kalahkan tokemon liar itu!'), nl,
+    asserta(isRun(1)),
     retract(peluang(P)),
     fight,
     !.
@@ -88,13 +109,28 @@ run :-
     !.
 /* ------------------------ */
 
-/* ----- RUN SUDAH GAGAL ----- */
+/* ----- RUN SUDAH GAGAL SUDAH PILIH TOKEMON ----- */
 run :-
     isRun(_),
+    isPick(_),
     write('E-e-eh! Kamu sudah gagal run lo ya... Ayo, semangat~!'), nl,
     cont.
 
+/* ----- RUN SUDAH GAGAL BELUM PILIH TOKEMON ----- */
+run :-
+    isRun(_),
+    \+ isPick(_),
+    write('E-e-eh! Kamu sudah gagal run lo ya... Ayo, semangat~!'), nl,
+    write('Jangan lupa pilih tokemon!'), nl,
+    fightChance.
+
 /* ---------- PICK ---------- */
+pick(X) :-
+    \+ inventory(_,X,_,_,_,_,_,_,_,_),
+    write('Kamu ga punya tokemon itu. Perhatikan daftar tokemon di inventori!'),
+    fightChance, 
+    !.
+
 pick(X) :-
     inventory(ID,X,Type,MaxHealth,Level,Health,Element,Attack,Special,Exp),
     asserta(myTokemon(ID,X,Type,MaxHealth,Level,Health,Element,Attack,Special,Exp)),
@@ -143,21 +179,38 @@ attackComment :-
     !.
 
 attackComment :-
-    enemyTokemon(_, EnemyName, _, _, EnemyLevel, EnemyHealth, _, _, _),
+    enemyTokemon(_, EnemyName, EnemyType, _, EnemyLevel, EnemyHealth, _, _, _),
+    positionX(X),
+    positionY(Y),
     EnemyHealth =< 0,
     write(EnemyName), write(' pingsan!'), nl,
-    retract(myTokemon(ID, _, _, _, _, MyHealth, _, _, _, _)),
-    retract(inventory(ID, Name, Type, MaxHealth, Level, _, Element, Attack, Special, Exp)),
-    maxExp(EnemyName, ExpGiven),
-    NewExpGiven is EnemyLevel*ExpGiven,
-    TempExp is Exp + NewExpGiven,
-    asserta(inventory(ID, Name, Type, MaxHealth, Level, MyHealth, Element, Attack, Special, TempExp)),
-    markLevelUp(ID,Level,TempExp),
-    write('Apakah kamu mau menangkap '), write(EnemyName), write('?'), nl,
-    write('- capture'), nl,
-    write('- skip'), nl,
-    retract(battle(1)),
-    !.
+    (
+        EnemyType == legendary 
+        -> 
+            (
+                isLegendary1(X,Y) 
+                -> retract(legendary1(_,_))
+                ; retract(legendary2(_,_))
+            )
+        ;
+            
+            retract(myTokemon(ID, _, _, _, _, MyHealth, _, _, _, _)),
+            retract(inventory(ID, Name, Type, MaxHealth, Level, _, Element, Attack, Special, Exp)),
+            maxExp(EnemyName, ExpGiven),
+            NewExpGiven is EnemyLevel*ExpGiven,
+            TempExp is Exp + NewExpGiven,
+            asserta(inventory(ID, Name, Type, MaxHealth, Level, MyHealth, Element, Attack, Special, TempExp)),
+            markLevelUp(ID,Level,TempExp),
+            write('Apakah kamu mau menangkap '), write(EnemyName), write('?'), nl,
+            write('- capture'), nl,
+            write('- skip'), nl
+    ),
+    (
+        (\+legendary1(_,_),\+legendary2(_,_))
+        -> win
+        ; retract(battle(1)),
+        retract(isRun(_))
+    ), !.
 
 /* ----- ATTACK ----- */
 attack :-
@@ -187,7 +240,11 @@ enemyAttackComment :-
     retract(myTokemon(_, _, _, _, _, _, _, _, _, _)),
     delTokemon(MyID),
     write(MyName), write(' pingsan!'), nl,
-    write('Kamu sudah tidak memiliki tokemon lagi di inventori!'), nl.
+    write('Kamu sudah tidak memiliki tokemon lagi di inventori!'), nl,
+    retract(battle(_)),
+    retract(run(_)),
+    lose, 
+    quit.
 
 enemyAttackComment :-
     cekPanjang(X),
@@ -265,8 +322,8 @@ skill :-
 
 /* ---------- ENEMY TURN ---------- */
 enemyTurn :-
-    random(1,2,X),
-    (X =:= 1 ->
+    random(1,4,X),
+    (X =< 2 ->
         enemyAttack
     ; enemySkill
     ),
@@ -334,6 +391,22 @@ enemySkill :-
     enemyAttackComment,
     !.
 
+/* ---------- DROP ---------- */
+drop(Name) :-
+    \+ tokedex(_, Name, _, _, _, _, _, _),
+    write('Kamu ga punya tokemon itu. Perhatikan daftar tokemon di inventori!'),nl,
+    statusInventory,
+    !.
+
+drop(Name) :-
+    tokedex(ID, Name, _, _, _, _, _, _),
+    delTokemon(ID),
+    addTokemon(EnemyID),
+    write(Name), write(' berhasil ditukar dengan '), write(EnemyName), nl,
+    write(Name), write(' dibebaskan ke habitatnya kembali.'), nl, 
+    retract(battle(_)),
+    !.
+
 /* ---------- CAPTURE ---------- */
 capture :-
     \+ isFull,
@@ -354,6 +427,7 @@ capture :-
     write(Name), write(' berhasil ditukar dengan '), write(EnemyName), nl,
     write(Name), write(' dibebaskan ke habitatnya kembali.'), nl, 
     retract(battle(_)),
+    retract(isRun(_)),
     !.
 
 skip :-
@@ -361,4 +435,31 @@ skip :-
     write(EnemyName), write(' terbangun dan segera berlari ke semak-semak, menghilang dari pandanganmu.'), nl,
     write('Kamu pun melanjutkan perjalananmu.'), 
     retract(battle(_)),
+    retract(isRun(_)),
     !.
+
+/* ---------- WIN ---------- */
+win :-
+    write('$$\\     $$\\  $$$$$$\\  $$\\   $$\\       $$\\      $$\\ $$$$$$\\ $$\\   $$\\ '), nl,
+    write('\\$$\\   $$  |$$  __$$\\ $$ |  $$ |      $$ | $\\  $$ |\\_$$  _|$$$\\  $$ |'), nl,
+    write(' \\$$\\ $$  / $$ /  $$ |$$ |  $$ |      $$ |$$$\\ $$ |  $$ |  $$$$\\ $$ |'), nl,
+    write('  \\$$$$  /  $$ |  $$ |$$ |  $$ |      $$ $$ $$\\$$ |  $$ |  $$ $$\\$$ |'), nl,
+    write('   \\$$  /   $$ |  $$ |$$ |  $$ |      $$$$  _$$$$ |  $$ |  $$ \\$$$$ |'), nl,
+    write('    $$ |    $$ |  $$ |$$ |  $$ |      $$$  / \\$$$ |  $$ |  $$ |\\$$$ |'), nl,
+    write('    $$ |     $$$$$$  |\\$$$$$$  |      $$  /   \\$$ |$$$$$$\\ $$ | \\$$ |'), nl,
+    write('    \\__|     \\______/  \\______/       \\__/     \\__|\\______|\\__|  \\__|'), nl,
+    quit.
+
+/* ---------- LOSE ---------- */
+lose :-
+    write('▓██   ██▓ ▒█████   █    ██     ██▓     ▒█████    ██████ ▓█████ '), nl,
+    write(' ▒██  ██▒▒██▒  ██▒ ██  ▓██▒   ▓██▒    ▒██▒  ██▒▒██    ▒ ▓█   ▀ '), nl,
+    write('  ▒██ ██░▒██░  ██▒▓██  ▒██░   ▒██░    ▒██░  ██▒░ ▓██▄   ▒███   '), nl,
+    write('  ░ ▐██▓░▒██   ██░▓▓█  ░██░   ▒██░    ▒██   ██░  ▒   ██▒▒▓█  ▄ '), nl,
+    write('  ░ ██▒▓░░ ████▓▒░▒▒█████▓    ░██████▒░ ████▓▒░▒██████▒▒░▒████▒'), nl,
+    write('   ██▒▒▒ ░ ▒░▒░▒░ ░▒▓▒ ▒ ▒    ░ ▒░▓  ░░ ▒░▒░▒░ ▒ ▒▓▒ ▒ ░░░ ▒░ ░'), nl,
+    write(' ▓██ ░▒░   ░ ▒ ▒░ ░░▒░ ░ ░    ░ ░ ▒  ░  ░ ▒ ▒░ ░ ░▒  ░ ░ ░ ░  ░'), nl,
+    write(' ▒ ▒ ░░  ░ ░ ░ ▒   ░░░ ░ ░      ░ ░   ░ ░ ░ ▒  ░  ░  ░     ░   '), nl,
+    write(' ░ ░         ░ ░     ░            ░  ░    ░ ░        ░     ░  ░'), nl,
+    write(' ░ ░                                          '), nl,
+    quit.

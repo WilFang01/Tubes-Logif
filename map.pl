@@ -4,6 +4,18 @@
 :- dynamic(positionY/1).
 :- dynamic(tembok/16).
 :- dynamic(adaTembok/1).
+:- dynamic(legendary1/2).
+:- dynamic(legendary2/2).
+
+initLegendary :-
+    lebar(L),
+    panjang(P),
+    random(5,10,X1),
+    random(5,10,Y1),
+    random(10,P,X2),
+    random(10,L,Y2),
+    asserta(legendary1(X1,Y1)),
+    asserta(legendary2(X2,Y2)).
 
 isPlayer(X,Y) :-
     positionX(A),
@@ -15,6 +27,16 @@ isGym(X,Y) :-
     cure(_),
     X =:= 4,
     Y =:= 9.
+
+isLegendary1(X,Y) :-
+    legendary1(A,B),
+    X =:= A,
+    Y =:= B.
+
+isLegendary2(X,Y) :-
+    legendary2(A,B),
+    X =:= A,
+    Y =:= B.
 
 generateTembok :-
     asserta(adaTembok(1)),
@@ -140,6 +162,18 @@ printX(X,Y) :-
     printX(NextX,Y).
 
 printX(X,Y) :-
+    isLegendary1(X,Y),
+    write('L'),
+    NextX is (X+1),
+    printX(NextX,Y).
+
+printX(X,Y) :-
+    isLegendary2(X,Y),
+    write('L'),
+    NextX is (X+1),
+    printX(NextX,Y).
+
+printX(X,Y) :-
     \+isKiri(X,Y),
     \+isKanan(X,Y),
     \+isBawah(X,Y),
@@ -163,6 +197,7 @@ map :-
     init(_),
     \+adaTembok(_),
     generateTembok,
+    initLegendary,
     printX(0,0),!.
 
 map :- 
