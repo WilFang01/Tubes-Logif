@@ -179,7 +179,7 @@ attackComment :-
     !.
 
 attackComment :-
-    enemyTokemon(_, EnemyName, EnemyType, _, EnemyLevel, EnemyHealth, _, _, _),
+    enemyTokemon(ID, EnemyName, EnemyType, _, EnemyLevel, EnemyHealth, _, _, _),
     positionX(X),
     positionY(Y),
     EnemyHealth =< 0,
@@ -189,8 +189,8 @@ attackComment :-
         -> 
             (
                 isLegendary1(X,Y) 
-                -> retract(legendary1(_,_))
-                ; retract(legendary2(_,_))
+                -> (retract(legendary1(_,_)), retract(legendary(ID,_,_,_,_,_,_,_,_)))
+                ; (retract(legendary2(_,_)), retract(legendary(ID,_,_,_,_,_,_,_,_)))
             )
         ;
             
