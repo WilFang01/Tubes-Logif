@@ -137,6 +137,78 @@ namaSkill(busew, mambu).
 namaSkill(lightkid, silau-men).
 namaSkill(skyling, cling).
 namaSkill(gibel, gembel).
+namaSkill(ponytak, takituk).
+namaSkill(trapezoidyu, trapezeum).
+namaSkill(telorcute, kawaiii).
+namaSkill(proton, optimistic).
+namaSKill(dodol, sticky).
+namaSkill(oneng, teteh).
+
+namaSkill(istigfaur, astagfirullah).
+namaSkill(charmelon, invisible).
+namaSkill(squirting, putih-putih).
+namaSKill(ssssscupi, asap-knalpot).
+namaSkill(yogaday, shavasana).
+namaSkill(veryhorny, engas).
+namaSkill(fullscreenpics, 144px).
+namaSkill(garadyos, cipak-cipuk).
+namaSkill(breastcancer, cancer).
+namaSkill(helicoptile, empty-fuel).
+namaSkill(sarung, bau).
+namaSkill(tytyt, gatel).
+namaSkill(glareo, duh-silau-banget-gila).
+namaSkill(tsunamio, hanyut).
+namaSkill(annyeonghaseo, baca-doang).
+namaSkill(kesetrumeo, gosong).
+namaSkill(kademenoooo, biduren).
+namaSkill(stereo, ngiiiiing).
+namaSkill(feby_et, best-speaker).
+namaSkill(swikeswike, goreng-mentega).
+namaSkill(wesub, wewewewe).
+namaSkill(darkadult, prnhub).
+namaSkill(skyglow, skyfall).
+namaSkill(gembel, cd-ga-dicuci-seminggu).
+namaSkill(kecetak, kecetot).
+namaSkill(hode, cosplay-cewe-tapi-cowo).
+namaSkill(telorkucute, kuceplok).
+namaSkill(elektron, negativity).
+namaSkill(jenangdodol, diabetes).
+namaSkill(nengoneng, gibah).
+
+namaSkill(khilaf, ibadah).
+namaSkill(charlize_wendy, kisseu).
+namaSkill(squirting, pil-biru).
+namaSkill(varioooooo, lulus-gas-emisi).
+namaSkill(cibayday, lanciaoday).
+namaSkill(superhorny, ah-ah).
+namaSkill(minimizedpics, 1000mb).
+namaSkill(garasi, seret).
+namaSkill(bigbreast, bigbra).
+namaSkill(helicopter, mainan).
+namaSkill(arung, oh-mai-mai).
+namaSkill(tytytbesar, cdbesar).
+namaSkill(trespaseo, terciduk).
+namaSkill(ndemekeo, kuah-panas).
+namaSkill(yeppeoseo, spam-chat).
+namaSkill(akumaumasukpower, pak-umar).
+namaSkill(bekunoooo, garam).
+namaSkill(steroid, one-punch).
+namaSkill(patricia, cantik).
+namaSkill(pepesswikee, cabe-setan).
+namaSkill(subew, bew-bew).
+namaSkill(nigga, rap-GOD).
+namaSkill(earthglow, volcano).
+namaSkill(wedusgembel, hujan-abu).
+namaSkill(kecoak, terbang).
+namaSkill(jones, beautiful).
+namaSkill(ganeshaoperation, sbmptn).
+namaSkill(neutron, kimia-A).
+namaSkill(jenangdodoldurian, kulit-durian).
+namaSkill(anengoneng, arisan).
+
+
+tokedex(100, sangemon, legendary,100000,90,water,3000,6000).
+tokedex(101, icanmon, legendary,133243,90,fire,2843,400
 
 maxExp(fullpics, 100).
 maxExp(magicrap, 120).
