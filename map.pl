@@ -16,8 +16,8 @@ initLegendaryMap :-
     random(NewL,L,Y1),
     random(NewP,P,X2),
     random(NewL,L,Y2),
-    asserta(legendary1(2,3)),
-    asserta(legendary2(1,2)).
+    asserta(legendary1(X1,Y1)),
+    asserta(legendary2(X2,Y2)).
 
 isPlayer(X,Y) :-
     positionX(A),

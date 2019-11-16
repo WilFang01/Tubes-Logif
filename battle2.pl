@@ -671,10 +671,6 @@ win :-
 
 /* ---------- LOSE ---------- */
 lose :-
-    retract(isEnemyAlive(_)),
-    retract(isRun(_)),
-    retract(isFight(_)),
-    retract(isPick(_)),
     write('@@@ @@@   @@@@@@   @@@  @@@     @@@        @@@@@@    @@@@@@   @@@@@@@@  '), nl,
     write('@@@ @@@  @@@@@@@@  @@@  @@@     @@@       @@@@@@@@  @@@@@@@   @@@@@@@@ '), nl, 
     write('@@! !@@  @@!  @@@  @@!  @@@     @@!       @@!  @@@  !@@       @@!      '), nl, 
@@ -685,4 +681,8 @@ lose :-
     write('  :!:    :!:  !:!  :!:  !:!      :!:      :!:  !:!      !:!   :!:      '), nl, 
     write('   ::    ::::: ::  ::::: ::      :: ::::  ::::: ::  :::: ::    :: :::: '), nl, 
     write('   :      : :  :    : :  :      : :: : :   : :  :   :: : :    : :: ::  '), nl,
+    retract(isEnemyAlive(_)),
+    retract(isRun(_)),
+    retract(isFight(_)),
+    retract(isPick(_)),
     quit.

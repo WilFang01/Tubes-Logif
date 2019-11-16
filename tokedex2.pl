@@ -3,9 +3,9 @@
 /* Player milih 1 starter, yang gak dipilih gabisa didapetin dari cara lain */
 /* tokedex(ID, Name, Type, MaxHealth, Level, Element, Attack, Special) */
 
-tokedex(-999, cheat, normal, 999999, 9, earth, 9999999, 9999999).
-tokedex(-969, cheat_evolve_1, normal, 999999, 9, earth, 9999999, 9999999).
-tokedex(-939, cheat_evolve_2, 999999, 9, earth, 9999999, 9999999).
+tokedex(939, cheat, normal, 999999, 9, earth, 9999999, 9999999).
+tokedex(969, cheatevolve1, normal, 999999, 9, earth, 9999999, 9999999).
+tokedex(999, cheatevolve2, normal, 999999, 9, earth, 9999999, 9999999).
 
 tokedex(1, bulsabaur, normal, 360, 1, grass, 70, 110).
 tokedex(2, charamder, normal, 355, 1, fire, 75, 120).
@@ -60,7 +60,7 @@ tokedex(45, annyeonghaseo, normal, 350, 1, grass, 75, 185).
 tokedex(46, kesetrumeo, normal, 350, 1, electric, 75, 185).
 tokedex(47, kademenoooo, normal, 350, 1, wind, 75, 185).
 tokedex(48, stereo, normal, 350, 1, earth, 75, 185).
-tokedex(49, feby_et, normal, 280, 1, fire, 50, 110).
+tokedex(49, febyet, normal, 280, 1, fire, 50, 110).
 tokedex(50, swikeswike, normal, 290, 1, water, 40, 115).
 tokedex(51, wesub, normal, 280, 1, grass, 40, 120).
 tokedex(52, darkadult, normal, 270, 1, electric, 40, 135).
@@ -73,7 +73,7 @@ tokedex(58, elektron, normal, 280, 1, electric, 35, 150).
 tokedex(59, jenangdodol, normal, 270, 1, wind, 65, 110).
 tokedex(60, nengoneng, normal, 270, 1, earth, 80, 90).
 tokedex(61, khilaf, normal, 360, 1, grass, 70, 110).
-tokedex(62, charlize_wendy, normal, 355, 1, fire, 75, 120).
+tokedex(62, charlizewendy, normal, 355, 1, fire, 75, 120).
 tokedex(63, squirting, normal, 345, 1, water, 85, 100).
 tokedex(64, varioooooo, normal, 370, 1, electric, 65, 115).
 tokedex(65, cibayday, normal, 355, 1, wind, 70, 100).
@@ -160,7 +160,7 @@ namaSkill(annyeonghaseo, baca-doang).
 namaSkill(kesetrumeo, gosong).
 namaSkill(kademenoooo, biduren).
 namaSkill(stereo, ngiiiiing).
-namaSkill(feby_et, best-speaker).
+namaSkill(febyet, best-speaker).
 namaSkill(swikeswike, goreng-mentega).
 namaSkill(wesub, wewewewe).
 namaSkill(darkadult, prnhub).
@@ -174,9 +174,9 @@ namaSkill(jenangdodol, diabetes).
 namaSkill(nengoneng, gibah).
 
 namaSkill(khilaf, ibadah).
-namaSkill(charlize_wendy, kisseu).
-namaSkill(squirting, pil_biru).
-namaSkill(varioooooo, lulus_gas_emisi).
+namaSkill(charlizewendy, kisseu).
+namaSkill(squirting, pilbiru).
+namaSkill(varioooooo, lulusgasemisi).
 namaSkill(cibayday, lanciaoday).
 namaSkill(superhorny, ah-ah).
 namaSkill(minimizedpics, wahh-mb).

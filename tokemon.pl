@@ -1,4 +1,3 @@
-:- dynamic(tokemon/10).      /* Data pokemon di inventory*/
 :- dynamic(init/1).          /* Mark game dimulai */
 :- dynamic(player/1).
 

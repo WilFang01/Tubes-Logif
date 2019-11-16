@@ -1,0 +1,11 @@
+player(yoga).
+inventory(939, cheat, normal, 999999, 9, 999999, earth, 9999999, 9999999, 0).
+inventory(5, pigday, normal, 355, 1, 355, wind, 70, 100, 0).
+cure(1).
+lebar(15).
+panjang(23).
+positionX(1).
+positionY(1).
+tembok(5,4,14,8,11,7,9,6,7,4,15,3,14,3,13,5).
+legendary1(18,10).
+legendary2(22,12).
