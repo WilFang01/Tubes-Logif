@@ -10,12 +10,14 @@
 initLegendaryMap :-
     lebar(L),
     panjang(P),
-    random(5,10,X1),
-    random(5,10,Y1),
-    random(10,P,X2),
-    random(10,L,Y2),
-    asserta(legendary1(X1,Y1)),
-    asserta(legendary2(X2,Y2)).
+    NewP is P-5,
+    NewL is L-5,
+    random(NewP,P,X1),
+    random(NewL,L,Y1),
+    random(NewP,P,X2),
+    random(NewL,L,Y2),
+    asserta(legendary1(2,3)),
+    asserta(legendary2(1,2)).
 
 isPlayer(X,Y) :-
     positionX(A),
@@ -25,8 +27,8 @@ isPlayer(X,Y) :-
 
 isGym(X,Y) :-
     cure(_),
-    X =:= 4,
-    Y =:= 9.
+    X =:= 2,
+    Y =:= 2.
 
 isLegendary1(X,Y) :-
     legendary1(A,B),
@@ -42,22 +44,24 @@ generateTembok :-
     asserta(adaTembok(1)),
     lebar(L),
     panjang(J),
-    random(6,J,TempX1),
-    random(6,J,TempX2),
-    random(6,J,TempX3),
-    random(6,J,TempX4),
-    random(6,J,TempX5),
-    random(6,J,TempX6),
-    random(6,J,TempX7),
-    random(6,J,TempX8),
-    random(6,L,TempY1),
-    random(6,L,TempY2),
-    random(6,L,TempY3),
-    random(6,L,TempY4),
-    random(6,L,TempY5),
-    random(6,L,TempY6),
-    random(6,L,TempY7),
-    random(6,L,TempY8),
+    NewJ is J-6,
+    NewL is L-6,
+    random(3,NewJ,TempX1),
+    random(3,NewJ,TempX2),
+    random(3,NewJ,TempX3),
+    random(3,NewJ,TempX4),
+    random(3,NewJ,TempX5),
+    random(3,NewJ,TempX6),
+    random(3,NewJ,TempX7),
+    random(3,NewJ,TempX8),
+    random(3,NewL,TempY1),
+    random(3,NewL,TempY2),
+    random(3,NewL,TempY3),
+    random(3,NewL,TempY4),
+    random(3,NewL,TempY5),
+    random(3,NewL,TempY6),
+    random(3,NewL,TempY7),
+    random(3,NewL,TempY8),
     asserta(tembok(TempX1,TempY1,TempX2,TempY2,TempX3,TempY3,TempX4,TempY4,TempX5,TempY5,TempX6,TempY6,TempX7,TempY7,TempX8,TempY8)).
 
 isTembok(X1,Y1,X2,Y2,X3,Y3,X4,Y4,X5,Y5,X6,Y6,X7,Y7,X8,Y8) :-
@@ -188,10 +192,8 @@ initMap(X, Y) :-
 
 initPlayer :-
     asserta(cure(1)),
-    random(1,5,A),
-    random(1,5,B),
-    asserta(positionX(A)),
-    asserta(positionY(B)).
+    asserta(positionX(1)),
+    asserta(positionY(1)).
 
 map :- 
     init(_),

@@ -213,10 +213,27 @@ quit :-
     forall( inventory(ID, Name, Type, MaxHealth, Level, Health, Element, Attack, Special, EXP), (
         retract(inventory(_, _, _, _, _, _, _, _, _, _))
 	)),
-    retract(legendary1(_,_)),
-    retract(legendary2(_,_)),
-    retract(player(_)),
-    retract(init(_)).
+    (
+        (legendary1(_,_),legendary2(_,_))
+        -> retract(legendary1(_,_)),
+        retract(legendary2(_,_)),
+        retract(player(_)),
+        retract(init(_)),
+        fail
+        ; 
+        (legendary1(_,_),\+legendary2(_,_))
+        -> retract(legendary1(_,_)), fail
+        ;
+        (\+legendary1(_,_),legendary2(_,_))
+        -> retract(legendary2(_,_)),
+        retract(player(_)),
+        retract(init(_)),
+        fail
+        ;
+        retract(player(_)),
+        retract(init(_))
+        
+    ).
 
 /* EKSTERNAL FILE CONFIG */
 

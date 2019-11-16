@@ -4,6 +4,8 @@
 /* tokedex(ID, Name, Type, MaxHealth, Level, Element, Attack, Special) */
 
 tokedex(-999, cheat, normal, 999999, 9, earth, 9999999, 9999999).
+tokedex(-969, cheat_evolve_1, normal, 999999, 9, earth, 9999999, 9999999).
+tokedex(-939, cheat_evolve_2, 999999, 9, earth, 9999999, 9999999).
 
 tokedex(1, bulsabaur, normal, 360, 1, grass, 70, 110).
 tokedex(2, charamder, normal, 355, 1, fire, 75, 120).
@@ -40,7 +42,6 @@ tokedex(27, telorcute, normal, 320, 1, grass, 50, 95).
 tokedex(28, proton, normal, 280, 1, electric, 35, 150).
 tokedex(29, dodol, normal, 270, 1, wind, 65, 110).
 tokedex(30, oneng, normal, 270, 1, earth, 80, 90).
-
 tokedex(31, istigfaur, normal, 360, 1, grass, 70, 110).
 tokedex(32, charmelon, normal, 355, 1, fire, 75, 120).
 tokedex(33, squirting, normal, 345, 1, water, 85, 100).
@@ -71,7 +72,6 @@ tokedex(57, telorkucute, normal, 320, 1, grass, 50, 95).
 tokedex(58, elektron, normal, 280, 1, electric, 35, 150).
 tokedex(59, jenangdodol, normal, 270, 1, wind, 65, 110).
 tokedex(60, nengoneng, normal, 270, 1, earth, 80, 90).
-
 tokedex(61, khilaf, normal, 360, 1, grass, 70, 110).
 tokedex(62, charlize_wendy, normal, 355, 1, fire, 75, 120).
 tokedex(63, squirting, normal, 345, 1, water, 85, 100).
@@ -102,10 +102,8 @@ tokedex(87, ganeshaoperation, normal, 320, 1, grass, 50, 95).
 tokedex(88, neutron, normal, 280, 1, electric, 35, 150).
 tokedex(89, jenangdodoldurian, normal, 270, 1, wind, 65, 110).
 tokedex(90, anengoneng, normal, 270, 1, earth, 80, 90).
-
-
-tokedex(100, sangemon, legendary,100000,90,water,3000,6000).
-tokedex(101, icanmon, legendary,133243,90,fire,2843,4000).
+tokedex(100, sangemon, legendary,100000,20,water,3000,6000).
+tokedex(101, icanmon, legendary,133243,20,fire,2843,4000).
 
 namaSkill(bulsabaur, onyong-onyong).
 namaSkill(charamder, blar-blar).
@@ -141,16 +139,16 @@ namaSkill(ponytak, takituk).
 namaSkill(trapezoidyu, trapezeum).
 namaSkill(telorcute, kawaiii).
 namaSkill(proton, optimistic).
-namaSKill(dodol, sticky).
+namaSkill(dodol, sticky).
 namaSkill(oneng, teteh).
 
 namaSkill(istigfaur, astagfirullah).
 namaSkill(charmelon, invisible).
 namaSkill(squirting, putih-putih).
-namaSKill(ssssscupi, asap-knalpot).
+namaSkill(ssssscupi, asap-knalpot).
 namaSkill(yogaday, shavasana).
 namaSkill(veryhorny, engas).
-namaSkill(fullscreenpics, 144px).
+namaSkill(fullscreenpics, wow-px).
 namaSkill(garadyos, cipak-cipuk).
 namaSkill(breastcancer, cancer).
 namaSkill(helicoptile, empty-fuel).
@@ -177,11 +175,11 @@ namaSkill(nengoneng, gibah).
 
 namaSkill(khilaf, ibadah).
 namaSkill(charlize_wendy, kisseu).
-namaSkill(squirting, pil-biru).
-namaSkill(varioooooo, lulus-gas-emisi).
+namaSkill(squirting, pil_biru).
+namaSkill(varioooooo, lulus_gas_emisi).
 namaSkill(cibayday, lanciaoday).
 namaSkill(superhorny, ah-ah).
-namaSkill(minimizedpics, 1000mb).
+namaSkill(minimizedpics, wahh-mb).
 namaSkill(garasi, seret).
 namaSkill(bigbreast, bigbra).
 namaSkill(helicopter, mainan).
@@ -196,19 +194,15 @@ namaSkill(steroid, one-punch).
 namaSkill(patricia, cantik).
 namaSkill(pepesswikee, cabe-setan).
 namaSkill(subew, bew-bew).
-namaSkill(nigga, rap-GOD).
+namaSkill(nigga, rap-god).
 namaSkill(earthglow, volcano).
 namaSkill(wedusgembel, hujan-abu).
 namaSkill(kecoak, terbang).
 namaSkill(jones, beautiful).
 namaSkill(ganeshaoperation, sbmptn).
-namaSkill(neutron, kimia-A).
+namaSkill(neutron, kimia-a).
 namaSkill(jenangdodoldurian, kulit-durian).
 namaSkill(anengoneng, arisan).
-
-
-tokedex(100, sangemon, legendary,100000,90,water,3000,6000).
-tokedex(101, icanmon, legendary,133243,90,fire,2843,400
 
 maxExp(fullpics, 100).
 maxExp(magicrap, 120).
@@ -234,3 +228,5 @@ maxExp(telorcute, 105).
 maxExp(proton, 150).
 maxExp(dodol, 110).
 maxExp(oneng, 120).
+maxExp(sangemon, 100).
+maxExp(icanmon, 100).

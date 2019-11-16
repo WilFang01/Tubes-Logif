@@ -64,7 +64,7 @@ s :-
     positionY(Temp),
     Next is (Temp+1),
     isLegendary2(TempX,Next),
-    legendaryTriggered1,
+    legendaryTriggered2,
     retract(positionY(_)),
     asserta(positionY(Next)),!.
 

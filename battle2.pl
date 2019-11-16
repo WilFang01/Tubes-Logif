@@ -58,7 +58,7 @@ enemyTriggered :-
 
 legendaryTriggered1 :-
     ID is 100,
-    tokedex(ID, Name, Type, MaxHealth, _, Element, Attack, Special),
+    tokedex(ID, Name, Type, MaxHealth, Level, Element, Attack, Special),
     Health is MaxHealth,
     asserta(enemyTokemon(ID,Name,Type,MaxHealth,Level,Health,Element,Attack,Special)),nl,
     write('Kamu bertemu Legendary Pokemon '), write(Name), write('!!!'), nl,nl,
@@ -67,7 +67,7 @@ legendaryTriggered1 :-
 
 legendaryTriggered2 :-
     ID is 101,
-    tokedex(ID, Name, Type, MaxHealth, _, Element, Attack, Special),
+    tokedex(ID, Name, Type, MaxHealth, Level, Element, Attack, Special),
     Health is MaxHealth,    
     asserta(enemyTokemon(ID,Name,Type,MaxHealth,Level,Health,Element,Attack,Special)),nl,
     write('Kamu bertemu Legendary Pokemon '), write(Name), write('!!!'), nl,nl,
@@ -242,7 +242,8 @@ attackComment :-
     (
         EnemyType == legendary 
         -> 
-            legendary
+            legendary,
+            retract(enemyTokemon(_,_,_,_,_,_,_,_,_))
         ;
             retract(myTokemon(MyID, _, _, _, _, MyHealth, _, _, _, _)),
             retract(inventory(MyID, Name, Type, MaxHealth, Level, _, Element, Attack, Special, Exp)),
@@ -260,6 +261,7 @@ attackComment :-
 
 /* ENEMY LEGENDARY */
 legendary :-
+    enemyTokemon(ID, _, _, _, _, _, _, _, _),
     positionX(X),
     positionY(Y),
     (
@@ -272,15 +274,20 @@ legendary :-
             (
                 retract(legendary2(_,_)), retract(legendary(ID,_,_,_,_,_,_,_,_))
             )
-
     ),
     (
         (\+legendary1(_,_),\+legendary2(_,_))
         -> win
         ; 
-        (retract(isEnemyAlive(_)),
-        retract(isRun(_)))
-    ).
+        (
+            retract(isEnemyAlive(_)),
+            retract(isFight(_)),
+            retract(isPick(_)),
+            retract(isRun(_)),
+            retract(isSkill(_))
+        )
+    ),
+    !.
 
 /* ----------------------- */
 
@@ -453,6 +460,8 @@ enemyAttackComment :-
     retract(isPick(_)),
     fightChance,
     !.
+    
+
 
 /* ----- ENEMY ATTACK ----- */
 
@@ -573,6 +582,7 @@ drop(Name) :-
     write(Name), write(' dibebaskan ke habitatnya kembali.'), nl, 
     retract(isEnemyAlive(_)),
     retract(isRun(_)),
+    retract(isFight(_)),
     (
         isEnemySkill(_)
         -> retract(isEnemySkill(_))
@@ -604,6 +614,7 @@ capture :-
     retract(isFight(_)),
     retract(ableCaptured(_)),
     retract(isPick(_)),
+    retract(isSkill(_)),
     !.
 
 capture :-
@@ -631,7 +642,7 @@ skip :-
 skip :-
     ableCaptured(_),
     isEnemyAlive(_),
-    retract(enemyTokemon(EnemyID,EnemyName,EnemyType,EnemyMaxHealth,EnemyLevel,EnemyHealth,EnemyElement,EnemyAttack,EnemySpecial)),
+    retract(enemyTokemon(_,EnemyName,_,_,_,_,_,_,_)),
     write(EnemyName), write(' terbangun dan segera berlari ke semak-semak, menghilang dari pandanganmu.'), nl,
     write('Kamu pun melanjutkan perjalananmu.'), 
     retract(isEnemyAlive(_)),
@@ -639,6 +650,7 @@ skip :-
     retract(isFight(_)),
     retract(ableCaptured(_)),
     retract(isPick(_)),
+    retract(isSkill(_)),
     !.
 
 /* ---------- WIN ---------- */
@@ -651,6 +663,10 @@ win :-
     write('    $$ |    $$ |  $$ |$$ |  $$ |      $$$  / \\$$$ |  $$ |  $$ |\\$$$ |'), nl,
     write('    $$ |     $$$$$$  |\\$$$$$$  |      $$  /   \\$$ |$$$$$$\\ $$ | \\$$ |'), nl,
     write('    \\__|     \\______/  \\______/       \\__/     \\__|\\______|\\__|  \\__|'), nl,
+    retract(isEnemyAlive(_)),
+    retract(isRun(_)),
+    retract(isFight(_)),
+    retract(isPick(_)),
     quit.
 
 /* ---------- LOSE ---------- */
