@@ -90,7 +90,6 @@ run :-
     peluang(P), 
     P < 5,
     write('Kamu gagal lari, jadi kamu harus kalahkan tokemon liar itu!'), nl,
-    asserta(isRun(1)),
     retract(peluang(P)),
     fight,
     !.
@@ -192,8 +191,8 @@ fight :-
 
 /* ----- FIGHT BERHASIL ----- */
 fight :-
-    asserta(isRun(_)),
-    asserta(isFight(_)),
+    asserta(isRun(1)),
+    asserta(isFight(1)),
     isEnemyAlive(_),
     asserta(isEnemySkill(1)),
     write('Tokemon yang tersedia:'), nl,
