@@ -434,6 +434,7 @@ enemyAttackComment :-
     myTokemon(MyID, MyName, _, _, _, MyHealth, _, _, _, _),
     MyHealth =< 0,
     retract(myTokemon(_, _, _, _, _, _, _, _, _, _)),
+    retract(enemyTokemon(_, _, _, _, _, _, _, _, _)),
     delTokemon(MyID),
     write(MyName), write(' pingsan!'), nl,
     write('Kamu sudah tidak memiliki tokemon lagi di inventori!'), nl,
