@@ -238,7 +238,7 @@ attackComment :-
     (
         isEnemySkill(_)
         -> retract(isEnemySkill(_))
-        ; write('masuk')
+        ; tokedex(A,_,_,_,_,_,_,_)
     ),
     (
         EnemyType == legendary 
@@ -557,7 +557,7 @@ drop(Name) :-
     write('Tidak ada tokemon baru yang mau ditambahkan. Ngapain dibuang tokemonmu?').
 
 drop(Name) :-
-    \+ inventory(_, Name, _, _, _, _, _, _),
+    \+ inventory(_, Name, _, _, _, _, _, _, _, _),
     isEnemyAlive(_),
     write('Kamu ga punya tokemon itu. Perhatikan daftar tokemon di inventori!'),nl,
     statusInventory,
@@ -568,11 +568,17 @@ drop(Name) :-
     retract(temp(EnemyID)),
     delTokemon(ID),
     addTokemon(EnemyID),
+    tokedex(EnemyID, EnemyName, _, _, _, _, _, _),
     write(Name), write(' berhasil ditukar dengan '), write(EnemyName), nl,
     write(Name), write(' dibebaskan ke habitatnya kembali.'), nl, 
     retract(isEnemyAlive(_)),
     retract(isRun(_)),
-    retract(isEnemySkill(_)),
+    (
+        isEnemySkill(_)
+        -> retract(isEnemySkill(_))
+        ; tokedex(ID, _, _, _, _, _, _, _)
+    ),
+    retract(isPick(_)),
     !.
 
 /* ---------- CAPTURE ---------- */
@@ -597,6 +603,7 @@ capture :-
     retract(isRun(_)),
     retract(isFight(_)),
     retract(ableCaptured(_)),
+    retract(isPick(_)),
     !.
 
 capture :-
@@ -631,6 +638,7 @@ skip :-
     retract(isRun(_)),
     retract(isFight(_)),
     retract(ableCaptured(_)),
+    retract(isPick(_)),
     !.
 
 /* ---------- WIN ---------- */

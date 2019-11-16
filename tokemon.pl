@@ -36,7 +36,8 @@ title :-
     write('     Legends:'),nl,
     write('       - X = Pagar'),nl,
     write('       - G = Gym Center'),nl,
-    write('       - P = Player'),nl, nl.
+    write('       - P = Player'),nl,
+    write('       - L = Legendary'), nl, nl.
 
 initFirst :-
     write('We welcome you to Tokemon'), nl,
@@ -159,8 +160,8 @@ initFirst :-
             )
     ),
     do(ID), nl,
-    status,
-    end_condition(ID).
+    end_condition(ID),
+    status.
 
 end_condition(end).
 end_condition(X) :- 
@@ -175,8 +176,8 @@ end_condition(X) :-
     statusInventory,!.
 
 do(X) :- have(X), !.
-do(end).
 do(_) :- write('Itu bukan tokemon yang ada di list, cek lagi ya...').
+do(end).
 
 have(X) :-
     X =< 6, !.
