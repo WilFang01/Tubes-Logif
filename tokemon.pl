@@ -192,7 +192,10 @@ start :-
     initLegendary(100),
     initLegendary(101),
     initFirst,
-    initPlayer,!.
+    initPlayer,
+    generateTembok,
+    initLegendaryMap, 
+    !.
 
 quit :-
     \+init(_),

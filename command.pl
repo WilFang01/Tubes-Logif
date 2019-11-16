@@ -4,7 +4,7 @@
 
 s :-
     init(_),
-    \+ battle(_),
+    \+ isEnemyAlive(_),
     positionX(TempX),
     positionY(Temp),
     Next is (Temp+1),
@@ -22,7 +22,7 @@ s :-
 
 s :- 
     init(_),
-    \+ battle(_),
+    \+ isEnemyAlive(_),
     positionX(TempX),
     positionY(Temp),
     Next is (Temp+1),
@@ -37,7 +37,7 @@ s :-
 
 s :-
     init(_),
-    \+ battle(_),
+    \+ isEnemyAlive(_),
     positionX(TempX),
     positionY(Temp),
     Next is (Temp+1),
@@ -48,7 +48,7 @@ s :-
 
 s :-
     init(_),
-    \+ battle(_),
+    \+ isEnemyAlive(_),
     positionX(TempX),
     positionY(Temp),
     Next is (Temp+1),
@@ -59,7 +59,7 @@ s :-
 
 s :-
     init(_),
-    \+ battle(_),
+    \+ isEnemyAlive(_),
     positionX(TempX),
     positionY(Temp),
     Next is (Temp+1),
@@ -74,7 +74,7 @@ s :-
 
 n :-
     init(_),
-    \+ battle(_),
+    \+ isEnemyAlive(_),
     positionX(TempX),
     positionY(Temp),
     Next is (Temp-1),
@@ -92,7 +92,7 @@ n :-
 
 n :-
     init(_),
-    \+ battle(_),
+    \+ isEnemyAlive(_),
     positionX(TempX),
     positionY(Temp),
     Next is (Temp-1),
@@ -107,7 +107,7 @@ n :-
 
 n :-
     init(_),
-    \+ battle(_),
+    \+ isEnemyAlive(_),
     positionX(TempX),
     positionY(Temp),
     Next is (Temp-1),
@@ -118,7 +118,7 @@ n :-
 
 n :-
     init(_),
-    \+ battle(_),
+    \+ isEnemyAlive(_),
     positionX(TempX),
     positionY(Temp),
     Next is (Temp-1),
@@ -129,7 +129,7 @@ n :-
 
 n :-
     init(_),
-    \+ battle(_),
+    \+ isEnemyAlive(_),
     positionX(TempX),
     positionY(Temp),
     Next is (Temp-1),
@@ -144,7 +144,7 @@ n :-
 
 e :-
     init(_),
-    \+ battle(_),
+    \+ isEnemyAlive(_),
     positionX(TempX),
     positionY(Temp),
     Next is (TempX+1),
@@ -162,7 +162,7 @@ e :-
 
 e :-
     init(_),
-    \+ battle(_),
+    \+ isEnemyAlive(_),
     positionX(TempX),
     positionY(Temp),
     Next is (TempX+1),
@@ -177,7 +177,7 @@ e :-
 
 e :-
     init(_),
-    \+ battle(_),
+    \+ isEnemyAlive(_),
     positionX(TempX),
     positionY(Temp),
     Next is (TempX+1),
@@ -188,7 +188,7 @@ e :-
 
 e :-
     init(_),
-    \+ battle(_),
+    \+ isEnemyAlive(_),
     positionX(TempX),
     positionY(Temp),
     Next is (TempX+1),
@@ -199,7 +199,7 @@ e :-
 
 e :-
     init(_),
-    \+ battle(_),
+    \+ isEnemyAlive(_),
     positionX(TempX),
     positionY(Temp),
     Next is (TempX+1),
@@ -214,7 +214,7 @@ e :-
 
 w :-
     init(_),
-    \+ battle(_),
+    \+ isEnemyAlive(_),
     positionX(TempX),
     positionY(Temp),
     Next is (TempX-1),
@@ -232,7 +232,7 @@ w :-
 
 w :-
     init(_),
-    \+ battle(_),
+    \+ isEnemyAlive(_),
     positionX(TempX),
     positionY(Temp),
     Next is (TempX-1),
@@ -247,7 +247,7 @@ w :-
 
 w :-
     init(_),
-    \+ battle(_),
+    \+ isEnemyAlive(_),
     positionX(TempX),
     positionY(Temp),
     Next is (TempX-1),
@@ -258,7 +258,7 @@ w :-
 
 w :-
     init(_),
-    \+ battle(_),
+    \+ isEnemyAlive(_),
     positionX(TempX),
     positionY(Temp),
     Next is (TempX-1),
@@ -269,7 +269,7 @@ w :-
 
 w :-
     init(_),
-    \+ battle(_),
+    \+ isEnemyAlive(_),
     positionX(TempX),
     positionY(Temp),
     Next is (TempX-1),

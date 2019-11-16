@@ -7,7 +7,7 @@
 :- dynamic(legendary1/2).
 :- dynamic(legendary2/2).
 
-initLegendary :-
+initLegendaryMap :-
     lebar(L),
     panjang(P),
     random(5,10,X1),
@@ -192,13 +192,6 @@ initPlayer :-
     random(1,5,B),
     asserta(positionX(A)),
     asserta(positionY(B)).
-
-map :- 
-    init(_),
-    \+adaTembok(_),
-    generateTembok,
-    initLegendary,
-    printX(0,0),!.
 
 map :- 
     init(_),
