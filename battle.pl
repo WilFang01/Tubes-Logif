@@ -1,318 +1,715 @@
 :- dynamic(enemyTokemon/9).     /* enemyTokemon(ID, Name, Type, MaxHealth, Level, Health, Element, Attack, Special) */
-:- dynamic(myTokemon/10).
+:- dynamic(myTokemon/10).       /* myTokemon(ID, Name, Type, MaxHealth, Level, Health, Element, Attack, Special, Exp) */
 :- dynamic(peluang/1).
-:- dynamic(isSkill/1).
 :- dynamic(isEnemySkill/1).
-:- dynamic(battle/1).
-:- include('player.pl').
-:- include('tokedex.pl').
+:- dynamic(isEnemyAlive/1).
+:- dynamic(ableCaptured/1).
+:- dynamic(isPick/1).
+:- dynamic(isRun/1).
+:- dynamic(isFight/1).
+:- dynamic(isSkill/1).
+:- dynamic(temp/1).
 
 superEffective(fire, grass).
-superEffective(grass, water).
+superEffective(fire, wind).
 superEffective(water, fire).
-lessEffective(grass, fire).
-lessEffective(water, grass).
-lessEffective(fire, water).
+superEffective(water, earth).
+superEffective(grass, water).
+superEffective(grass, electric).
+superEffective(electric, water).
+superEffective(electric, wind).
+superEffective(wind, grass).
+superEffective(wind, earth).
+superEffective(earth, fire).
+superEffective(earth, electric).
 
-enemyTriggered :-
-    random(1, 3, ID),
-    tokedex(ID, Name, Type, MaxHealth, Level, Element, Attack, Special),
-    Health is MaxHealth,
-    asserta(enemyTokemon(ID, Name, Type, MaxHealth, Level, Health, Element, Attack, Special)),
+lessEffective(fire, water).
+lessEffective(fire, earth).
+lessEffective(water, grass).
+lessEffective(water, electric).
+lessEffective(grass, fire).
+lessEffective(grass, wind).
+lessEffective(electric, grass).
+lessEffective(electric, earth).
+lessEffective(wind, fire).
+lessEffective(wind, electric).
+lessEffective(earth, water).
+lessEffective(earth, wind).
+
+/* ---------- INTRO isEnemyAlive ---------- */
+
+enemyTriggered :-  
+    random(7, 30, ID),
+    tokedex(ID, Name, Type, MaxHealth, _, Element, Attack, Special),
+    cekPanjang(Level),
+    asserta(enemyTokemon(ID, Name, Type, MaxHealth, Level, _, Element, Attack, Special)),
+    loop(Level,ID),
+    retract(enemyTokemon(ID,Name2,Type,MaxHealth2,Level2,_,Element,Attack2,Special2)),
+    Health is MaxHealth2,
+    asserta(enemyTokemon(ID,Name2,Type,MaxHealth2,Level2,Health,Element,Attack2,Special2)),
     write('Kamu ketemu '), write(Name), write(' liar dengan level '), write(Level), write('!'), nl,
     write('Apa yang akan kamu lakukan?'), nl,
     write('- fight'), nl,
     write('- run'), nl,
     write('Ketik pilihan diakhiri titik, contoh: fight.'), nl,
-    random(1,10,P),
+    random(1, 10, P),
     asserta(peluang(P)),
-    asserta(battle(1)),
-    asserta(isEnemySkill(1)).
+    asserta(isEnemyAlive(1)).
 
+legendaryTriggered1 :-
+    ID is 100,
+    tokedex(ID, Name, Type, MaxHealth, Level, Element, Attack, Special),
+    Health is MaxHealth,
+    asserta(enemyTokemon(ID,Name,Type,MaxHealth,Level,Health,Element,Attack,Special)),nl,
+    write('Kamu bertemu Legendary Pokemon '), write(Name), write('!!!'), nl,nl,
+    asserta(isEnemyAlive(1)),
+    fight, !.
+
+legendaryTriggered2 :-
+    ID is 101,
+    tokedex(ID, Name, Type, MaxHealth, Level, Element, Attack, Special),
+    Health is MaxHealth,    
+    asserta(enemyTokemon(ID,Name,Type,MaxHealth,Level,Health,Element,Attack,Special)),nl,
+    write('Kamu bertemu Legendary Pokemon '), write(Name), write('!!!'), nl,nl,
+    asserta(isEnemyAlive(1)), 
+    fight, !.
+
+/* ---------- RUN ---------- */
+
+/* ----- BELUM isEnemyAlive ----- */
 run :-
-    battle(_),
+    \+ isEnemyAlive(_),
+    write('Kamu belum bertemu tokemon liar. Mau lari darimana? Kenyataan?'),
+    !.
+/* ------------------------ */
+
+/* ----- RUN GAGAL ----- */
+run :-
+    \+ isRun(_),
+    isEnemyAlive(_),
     peluang(P), 
     P < 5,
-    write('Kamu gagal lari, jadi kamu harus kalahkan tokemon liar itu!'),
+    write('Kamu gagal lari, jadi kamu harus kalahkan tokemon liar itu!'), nl,
     retract(peluang(P)),
     fight,
-    retrct(battle(_)),
     !.
+/* --------------------- */
 
+
+/* ----- RUN BERHASIL ----- */
 run :-
-    battle(_),
+    \+ isRun(_),
+    isEnemyAlive(_),
     peluang(P),
     P >= 5,
     write('Kamu berhasil lari! Fyuh~'),
     retract(peluang(P)),
-    retract(battle(_)),
+    retract(isEnemyAlive(_)),
+    retract(enemyTokemon(_, _, _, _, _, _, _, _, _)),
+    (
+        isEnemySkill(_) ->
+        retract(isEnemySkill(_))
+        ;
+        lebar(X)
+    )
+    , !.
+/* ------------------------ */
+
+/* ----- RUN SUDAH GAGAL BELUM PILIH TOKEMON ----- */
+run :-
+    isRun(_),
+    \+ isPick(_),
+    write('E-e-eh! Kamu sudah gagal run lo ya... Ayo, semangat~!'), nl,
+    write('Jangan lupa pilih tokemon!'), nl,
+    fightChance.
+/* ------------------------------------------------ */
+
+/* ----- RUN SUDAH GAGAL SUDAH PILIH TOKEMON ----- */
+run :-
+    isRun(_),
+    isPick(_),
+    write('E-e-eh! Kamu sudah gagal run lo ya... Ayo, semangat~!'), nl,
+    !.
+/* ----------------------------------------------- */
+
+/* ---------- PICK ---------- */
+/* ----- BELOM KETEMU TOKEMON LIAR ----- */
+pick(X) :-
+    \+ isEnemyAlive(_),
+    write('Kamu belum bertemu tokemon liar, sehingga kamu tidak bisa memilih tokemon dari inventori.'), nl,
+    write('Start atau jalan sampai bertemu tokemon liar. Good luck~!'), nl,
+    !.
+/* -------------------------------------- */
+
+/* ----- UDA KETEMU TOKEMON LIAR TAPI BLOM PILIH FIGHT ----- */
+pick(X) :-
+    \+isFight(_),
+    write('Pilih fight dulu mas'),nl,
+    !.
+/* --------------------------------------------------------- */
+
+/* ----- UDA PICK INPUT PICK LAGI ----- */
+pick(X) :-
+    isPick(_),
+    isFight(_),
+    write('Weh masa tokemonmu yang sekarang mau ditinggal :('),
+    !.
+/* ------------------------------------- */
+
+/* ----- PICK TOKEMON YG GA ADA DI INVENTORI ----- */
+pick(X) :-
+    isEnemyAlive(_),
+    isFight(_),
+    \+ inventory(_,X,_,_,_,_,_,_,_,_),
+    write('Kamu ga punya tokemon itu. Perhatikan daftar tokemon di inventori!'),
+    fightChance, 
+    !.
+/* ------------------------------------------------ */
+
+/* ----- PICK BERHASIL ----- */
+pick(X) :-
+    isEnemyAlive(_),
+    isFight(_),
+    \+ isPick(_),
+    inventory(ID,X,Type,MaxHealth,Level,Health,Element,Attack,Special,Exp),
+    asserta(myTokemon(ID,X,Type,MaxHealth,Level,Health,Element,Attack,Special,Exp)),
+    write('Kamu memilih '), write(X), write(' dengan health '), write(Health), nl,
+    asserta(isSkill(1)),
+    asserta(isPick(1)),
+    cont, !.
+/* -------------------------- */
+
+/* ---------- FIGHT ---------- */
+/* ----- BLOM KETEMU TOKEMON ---- */
+fight :-
+    \+ isEnemyAlive(_),
+    write('Kamu belum bertemu tokemon liar. Mau nyerang apa mas?'),
+    !.
+/* ------------------------------ */
+
+/* ----- KETEMU TOKEMON UDA PICK TP FIGHT LAGI ----- */
+fight :-
+    isFight(_),
+    isEnemyAlive(_),
+    write('Kamu lagi fight enemy-nya, bambang. Semangat ya~!'), nl,
     !.
 
+/* ----- FIGHT BERHASIL ----- */
 fight :-
-    battle(_),
+    asserta(isRun(1)),
+    asserta(isFight(1)),
+    isEnemyAlive(_),
+    asserta(isEnemySkill(1)),
     write('Tokemon yang tersedia:'), nl,
     statusInventory,
-    read(Name),nl,
-    inventory(ID,Name,Type,MaxHealth,Level,Health,Element,Attack,Special,Exp),
-    asserta(myTokemon(ID,Name,Type,MaxHealth,Level,Health,Element,Attack,Special,Exp)),
-    write('Kamu memilih '), write(Name), write(' dengan health '), write(Health), nl,
-    asserta(isSkill(1)),
-    cont.
+    !.
+/* -------------------------- */
 
+/* ----- KALO TOKEMON UDA PINGSAN TERUS GANTI TOKEMON ----- */
+fightChance :-
+    write('Tokemon yang tersedia:'), nl,
+    statusInventory,
+    !.
+/* -------------------------------------------------------- */
+
+/* ---------- CONTINUE/END TURN ---------- */
 cont :-
     write('Sekarang ngapain nih?'), nl,
     write('- attack'), nl,
-    write('- skill'), nl, !.
-
-enemyPingsan :-
-    myTokemon(MyID,MyName,MyType,MyMaxHealth,MyLevel,MyHealth,MyElement,MyAttack,MySpecial,MyExp),
-    write('Kamu memilih attack! Tetapi tidak terlalu effective!'), nl,
-    delTokemon(MyID),
-    asserta(inventory(MyID, MyName, MyType, MyMaxHealth, MyLevel, MyHealth, MyElement, MyAttack, MySpecial, MyExp)),
-    write(MyName), write(' pingsan!'), nl,
-    write('Apakah kamu mau menangkap tokemon '), write(MyName), nl,
-    write('- capture'), nl,
-    write('- skip'), nl,
+    write('- skill'), nl,
     !.
 
-healthEnemy(NewEnemyHealth) :-
-    retract(enemyTokemon(EnemyID,EnemyName,EnemyType,EnemyMaxHealth,EnemyLevel,EnemyHealth,EnemyElement,EnemyAttack,EnemySpecial)),
-    asserta(enemyTokemon(EnemyID,EnemyName,EnemyType,EnemyMaxHealth,EnemyLevel,NewEnemyHealth,EnemyElement,EnemyAttack,EnemySpecial)),
-    write('Health musuh tersisa '), write(NewEnemyHealth), write('!'), nl,
+/* ---------- ATTACK ---------- */
+
+/* ----- COMMENT ----- */
+/* ----- NORMAL ----- */
+attackComment :-
+    enemyTokemon(_, EnemyName, _, _, _, EnemyHealth, _, _, _),
+    EnemyHealth > 0,
+    write('Health '), write(EnemyName), write(' tersisa '), write(EnemyHealth), nl,
     write('Sekarang giliran musuh!'), nl,
-    enemyAttack,!.
+    write('...'), nl,
+    sleep(1),
+    enemyTurn,
+    !.
+/* ------------------ */
+/* ----- ENEMY PINGSAN ----- */
+attackComment :-
+    enemyTokemon(ID, EnemyName, EnemyType, _, EnemyLevel, EnemyHealth, _, _, _),
+    EnemyHealth =< 0,
+    write(EnemyName), write(' pingsan!'), nl,
+    asserta(ableCaptured(1)),
+    (
+        isEnemySkill(_)
+        -> retract(isEnemySkill(_))
+        ; tokedex(A,_,_,_,_,_,_,_)
+    ),
+    (
+        EnemyType == legendary 
+        -> 
+            legendary,
+            retract(enemyTokemon(_,_,_,_,_,_,_,_,_))
+        ;
+            retract(myTokemon(MyID, _, _, _, _, MyHealth, _, _, _, _)),
+            retract(inventory(MyID, Name, Type, MaxHealth, Level, _, Element, Attack, Special, Exp)),
+            maxExp(EnemyName, ExpGiven),
+            NewExpGiven is EnemyLevel*ExpGiven,
+            TempExp is Exp + NewExpGiven,
+            asserta(inventory(MyID, Name, Type, MaxHealth, Level, MyHealth, Element, Attack, Special, TempExp)),
+            write(Name), write(' '),
+            markLevelUp(MyID,Level,TempExp),
+            write('Apakah kamu mau menangkap '), write(EnemyName), write('?'), nl,
+            write('- capture'), nl,
+            write('- skip'), nl
+    ),
+    !.
 
-attack :-
-    myTokemon(_, _, _, _, _, _, MyAttack, MyElement, _, _),
-    enemyTokemon(_, Name, _, _, _, EnemyHealth, EnemyElement, _, _),
-    lessEffective(MyElement, EnemyElement),
-    NewAttack is (MyAttack*0.5),
-    ((EnemyHealth-NewAttack) =< 0),
-    enemyPingsan.
+/* ENEMY LEGENDARY */
+legendary :-
+    enemyTokemon(ID, _, _, _, _, _, _, _, _),
+    positionX(X),
+    positionY(Y),
+    (
+        isLegendary1(X,Y) 
+        -> 
+            (
+                retract(legendary1(_,_)), retract(legendary(ID,_,_,_,_,_,_,_,_))
+            )
+        ; 
+            (
+                retract(legendary2(_,_)), retract(legendary(ID,_,_,_,_,_,_,_,_))
+            )
+    ),
+    (
+        (\+legendary1(_,_),\+legendary2(_,_))
+        -> win
+        ; 
+        (
+            retract(isEnemyAlive(_)),
+            retract(isFight(_)),
+            retract(isPick(_)),
+            retract(isRun(_)),
+            retract(isSkill(_))
+        )
+    ),
+    !.
 
+/* ----------------------- */
+
+/* ----- BLOM KETEMU TOKEMON LIAR ----- */
 attack :-
-    myTokemon(_, _, _, _, _, _, MyAttack, MyElement, _, _),
-    enemyTokemon(_, Name, _, _, _, EnemyHealth, EnemyElement, _, _),
+    \+ isEnemyAlive(_),
+    write('Blom ketemu tokemon liar cuk'), nl,
+    !.
+/* ------------------------------------ */
+
+/* ----- BLOM PICK TOKEMON ----- */
+attack :-
+    isEnemyAlive(_),
+    \+ isPick(_),
+    write('Pilih tokemon dulu brow'), nl,
+    !.
+/* ----------------------------- */
+
+/* ----- SUPER EFFECTIVE ----- */
+attack :-
+    isEnemyAlive(_),
+    myTokemon(_, MyName, _, _, _, _, MyElement, MyAttack, _, _),
+    enemyTokemon(_, _, _, _, _, EnemyHealth, EnemyElement, _, _),
     superEffective(MyElement, EnemyElement),
     NewAttack is (MyAttack*1.5),
-    ((EnemyHealth-NewAttack) =< 0),
-    write('Kamu memilih attack! Dan super effective!'), nl,
-    enemyPingsan.
-
-attack :-
-    myTokemon(_, _, _, _, _, _, MyAttack, MyElement, _, _),
-    enemyTokemon(_, Name, _, _, _, EnemyHealth, EnemyElement, _, _),
-    \+ lessEffective(MyElement, EnemyElement),
-    \+ superEffective(MyElement, EnemyElement),
-    ((EnemyHealth-MyAttack) =< 0),
-    write('Kamu memilih attack!'), nl,
-    enemyPingsan.
-
-attack :-
-    myTokemon(_,_,_,_,_,MyHealth,MyElement,MyAttack,_,_),
-    enemyTokemon(_,_,_,_,_,EnemyHealth,EnemyElement,_,_),
-    superEffective(MyElement,EnemyElement),
-    NewAttack is (MyAttack*1.5),
     NewEnemyHealth is (EnemyHealth-NewAttack),
-    write('Kamu memilih attack! Dan super effective!'), nl,
-    healthEnemy(NewEnemyHealth).
+    retract(enemyTokemon(EnemyID,EnemyName,EnemyType,EnemyMaxHealth,EnemyLevel,EnemyHealth,EnemyElement,EnemyAttack,EnemySpecial)),
+    asserta(enemyTokemon(EnemyID,EnemyName,EnemyType,EnemyMaxHealth,EnemyLevel,NewEnemyHealth,EnemyElement,EnemyAttack,EnemySpecial)),
+    write(MyName), write(' menggunakan attack! Dan itu super effective!'), nl,
+    attackComment,!.
+/* --------------------------- */
 
+/* ----- LESS EFFECTIVE ----- */
 attack :-
-    myTokemon(_,_,_,_,_,MyHealth,MyElement,MyAttack,_,_),
-    enemyTokemon(_,_,_,_,_,EnemyHealth,EnemyElement,_,_),
-    lessEffective(MyElement,EnemyElement),
+    isEnemyAlive(_),
+    myTokemon(_, MyName, _, _, _, _, MyElement, MyAttack, _, _),
+    enemyTokemon(_, _, _, _, _, EnemyHealth, EnemyElement, _, _),
+    lessEffective(MyElement, EnemyElement),
     NewAttack is (MyAttack*0.5),
     NewEnemyHealth is (EnemyHealth-NewAttack),
-    healthEnemy(NewEnemyHealth).
+    retract(enemyTokemon(EnemyID,EnemyName,EnemyType,EnemyMaxHealth,EnemyLevel,EnemyHealth,EnemyElement,EnemyAttack,EnemySpecial)),
+    asserta(enemyTokemon(EnemyID,EnemyName,EnemyType,EnemyMaxHealth,EnemyLevel,NewEnemyHealth,EnemyElement,EnemyAttack,EnemySpecial)),
+    write(MyName), write(' menggunakan attack! Tapi itu tidak terlalu effective!'), nl,
+    attackComment,!.
+/* --------------------------- */
 
-
+/* ----- ELEMEN SAMA ----- */
 attack :-
-    myTokemon(_,_,_,_,_,MyHealth,MyElement,MyAttack,_,_),
-    enemyTokemon(_,_,_,_,_,EnemyHealth,EnemyElement,_,_),
-    \+ lessEffective(MyElement, EnemyElement),
-    \+ superEffective(MyElement, EnemyElement),
+    isEnemyAlive(_),
+    myTokemon(_, MyName, _, _, _, _, MyElement, MyAttack, _, _),
+    enemyTokemon(_, _, _, _, _, EnemyHealth, EnemyElement, _, _),
+    \+superEffective(MyElement,EnemyElement),
+    \+lessEffective(MyElement,EnemyElement),
     NewEnemyHealth is (EnemyHealth-MyAttack),
-    write('Kamu memilih attack!'), nl,
-    healthEnemy(NewEnemyHealth).
+    retract(enemyTokemon(EnemyID,EnemyName,EnemyType,EnemyMaxHealth,EnemyLevel,EnemyHealth,EnemyElement,EnemyAttack,EnemySpecial)),
+    asserta(enemyTokemon(EnemyID,EnemyName,EnemyType,EnemyMaxHealth,EnemyLevel,NewEnemyHealth,EnemyElement,EnemyAttack,EnemySpecial)),
+    write(MyName), write(' menggunakan attack!'), nl,
+    attackComment,!.
+/* ------------------------ */
 
-skill :-
-    \+isSkill(_),
-    write('Kamu sudah memakai skill'), nl,
-    cont,!.
+/* ---------- SKILL ---------- */
 
+/* ----- BLOM KETEMU ENEMY ----- */
 skill :-
+    \+ isEnemyAlive(_),
+    write('Kamu belum bertemu tokemon liar. Jangan napsu nyerang mas. '),
+    !.
+/* ----------------------------- */
+
+/* ----- SUDAH PAKAI SKILL ----- */
+skill :-
+    \+ isSkill(_),
+    write('Kamu sudah memakai skill. Pilih yang lain ya...'), nl,
+    !.
+/* ----------------------------- */
+
+/* ----- SUPER EFFECTIVE ----- */
+skill :-
+    isEnemyAlive(_),
     isSkill(_),
-    myTokemon(_,_,_,_,_,_,MyElement,_,MySpecial,_),
-    enemyTokemon(_,_,_,_,_,EnemyHealth,EnemyElement,_,_),
-    superEffective(MyElement,EnemyElement),
-    NewAttack is (MySpecial*1.5),
-    NewEnemyHealth is (EnemyHealth-NewAttack),
-    write('Kamu memilih skill! Dan super effective!'), nl,
-    healthEnemy(NewEnemyHealth).
+    myTokemon(_, MyName, _, _, _, _, MyElement, _, MySpecial, _),
+    enemyTokemon(_, _, _, _, _, EnemyHealth, EnemyElement, _, _),
+    superEffective(MyElement, EnemyElement),
+    NewSpecial is (MySpecial*1.5),
+    NewEnemyHealth is (EnemyHealth-NewSpecial),
+    retract(enemyTokemon(EnemyID,EnemyName,EnemyType,EnemyMaxHealth,EnemyLevel,EnemyHealth,EnemyElement,EnemyAttack,EnemySpecial)),
+    asserta(enemyTokemon(EnemyID,EnemyName,EnemyType,EnemyMaxHealth,EnemyLevel,NewEnemyHealth,EnemyElement,EnemyAttack,EnemySpecial)),
+    namaSkill(MyName, SkillName), 
+    write(MyName), write(' menggunakan '), write(SkillName), write('!'), nl,
+    write('It\'s super effective!'), nl,
+    retract(isSkill(_)),
+    attackComment,!.
+/* --------------------------- */
 
+/* ----- LESS EFFECTIVE ----- */
 skill :-
+    isEnemyAlive(_),
     isSkill(_),
-    myTokemon(_,_,_,_,_,_,MyElement,_,MySpecial,_),
-    enemyTokemon(_,_,_,_,_,EnemyHealth,EnemyElement,_,_),
-    lessEffective(MyElement,EnemyElement),
-    NewAttack is (MySpecial*1.5),
-    NewEnemyHealth is (EnemyHealth-NewAttack),
-    write('Kamu memilih skill! Tapi tidak terlalu effective!'), nl,
-    healthEnemy(NewEnemyHealth).
+    myTokemon(_, MyName, _, _, _, _, MyElement, _, MySpecial, _),
+    enemyTokemon(_, _, _, _, _, EnemyHealth, EnemyElement, _, _),
+    lessEffective(MyElement, EnemyElement),
+    NewSpecial is (MySpecial*0.5),
+    NewEnemyHealth is (EnemyHealth-NewSpecial),
+    retract(enemyTokemon(EnemyID,EnemyName,EnemyType,EnemyMaxHealth,EnemyLevel,EnemyHealth,EnemyElement,EnemyAttack,EnemySpecial)),
+    asserta(enemyTokemon(EnemyID,EnemyName,EnemyType,EnemyMaxHealth,EnemyLevel,NewEnemyHealth,EnemyElement,EnemyAttack,EnemySpecial)),
+    namaSkill(MyName, SkillName),
+    write(MyName), write(' menggunakan '), write(SkillName), write('!'), nl,
+    write('It\'s not very effective.'), nl,
+    retract(isSkill(_)),
+    attackComment,!.
+/* -------------------------- */
 
+/* ----- ELEMEN SAMA ----- */
 skill :-
+    isEnemyAlive(_),
     isSkill(_),
-    myTokemon(_,_,_,_,_,_,MyElement,_,MySpecial,_),
-    enemyTokemon(_,_,_,_,_,EnemyHealth,EnemyElement,_,_),
-    \+ lessEffective(MyElement, EnemyElement),
-    \+ superEffective(MyElement, EnemyElement),
+    myTokemon(_, MyName, _, _, _, _, MyElement, _, MySpecial, _),
+    enemyTokemon(_, _, _, _, _, EnemyHealth, EnemyElement, _, _),
+    \+ superEffective(EnemyElement, MyElement),
+    \+ lessEffective(EnemyElement, MyElement),
     NewEnemyHealth is (EnemyHealth-MySpecial),
-    write('Kamu memilih skill!'), nl,
-    healthEnemy(NewEnemyHealth).
+    retract(enemyTokemon(EnemyID,EnemyName,EnemyType,EnemyMaxHealth,EnemyLevel,EnemyHealth,EnemyElement,EnemyAttack,EnemySpecial)),
+    asserta(enemyTokemon(EnemyID,EnemyName,EnemyType,EnemyMaxHealth,EnemyLevel,NewEnemyHealth,EnemyElement,EnemyAttack,EnemySpecial)),
+    namaSkill(MyName, SkillName),
+    write(MyName), write(' menggunakan '), write(SkillName), write('!'), nl,
+    retract(isSkill(_)),
+    attackComment,!.
+/* ------------------------ */
 
-enemyAttack :-
-    enemyTokemon(_,Name,_,_,_,_,EnemyElement,EnemyAttack,_),
-    myTokemon(_,MyName,_,MyMaxHealth,_,MyHealth,MyElement,MyAttack,MySpecial,MyExp),
-    superEffective(EnemyElement,MyElement),
-    NewAttack is (EnemyAttack*1.5),
-    (MyHealth-NewAttack) =< 0,
-    write(Name), write(' memilih attack! Dan super effective!'), nl,
-    write('Oh, tidak! '), write(MyName), write('pingsan!'), nl,
-    retract(myTokemon(MyID,MyName,MyType,MyMaxHealth,MyLevel,MyHealth,MyElement,MyAttack,MySpecial,Exp)),
-    statusInventory, !.
+/* ---------- ENEMY TURN ---------- */
+enemyTurn :-
+    random(1,4,X),
+    (X =< 2 ->
+        enemyAttack
+    ; enemySkill
+    ),
+    !.
 
-enemyAttack :-
-    enemyTokemon(_,Name,_,EnemyMaxHealth,_,EnemyHealth,EnemyElement,EnemyAttack,EnemySpecial),
-    myTokemon(_,_,_,MyMaxHealth,_,MyHealth,MyElement,MyAttack,MySpecial,MyExp),
-    lessEffective(EnemyElement,MyElement),
-    NewAttack is (EnemyAttack*0.5),
-    (MyHealth-NewAttack) =< 0,
-    write('Enemy memilih attack! Tapi tidak terlalu effective!'), nl,
-    write('Oh, tidak! '), write(MyName), write('pingsan!'), nl,
-    retract(myTokemon(MyID,MyName,MyType,MyMaxHealth,MyLevel,MyHealth,MyElement,MyAttack,MySpecial,Exp)),
-    statusInventory, !.
+/* ---------- ENEMY ATTACK ----------- */
 
-enemyAttack :-
-    enemyTokemon(_,Name,_,EnemyMaxHealth,_,EnemyHealth,EnemyElement,EnemyAttack,EnemySpecial),
-    myTokemon(_,_,_,MyMaxHealth,_,MyHealth,MyElement,MyAttack,MySpecial,MyExp),
-    \+ lessEffective(MyElement, EnemyElement),
-    \+ superEffective(MyElement, EnemyElement),
-    (MyHealth-EnemyAttack) =< 0,
-    write('Enemy memilih attack!'), nl,
-    write('Oh, tidak! '), write(MyName), write('pingsan!'), nl,
-    retract(myTokemon(MyID,MyName,MyType,MyMaxHealth,MyLevel,MyHealth,MyElement,MyAttack,MySpecial,Exp)),
-    statusInventory, !.
+/* ----- ENEMY ATTACK COMMENT ----- */
+enemyAttackComment :-
+    myTokemon(_, MyName, _, _, _, MyHealth, _, _, _, _),
+    MyHealth > 0,
+    write('Health '), write(MyName), write(' tersisa '), write(MyHealth),
+    !.
 
+enemyAttackComment :-
+    cekPanjang(X),
+    X =:= 1,
+    myTokemon(MyID, MyName, _, _, _, MyHealth, _, _, _, _),
+    MyHealth =< 0,
+    retract(myTokemon(_, _, _, _, _, _, _, _, _, _)),
+    retract(enemyTokemon(_, _, _, _, _, _, _, _, _)),
+    delTokemon(MyID),
+    write(MyName), write(' pingsan!'), nl,
+    write('Kamu sudah tidak memiliki tokemon lagi di inventori!'), nl,
+    lose.
+
+enemyAttackComment :-
+    cekPanjang(X),
+    X \== 1,
+    myTokemon(MyID, MyName, _, _, _, MyHealth, _, _, _, _),
+    MyHealth =< 0,
+    retract(myTokemon(_, _, _, _, _, _, _, _, _, _)),
+    write(MyID),
+    delTokemon(MyID),
+    write(MyName), write(' pingsan!'), nl,
+    write('Pilih Tokemon yang lain di inventorimu'), nl,
+    retract(isPick(_)),
+    fightChance,
+    !.
+    
+
+
+/* ----- ENEMY ATTACK ----- */
+
+/* ----- SUPER EFFECTIVE ----- */
 enemyAttack :-
-    enemyTokemon(_,Name,_,EnemyMaxHealth,_,EnemyHealth,EnemyElement,EnemyAttack,EnemySpecial),
-    myTokemon(_,_,_,MyMaxHealth,_,MyHealth,MyElement,MyAttack,MySpecial,MyExp),
-    superEffective(EnemyElement,MyElement),
+    enemyTokemon(_, EnemyName, _, _, _, _, EnemyElement, EnemyAttack, _),
+    myTokemon(_, _, _, _, _, MyHealth, MyElement, _, _, _),
+    superEffective(EnemyElement, MyElement),
     NewAttack is (EnemyAttack*1.5),
     NewMyHealth is (MyHealth-NewAttack),
-    write('Enemy memilih attack! Dan super effective!'), nl,
-    write('Health kamu tersisa '), write(NewMyHealth), write('!'), nl,
-    retract(myTokemon(MyID,MyName,MyType,MyMaxHealth,MyLevel,MyHealth,MyElement,MyAttack,MySpecial,Exp)),
-    asserta(myTokemon(MyID,MyName,MyType,MyMaxHealth,MyLevel,NewMyHealth,MyElement,MyAttack,MySpecial,Exp)),
-    write('Sekarang giliran kamu!'), nl,
-    cont,!.
+    retract(myTokemon(MyID, MyName, MyType, MyMaxHealth, MyLevel, MyHealth, MyElement, MyAttack, MySpecial, MyExp)),
+    asserta(myTokemon(MyID, MyName, MyType, MyMaxHealth, MyLevel, NewMyHealth, MyElement, MyAttack, MySpecial, MyExp)),
+    write(EnemyName), write(' menggunakan attack!'), nl,
+    write('It\'s super effective!'), nl,
+    enemyAttackComment,
+    !.
+/* ----------------------------- */
 
+/* ----- LESS EFFECTIVE ----- */
 enemyAttack :-
-    enemyTokemon(_,Name,_,EnemyMaxHealth,_,EnemyHealth,EnemyElement,EnemyAttack,_),
-    myTokemon(_,_,_,MyMaxHealth,_,MyHealth,MyElement,MyAttack,MySpecial,MyExp),
-    lessEffective(EnemyElement,MyElement),
+    enemyTokemon(_, EnemyName, _, _, _, _, EnemyElement, EnemyAttack, _),
+    myTokemon(_, _, _, _, _, MyHealth, MyElement, _, _, _),
+    lessEffective(EnemyElement, MyElement),
     NewAttack is (EnemyAttack*0.5),
     NewMyHealth is (MyHealth-NewAttack),
-    write('Enemy memilih attack! Tapi tidak terlalu effective!'), nl,
-    write('Health kamu tersisa '), write(NewMyHealth), write('!'), nl,
-    retract(myTokemon(MyID,MyName,MyType,MyMaxHealth,MyLevel,MyHealth,MyElement,MyAttack,MySpecial,Exp)),
-    asserta(myTokemon(MyID,MyName,MyType,MyMaxHealth,MyLevel,NewMyHealth,MyElement,MyAttack,MySpecial,Exp)),
-    write('Sekarang giliran kamu!'), nl,
-    cont,!.
+    retract(myTokemon(MyID, MyName, MyType, MyMaxHealth, MyLevel, MyHealth, MyElement, MyAttack, MySpecial, MyExp)),
+    asserta(myTokemon(MyID, MyName, MyType, MyMaxHealth, MyLevel, NewMyHealth, MyElement, MyAttack, MySpecial, MyExp)),
+    write(EnemyName), write(' menggunakan attack!'), nl,
+    write('But it\'s less effective'), nl,
+    enemyAttackComment,
+    !.
+/* ---------------------------- */
 
+/* ----- ELEMEN SAMA ----- */
 enemyAttack :-
-    enemyTokemon(_,Name,_,EnemyMaxHealth,_,EnemyHealth,EnemyElement,EnemyAttack,_),
-    myTokemon(_,_,_,MyMaxHealth,_,MyHealth,MyElement,MyAttack,MySpecial,MyExp),
-    \+ lessEffective(MyElement, EnemyElement),
-    \+ superEffective(MyElement, EnemyElement),
+    enemyTokemon(_, EnemyName, _, _, _, _, EnemyElement, EnemyAttack, _),
+    myTokemon(_, _, _, _, _, MyHealth, MyElement, _, _, _),
+    \+superEffective(EnemyElement,MyElement),
+    \+lessEffective(EnemyElement,MyElement),
     NewMyHealth is (MyHealth-EnemyAttack),
-    write('Enemy memilih attack!'), nl,
-    write('Health kamu tersisa '), write(NewMyHealth), write('!'), nl,
-    retract(myTokemon(MyID,MyName,MyType,MyMaxHealth,MyLevel,MyHealth,MyElement,MyAttack,MySpecial,Exp)),
-    asserta(myTokemon(MyID,MyName,MyType,MyMaxHealth,MyLevel,NewMyHealth,MyElement,MyAttack,MySpecial,Exp)),
-    write('Sekarang giliran kamu!'), nl,
-    cont,!.
+    retract(myTokemon(MyID, MyName, MyType, MyMaxHealth, MyLevel, MyHealth, MyElement, MyAttack, MySpecial, MyExp)),
+    asserta(myTokemon(MyID, MyName, MyType, MyMaxHealth, MyLevel, NewMyHealth, MyElement, MyAttack, MySpecial, MyExp)),
+    write(EnemyName), write(' menggunakan attack!'), nl,
+    enemyAttackComment,
+    !.
 
+/* ---------- ENEMY SKILL ---------- */
 enemySkill :-
     \+ isEnemySkill(_),
     enemyAttack.
-
+    
+/* ----- SUPER EFFECTIVE ----- */
 enemySkill :-
-    isEnemySkill(_),
-    enemyTokemon(_,Name,_,EnemyMaxHealth,_,EnemyHealth,EnemyElement,EnemyAttack,EnemySpecial),
-    myTokemon(_,_,_,MyMaxHealth,_,MyHealth,MyElement,MyAttack,MySpecial,MyExp),
-    superEffective(EnemyElement,MyElement),
-    NewAttack is (EnemySpecial*1.5),
-    NewMyHealth is (MyHealth-NewAttack),
-    write('Enemy memilih skill! Dan super effective!'), nl,
-    write('Health kamu tersisa '), write(NewMyHealth), write('!'), nl,
-    retract(myTokemon(MyID,MyName,MyType,MyMaxHealth,MyLevel,MyHealth,MyElement,MyAttack,MySpecial,Exp)),
-    asserta(myTokemon(MyID,MyName,MyType,MyMaxHealth,MyLevel,NewMyHealth,MyElement,MyAttack,MySpecial,Exp)),
+    enemyTokemon(_, EnemyName, _, _, _, _, EnemyElement, _, EnemySkill),
+    myTokemon(_, _, _, _, _, MyHealth, MyElement, _, _, _),
+    superEffective(EnemyElement, MyElement),
+    NewSkill is (EnemySkill*1.5),
+    NewMyHealth is (MyHealth-NewSkill),
+    retract(myTokemon(MyID, MyName, MyType, MyMaxHealth, MyLevel, MyHealth, MyElement, MyAttack, MySpecial, MyExp)),
+    asserta(myTokemon(MyID, MyName, MyType, MyMaxHealth, MyLevel, NewMyHealth, MyElement, MyAttack, MySpecial, MyExp)),
+    namaSkill(EnemyName, X),
+    write(EnemyName), write(' menggunakan '), write(X), write('!'), nl,
+    write('It\'s super effective!'), nl,
     retract(isEnemySkill(_)),
-    write('Sekarang giliran kamu!'), nl,
-    cont,!.
+    enemyAttackComment,
+    !.
 
+/* ----- LESS EFFECTIVE ----- */
 enemySkill :-
-    isEnemySkill(_),
-    enemyTokemon(_,Name,_,EnemyMaxHealth,_,EnemyHealth,EnemyElement,EnemyAttack,EnemySpecial),
-    myTokemon(_,_,_,MyMaxHealth,_,MyHealth,MyElement,MyAttack,MySpecial,MyExp),
-    lessEffective(EnemyElement,MyElement),
-    NewAttack is (EnemySpecial*1.5),
-    NewMyHealth is (MyHealth-NewAttack),
-    write('Enemy memilih skill! Dan super effective!'), nl,
-    write('Health kamu tersisa '), write(NewMyHealth), write('!'), nl,
-    retract(myTokemon(MyID,MyName,MyType,MyMaxHealth,MyLevel,MyHealth,MyElement,MyAttack,MySpecial,Exp)),
-    asserta(myTokemon(MyID,MyName,MyType,MyMaxHealth,MyLevel,NewMyHealth,MyElement,MyAttack,MySpecial,Exp)),
+    enemyTokemon(_, EnemyName, _, _, _, _, EnemyElement, _, EnemySkill),
+    myTokemon(_, _, _, _, _, MyHealth, MyElement, _, _, _),
+    lessEffective(EnemyElement, MyElement),
+    NewSkill is (EnemySkill*0.5),
+    NewMyHealth is (MyHealth-NewSkill),
+    retract(myTokemon(MyID, MyName, MyType, MyMaxHealth, MyLevel, MyHealth, MyElement, MyAttack, MySpecial, MyExp)),
+    asserta(myTokemon(MyID, MyName, MyType, MyMaxHealth, MyLevel, NewMyHealth, MyElement, MyAttack, MySpecial, MyExp)),
+    namaSkill(EnemyName, X),
+    write(EnemyName), write(' menggunakan '), write(X), write('!'), nl,
+    write('It\'s not very effective.'), nl,
     retract(isEnemySkill(_)),
-    write('Sekarang giliran kamu!'), nl,
-    cont,!.
+    enemyAttackComment,
+    !.
 
+/* ----- ELEMEN SAMA ----- */
 enemySkill :-
-    isEnemySkill(_),
-    enemyTokemon(_,Name,_,EnemyMaxHealth,_,EnemyHealth,EnemyElement,EnemyAttack,EnemySpecial),
-    myTokemon(_,_,_,MyMaxHealth,_,MyHealth,MyElement,MyAttack,MySpecial,MyExp),
-    \+ lessEffective(MyElement, EnemyElement),
-    \+ superEffective(MyElement, EnemyElement),
-    NewMyHealth is (MyHealth-EnemySpecial),
-    write('Enemy memilih skill! Dan super effective!'), nl,
-    write('Health kamu tersisa '), write(NewMyHealth), write('!'), nl,
-    retract(myTokemon(MyID,MyName,MyType,MyMaxHealth,MyLevel,MyHealth,MyElement,MyAttack,MySpecial,Exp)),
-    asserta(myTokemon(MyID,MyName,MyType,MyMaxHealth,MyLevel,NewMyHealth,MyElement,MyAttack,MySpecial,Exp)),
+    enemyTokemon(_, EnemyName, _, _, _, _, EnemyElement, _, EnemySkill),
+    myTokemon(_, _, _, _, _, MyHealth, MyElement, _, _, _),
+    \+superEffective(EnemyElement, MyElement),
+    \+lessEffective(EnemyElement, MyElement),
+    NewMyHealth is (MyHealth-EnemySkill),
+    retract(myTokemon(MyID, MyName, MyType, MyMaxHealth, MyLevel, MyHealth, MyElement, MyAttack, MySpecial, MyExp)),
+    asserta(myTokemon(MyID, MyName, MyType, MyMaxHealth, MyLevel, NewMyHealth, MyElement, MyAttack, MySpecial, MyExp)),
+    namaSkill(EnemyName, X),
+    write(EnemyName), write(' menggunakan '), write(X), write('!'), nl,
     retract(isEnemySkill(_)),
-    write('Sekarang giliran kamu!'), nl,
-    cont,!.
+    enemyAttackComment,
+    !.
 
-capture :-
-    \+ isFull,
-    retract(enemyTokemon(EnemyID,EnemyName,EnemyType,EnemyMaxHealth,EnemyLevel,EnemyHealth,EnemyElement,EnemyAttack,EnemySpecial)),
-    addTokemon(EnemyID),
-    write(EnemyName), write(' berhasil dimasukkan ke inventorimu!'), nl,
-    retract(battle(_)),!.
+/* ---------- DROP ---------- */
+drop(Name) :-
+    \+ isEnemyAlive(_),
+    write('Tidak ada tokemon baru yang mau ditambahkan. Ngapain dibuang tokemonmu?').
 
-capture :-
-    isFull,
-    retract(enemyTokemon(EnemyID,EnemyName,EnemyType,EnemyMaxHealth,EnemyLevel,EnemyHealth,EnemyElement,EnemyAttack,EnemySpecial)),
-    write('Inventorimu penuh! Pilih satu tokemonmu untuk ditukar dengan '), write(EnemyName), nl,
+drop(Name) :-
+    \+ inventory(_, Name, _, _, _, _, _, _, _, _),
+    isEnemyAlive(_),
+    write('Kamu ga punya tokemon itu. Perhatikan daftar tokemon di inventori!'),nl,
     statusInventory,
-    read(Name),
+    !.
+
+drop(Name) :-
     tokedex(ID, Name, _, _, _, _, _, _),
+    retract(temp(EnemyID)),
     delTokemon(ID),
     addTokemon(EnemyID),
+    tokedex(EnemyID, EnemyName, _, _, _, _, _, _),
     write(Name), write(' berhasil ditukar dengan '), write(EnemyName), nl,
     write(Name), write(' dibebaskan ke habitatnya kembali.'), nl, 
-    retract(battle(_)),!.
+    retract(isEnemyAlive(_)),
+    retract(isRun(_)),
+    retract(isFight(_)),
+    (
+        isEnemySkill(_)
+        -> retract(isEnemySkill(_))
+        ; tokedex(ID, _, _, _, _, _, _, _)
+    ),
+    retract(isPick(_)),
+    !.
+
+/* ---------- CAPTURE ---------- */
+capture :-
+    \+ ableCaptured(_),
+    write('Buat enemy pingsan dulu baru bisa sekip'), nl,
+    !.
+
+capture :-
+    \+ isEnemyAlive(_),
+    write('Uda start blom? Blom ketemu tokemon liar tuh, mau nangkep apa bos?'), nl,
+    !.
+
+capture :-
+    ableCaptured(_),
+    \+ isFull,
+    isEnemyAlive(_),
+    retract(enemyTokemon(EnemyID, EnemyName, _, _, _, _, _, _, _)),
+    addTokemon(EnemyID),
+    write(EnemyName), write(' berhasil dimasukkan ke inventorimu!'), nl,
+    retract(isEnemyAlive(_)),
+    retract(isRun(_)),
+    retract(isFight(_)),
+    retract(ableCaptured(_)),
+    retract(isPick(_)),
+    (
+        isSkill(_) ->
+        retract(isSkill(_))
+        ;
+        lebar(X)
+    )
+    ,
+    (
+        isEnemySkill(_) ->
+        retract(isEnemySkill(_))
+        ; lebar(X)  
+    ),
+    !.
+
+capture :-
+    ableCaptured(_),
+    isEnemyAlive(_),
+    isFull,
+    retract(enemyTokemon(EnemyID, EnemyName, _, _, _, _, _, _, _)),
+    asserta(temp(EnemyID)),
+    write('Inventorimu penuh! Pilih satu tokemonmu untuk ditukar dengan '), write(EnemyName), nl,
+    statusInventory, nl,
+    write('Buang tokemonmu dengan perintah \'drop(nama tokemon)\' '), nl,
+    !.
+
+/* ---------- SKIP ---------- */
+skip :-
+    \+ ableCaptured(_),
+    write('Buat enemy pingsan dulu baru bisa sekip'), nl,
+    !.
 
 skip :-
-    retract(enemyTokemon(EnemyID,EnemyName,EnemyType,EnemyMaxHealth,EnemyLevel,EnemyHealth,EnemyElement,EnemyAttack,EnemySpecial)),
+    \+ isEnemyAlive(_),
+    write('Uda start blom? Belum ketemu tokemon liar tu, mau sekip apa bos? Hearing cakahim?'), nl,
+    !.
+
+skip :-
+    ableCaptured(_),
+    isEnemyAlive(_),
+    retract(enemyTokemon(_,EnemyName,_,_,_,_,_,_,_)),
     write(EnemyName), write(' terbangun dan segera berlari ke semak-semak, menghilang dari pandanganmu.'), nl,
     write('Kamu pun melanjutkan perjalananmu.'), 
-    retract(battle(_)),!.
+    retract(isEnemyAlive(_)),
+    retract(isRun(_)),
+    retract(isFight(_)),
+    retract(ableCaptured(_)),
+    retract(isPick(_)),
+    (
+        isSkill(_) ->
+        retract(isSkill(_))
+        ;
+        lebar(X)
+    )
+    ,
+    (
+        isEnemySkill(_) ->
+        retract(isEnemySkill(_))
+        ; lebar(X)  
+    ),
+    !.
+
+/* ---------- WIN ---------- */
+win :-
+    write('$$\\     $$\\  $$$$$$\\  $$\\   $$\\       $$\\      $$\\ $$$$$$\\ $$\\   $$\\ '), nl,
+    write('\\$$\\   $$  |$$  __$$\\ $$ |  $$ |      $$ | $\\  $$ |\\_$$  _|$$$\\  $$ |'), nl,
+    write(' \\$$\\ $$  / $$ /  $$ |$$ |  $$ |      $$ |$$$\\ $$ |  $$ |  $$$$\\ $$ |'), nl,
+    write('  \\$$$$  /  $$ |  $$ |$$ |  $$ |      $$ $$ $$\\$$ |  $$ |  $$ $$\\$$ |'), nl,
+    write('   \\$$  /   $$ |  $$ |$$ |  $$ |      $$$$  _$$$$ |  $$ |  $$ \\$$$$ |'), nl,
+    write('    $$ |    $$ |  $$ |$$ |  $$ |      $$$  / \\$$$ |  $$ |  $$ |\\$$$ |'), nl,
+    write('    $$ |     $$$$$$  |\\$$$$$$  |      $$  /   \\$$ |$$$$$$\\ $$ | \\$$ |'), nl,
+    write('    \\__|     \\______/  \\______/       \\__/     \\__|\\______|\\__|  \\__|'), nl,
+    retract(isEnemyAlive(_)),
+    retract(isRun(_)),
+    retract(isFight(_)),
+    retract(isPick(_)),
+    quit.
+
+/* ---------- LOSE ---------- */
+lose :-
+    write('@@@ @@@   @@@@@@   @@@  @@@     @@@        @@@@@@    @@@@@@   @@@@@@@@  '), nl,
+    write('@@@ @@@  @@@@@@@@  @@@  @@@     @@@       @@@@@@@@  @@@@@@@   @@@@@@@@ '), nl, 
+    write('@@! !@@  @@!  @@@  @@!  @@@     @@!       @@!  @@@  !@@       @@!      '), nl, 
+    write('!@! @!!  !@!  @!@  !@!  @!@     !@!       !@!  @!@  !@!       !@!      '), nl, 
+    write(' !@!@!   @!@  !@!  @!@  !@!     @!!       @!@  !@!  !!@@!!    @!!!:!   '), nl, 
+    write('  @!!!   !@!  !!!  !@!  !!!     !!!       !@!  !!!   !!@!!!   !!!!!:   '), nl, 
+    write('  !!:    !!:  !!!  !!:  !!!     !!:       !!:  !!!       !:!  !!:      '), nl, 
+    write('  :!:    :!:  !:!  :!:  !:!      :!:      :!:  !:!      !:!   :!:      '), nl, 
+    write('   ::    ::::: ::  ::::: ::      :: ::::  ::::: ::  :::: ::    :: :::: '), nl, 
+    write('   :      : :  :    : :  :      : :: : :   : :  :   :: : :    : :: ::  '), nl,
+    retract(isEnemyAlive(_)),
+    retract(isRun(_)),
+    retract(isFight(_)),
+    retract(isPick(_)),
+    quit.

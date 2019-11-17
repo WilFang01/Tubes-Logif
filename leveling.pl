@@ -1,47 +1,23 @@
 levelUp(ID) :-
     inventory(ID,Name,Type,MaxHealth,Level,_,Element,Attack,Special,Exp),
     TempLevel is (Level+1),
-    (
-        (TempLevel == 4; TempLevel == 7)
-        -> 
-        (
-            TempMaxHealth is (MaxHealth*1.5),
-            TempHealth is TempMaxHealth,
-            TempAttack is (Attack*1.2),
-            TempSpecial is (Special*1.2),
-            evolve(ID),
-            NewID is ID+30,
-            retract(inventory(NewID,NewName,Type,MaxHealth,Level,_,Element,Attack,Special,Exp)),
-            asserta(inventory(NewID,NewName,Type,TempMaxHealth,TempLevel,TempHealth,Element,TempAttack,TempSpecial,Exp))
-        )
-        ;
-        (
-            TempMaxHealth is (MaxHealth*1.5),
-            TempHealth is TempMaxHealth,
-            TempAttack is (Attack*1.2),
-            TempSpecial is (Special*1.2),
-            retract(inventory(ID,_,_,_,Level,_,_,_,_,_)),
-            asserta(inventory(ID,Name,Type,TempMaxHealth,TempLevel,TempHealth,Element,TempAttack,TempSpecial,Exp))
-        )
-    ).
+    TempMaxHealth is (MaxHealth + 100),
+    TempHealth is TempMaxHealth,
+    TempAttack is (Attack + 15),
+    TempSpecial is (Special + 15),
+    retract(inventory(ID,_,_,_,Level,_,_,_,_,_)),
+    asserta(inventory(ID,Name,Type,TempMaxHealth,TempLevel,TempHealth,Element,TempAttack,TempSpecial,Exp)),
+    evolve(ID).
     
 levelUpEnemy(ID) :-
     enemyTokemon(ID,Name,Type,MaxHealth,Level,_,Element,Attack,Special),
     TempLevel is (Level+1),
-    TempMaxHealth is (MaxHealth*1.5),
+    TempMaxHealth is (MaxHealth*1.1),
     TempHealth is TempMaxHealth,
-    TempAttack is (Attack*1.2),
-    TempSpecial is (Special*1.2),
+    TempAttack is (Attack*1.1),
+    TempSpecial is (Special*1.1),
     retract(enemyTokemon(ID,_,_,_,Level,_,_,_,_)),
     asserta(enemyTokemon(ID,Name,Type,TempMaxHealth,TempLevel,TempHealth,Element,TempAttack,TempSpecial)).
-
-evolve(ID) :-
-    inventory(ID,Name,Type,MaxHealth,Level,_,Element,Attack,Special,Exp),
-    TempID is (ID + 30),
-    tokedex(TempID, TempName, _, _, _, _, _, _),
-    TempHealth is MaxHealth,
-    retract(inventory(ID,Name,Type,MaxHealth,Level,_,Element,Attack,Special,Exp)),
-    asserta(inventory(TempID, TempName, Type, MaxHealth, Level, TempHealth, Element, Attack, Special, Exp)).
 
 markLevelUp(ID,Level,Exp) :-
     Level =< 1,
