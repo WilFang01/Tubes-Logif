@@ -33,12 +33,12 @@ tokedex(17, sperong, normal, 280, 1, wind, 40, 125).
 tokedex(18, tylite, normal, 310, 1, earth, 65, 80).
 
 /* Category 3 Unevolved Tokemon */
-tokedex(19, flareo, normal, 400, 1, fire, 100, 200).
-tokedex(20, aquoeo, normal, 400, 1, water, 100, 200).
-tokedex(21, natureo, normal, 400, 1, grass, 100, 200).
-tokedex(22, volteo, normal, 400, 1, electric, 100, 200).
-tokedex(23, aereo, normal, 400, 1, wind, 100, 200).
-tokedex(24, terreo, normal, 400, 1, earth, 100, 200).
+tokedex(19, flareo, normal, 500, 1, fire, 25, 75).
+tokedex(20, aquoeo, normal, 500, 1, water, 25, 75).
+tokedex(21, natureo, normal, 500, 1, grass, 25, 75).
+tokedex(22, volteo, normal, 500, 1, electric, 25, 75).
+tokedex(23, aereo, normal, 500, 1, wind, 25, 75).
+tokedex(24, terreo, normal, 500, 1, earth, 25, 75).
 
 /* Category 4 (Pseudo-Legendary) Unevolved Tokemon */
 tokedex(25, camcam, normal, 300, 1, fire, 50, 100).
@@ -130,28 +130,98 @@ namaSkill(busew, mambu).
 namaSkill(lightkid, silau-men).
 namaSkill(skyling, cling).
 namaSkill(gibel, gembel).
+namaSkill(ponytak, takituk).
+namaSkill(trapezoidyu, trapezeum).
+namaSkill(telorcute, kawaiii).
+namaSkill(proton, optimistic).
+namaSkill(dodol, sticky).
+namaSkill(oneng, teteh).
 
-maxExp(fullpics, 120).
+namaSkill(istigfaur, astagfirullah).
+namaSkill(charmelon, invisible).
+namaSkill(squirting, putih-putih).
+namaSkill(ssssscupi, asap-knalpot).
+namaSkill(yogaday, shavasana).
+namaSkill(veryhorny, engas).
+namaSkill(fullscreenpics, wow-px).
+namaSkill(garadyos, cipak-cipuk).
+namaSkill(breastcancer, cancer).
+namaSkill(helicoptile, empty-fuel).
+namaSkill(sarung, bau).
+namaSkill(tytyt, gatel).
+namaSkill(glareo, duh-silau-banget-gila).
+namaSkill(tsunamio, hanyut).
+namaSkill(annyeonghaseo, baca-doang).
+namaSkill(kesetrumeo, gosong).
+namaSkill(kademenoooo, biduren).
+namaSkill(stereo, ngiiiiing).
+namaSkill(febyet, best-speaker).
+namaSkill(swikeswike, goreng-mentega).
+namaSkill(wesub, wewewewe).
+namaSkill(darkadult, prnhub).
+namaSkill(skyglow, skyfall).
+namaSkill(gembel, cd-ga-dicuci-seminggu).
+namaSkill(kecetak, kecetot).
+namaSkill(hode, cosplay-cewe-tapi-cowo).
+namaSkill(telorkucute, kuceplok).
+namaSkill(elektron, negativity).
+namaSkill(jenangdodol, diabetes).
+namaSkill(nengoneng, gibah).
+
+namaSkill(khilaf, ibadah).
+namaSkill(charlizewendy, kisseu).
+namaSkill(squirting, pilbiru).
+namaSkill(varioooooo, lulusgasemisi).
+namaSkill(cibayday, lanciaoday).
+namaSkill(superhorny, ah-ah).
+namaSkill(minimizedpics, wahh-mb).
+namaSkill(garasi, seret).
+namaSkill(bigbreast, bigbra).
+namaSkill(helicopter, mainan).
+namaSkill(arung, oh-mai-mai).
+namaSkill(tytytbesar, cdbesar).
+namaSkill(trespaseo, terciduk).
+namaSkill(ndemekeo, kuah-panas).
+namaSkill(yeppeoseo, spam-chat).
+namaSkill(akumaumasukpower, pak-umar).
+namaSkill(bekunoooo, garam).
+namaSkill(steroid, one-punch).
+namaSkill(patricia, cantik).
+namaSkill(pepesswikee, cabe-setan).
+namaSkill(subew, bew-bew).
+namaSkill(nigga, rap-god).
+namaSkill(earthglow, volcano).
+namaSkill(wedusgembel, hujan-abu).
+namaSkill(kecoak, terbang).
+namaSkill(jones, beautiful).
+namaSkill(ganeshaoperation, sbmptn).
+namaSkill(neutron, kimia-a).
+namaSkill(jenangdodoldurian, kulit-durian).
+namaSkill(anengoneng, arisan).
+
+maxExp(fullpics, 100).
 maxExp(magicrap, 120).
-maxExp(cancera, 120).
-maxExp(helicoptile, 120).
-maxExp(sperong, 120).
-maxExp(tylite, 120).
-maxExp(flareo, 200).
-maxExp(aquoeo, 200).
-maxExp(natureo, 200).
-maxExp(volteo, 200).
-maxExp(aereo, 200).
-maxExp(terreo, 200).
-maxExp(camcam, 150).
-maxExp(frogfrog, 150).
-maxExp(busew, 150).
-maxExp(lightkid, 150).
-maxExp(skyling, 150).
-maxExp(gibel, 150).
-maxExp(ponytak, 100).
-maxExp(trapezoidyu, 100).
-maxExp(telorcute, 100).
-maxExp(proton, 100).
-maxExp(dodol, 100).
-maxExp(oneng, 100).
+maxExp(cancera, 105).
+maxExp(helicoptile, 125).
+maxExp(sperong, 110).
+maxExp(tylite, 95).
+maxExp(flareo, 120).
+maxExp(aquoeo, 130).
+maxExp(natureo, 125).
+maxExp(volteo, 100).
+maxExp(aereo,145).
+maxExp(terreo, 150).
+maxExp(camcam, 110).
+maxExp(frogfrog, 115).
+maxExp(busew, 120).
+maxExp(lightkid, 135).
+maxExp(skyling, 100).
+maxExp(gibel, 110).
+maxExp(ponytak, 115).
+maxExp(trapezoidyu, 135).
+maxExp(telorcute, 105).
+maxExp(proton, 150).
+maxExp(dodol, 110).
+maxExp(oneng, 120).
+maxExp(sangemon, 100).
+maxExp(icanmon, 100).
