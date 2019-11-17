@@ -85,5 +85,5 @@ markLevelUp(ID,Level,Exp) :-
     write('Leveled Up!!!'),nl,
     levelUp(ID),!.
 
-markLevelUp(ID,Level,Exp) :-
+markLevelUp(_,_,Exp) :-
     Exp < 2801.

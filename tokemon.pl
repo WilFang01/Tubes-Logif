@@ -210,9 +210,12 @@ quit :-
     retract(panjang(_)),
     retract(tembok(_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_)),
     retract(cure(_)),
-    forall( inventory(ID, Name, Type, MaxHealth, Level, Health, Element, Attack, Special, EXP), (
+    forall(inventory(_, _, _, _, _, _, _, _, _, _), (
         retract(inventory(_, _, _, _, _, _, _, _, _, _))
 	)),
+    forall(legendary(_,_,_,_,_,_,_,_,_), (
+        retract(legendary(_,_,_,_,_,_,_,_,_))
+    )),
     (
         (legendary1(_,_),legendary2(_,_))
         -> retract(legendary1(_,_)),
@@ -232,8 +235,7 @@ quit :-
         ;
         retract(player(_)),
         retract(init(_))
-    ),
-    retract(legendary(_,_,_,_,_,_,_,_,_)).
+    ).
 
 /* EKSTERNAL FILE CONFIG */
 

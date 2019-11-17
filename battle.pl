@@ -235,7 +235,7 @@ attackComment :-
 /* ------------------ */
 /* ----- ENEMY PINGSAN ----- */
 attackComment :-
-    enemyTokemon(ID, EnemyName, EnemyType, _, EnemyLevel, EnemyHealth, _, _, _),
+    enemyTokemon(_, EnemyName, EnemyType, _, EnemyLevel, EnemyHealth, _, _, _),
     EnemyHealth =< 0,
     write(EnemyName), write(' pingsan!'), nl,
     asserta(ableCaptured(1)),
@@ -566,7 +566,7 @@ enemySkill :-
     !.
 
 /* ---------- DROP ---------- */
-drop(Name) :-
+drop(_) :-
     \+ isEnemyAlive(_),
     write('Tidak ada tokemon baru yang mau ditambahkan. Ngapain dibuang tokemonmu?').
 
