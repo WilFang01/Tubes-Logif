@@ -2,11 +2,12 @@
 :- dynamic(player/1).
 
 :- include('command.pl').
-:- include('leveling.pl').
+:- include('leveling2.pl').
 :- include('player.pl').
-:- include('tokedex2.pl').
+:- include('tokedex3.pl').
 :- include('battle2.pl').
 :- include('map.pl').
+:- include('evolution.pl').
 
 
 title :-
