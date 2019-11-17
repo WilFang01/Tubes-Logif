@@ -106,8 +106,13 @@ run :-
     retract(peluang(P)),
     retract(isEnemyAlive(_)),
     retract(enemyTokemon(_, _, _, _, _, _, _, _, _)),
-    retract(isEnemySkill(_)),
-    !.
+    (
+        isEnemySkill(_) ->
+        retract(isEnemySkill(_))
+        ;
+        lebar(X)
+    )
+    , !.
 /* ------------------------ */
 
 /* ----- RUN SUDAH GAGAL BELUM PILIH TOKEMON ----- */
@@ -614,7 +619,18 @@ capture :-
     retract(isFight(_)),
     retract(ableCaptured(_)),
     retract(isPick(_)),
-    retract(isSkill(_)),
+    (
+        isSkill(_) ->
+        retract(isSkill(_))
+        ;
+        lebar(X)
+    )
+    ,
+    (
+        isEnemySkill(_) ->
+        retract(isEnemySkill(_))
+        ; lebar(X)  
+    ),
     !.
 
 capture :-
@@ -635,7 +651,7 @@ skip :-
     !.
 
 skip :-
-    \+ isFight(_),
+    \+ isEnemyAlive(_),
     write('Uda start blom? Belum ketemu tokemon liar tu, mau sekip apa bos? Hearing cakahim?'), nl,
     !.
 
@@ -650,7 +666,18 @@ skip :-
     retract(isFight(_)),
     retract(ableCaptured(_)),
     retract(isPick(_)),
-    retract(isSkill(_)),
+    (
+        isSkill(_) ->
+        retract(isSkill(_))
+        ;
+        lebar(X)
+    )
+    ,
+    (
+        isEnemySkill(_) ->
+        retract(isEnemySkill(_))
+        ; lebar(X)  
+    ),
     !.
 
 /* ---------- WIN ---------- */
