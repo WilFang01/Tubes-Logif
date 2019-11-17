@@ -232,8 +232,8 @@ quit :-
         ;
         retract(player(_)),
         retract(init(_))
-        
-    ).
+    ),
+    retract(legendary(_,_,_,_,_,_,_,_,_)).
 
 /* EKSTERNAL FILE CONFIG */
 
