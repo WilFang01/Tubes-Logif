@@ -83,7 +83,7 @@ tokedex(54, gembel, normal, 980, 4, earth, 225, 325).
 /* Starter Second Evolved Tokemon */
 tokedex(55, khilaf, normal, 1580, 6, grass, 345, 630).
 tokedex(56, charlize_wendy, normal, 1580, 6, fire, 330, 675).
-tokedex(57, squirting, normal, 1580, 6, water, 360, 615).
+tokedex(57, squirtjumbo, normal, 1580, 6, water, 360, 615).
 tokedex(58, varioooooo, normal, 1460, 6, electric, 375, 705).
 tokedex(59, cibayday, normal, 1640, 6, wind, 360, 630).
 tokedex(60, superhorny, normal, 1760, 6, earth, 270, 600).
@@ -130,12 +130,6 @@ namaSkill(busew, mambu).
 namaSkill(lightkid, silau-men).
 namaSkill(skyling, cling).
 namaSkill(gibel, gembel).
-namaSkill(ponytak, takituk).
-namaSkill(trapezoidyu, trapezeum).
-namaSkill(telorcute, kawaiii).
-namaSkill(proton, optimistic).
-namaSkill(dodol, sticky).
-namaSkill(oneng, teteh).
 
 namaSkill(istigfaur, astagfirullah).
 namaSkill(charmelon, invisible).
@@ -155,7 +149,7 @@ namaSkill(annyeonghaseo, baca-doang).
 namaSkill(kesetrumeo, gosong).
 namaSkill(kademenoooo, biduren).
 namaSkill(stereo, ngiiiiing).
-namaSkill(febyet, best-speaker).
+namaSkill(feby_et, best-speaker).
 namaSkill(swikeswike, goreng-mentega).
 namaSkill(wesub, wewewewe).
 namaSkill(darkadult, prnhub).
@@ -169,8 +163,8 @@ namaSkill(jenangdodol, diabetes).
 namaSkill(nengoneng, gibah).
 
 namaSkill(khilaf, ibadah).
-namaSkill(charlizewendy, kisseu).
-namaSkill(squirting, pilbiru).
+namaSkill(charlize_wendy, kisseu).
+namaSkill(squirtjumbo, pilbiru).
 namaSkill(varioooooo, lulusgasemisi).
 namaSkill(cibayday, lanciaoday).
 namaSkill(superhorny, ah-ah).

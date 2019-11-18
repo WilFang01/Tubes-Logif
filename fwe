@@ -1,0 +1,12 @@
+player(jones).
+inventory(1, bulsabaur, normal, 290, 1, 290, grass, 55, 120, 0).
+cure(1).
+lebar(29).
+panjang(25).
+positionX(1).
+positionY(1).
+tembok(5,6,17,13,16,17,12,11,6,8,5,14,16,16,10,18).
+legendary(101, icanmon, legendary, 5250, 10, 5250, fire, 1085, 1835).
+legendary(100, sangemon, legendary, 4950, 10, 4950, water, 1050, 2065).
+legendary1(23,26).
+legendary2(20,25).

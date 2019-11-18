@@ -44,14 +44,14 @@ enemyTriggered :-
     cekPanjang(Level),
     asserta(enemyTokemon(ID, Name, Type, MaxHealth, Level, _, Element, Attack, Special)),
     loop(Level,ID),
-    retract(enemyTokemon(ID,Name2,Type,MaxHealth2,Level2,_,Element,Attack2,Special2)),
+    retract(enemyTokemon(ID,Name2,Type,MaxHealth2,_,_,Element,Attack2,Special2)),
     Health is MaxHealth2,
-    asserta(enemyTokemon(ID,Name2,Type,MaxHealth2,Level2,Health,Element,Attack2,Special2)),
+    asserta(enemyTokemon(ID,Name2,Type,MaxHealth2,Level,Health,Element,Attack2,Special2)),
     write('Kamu bertemu Tokemon liar!'), nl, nl,
     sleep(0.5),
     write(Name2), nl,
     write('Element: '), write(Element), nl,
-    write('Level: '), write(Level2), nl,
+    write('Level: '), write(Level), nl,
     write('Health: '), write(MaxHealth2), nl, nl,
     sleep(0.5),
     write('Apa yang akan kamu lakukan? Ketik \'fight.\' atau \'run.\' .'),
@@ -123,7 +123,7 @@ run :-
         isEnemySkill(_) ->
         retract(isEnemySkill(_))
         ;
-        lebar(X)
+        \+isEnemySkill(_)
     )
     , !.
 /* ------------------------ */
@@ -147,7 +147,7 @@ run :-
 
 /* ---------- PICK ---------- */
 /* ----- BELOM KETEMU TOKEMON LIAR ----- */
-pick(X) :-
+pick(_) :-
     \+ isEnemyAlive(_),
     write('Kamu belum bertemu Tokemon liar, sehingga kamu tidak bisa memilih Tokemon dari inventori.'), nl,
     write('Start atau jalan sampai bertemu Tokemon liar. Good luck~!'), nl,
@@ -155,14 +155,14 @@ pick(X) :-
 /* -------------------------------------- */
 
 /* ----- UDA KETEMU TOKEMON LIAR TAPI BLOM PILIH FIGHT ----- */
-pick(X) :- 
+pick(_) :- 
     \+isFight(_),
     write('Pilih fight dulu mas'),nl,
     !.
 /* --------------------------------------------------------- */
 
 /* ----- UDA PICK INPUT PICK LAGI ----- */
-pick(X) :-
+pick(_) :-
     isPick(_),
     isFight(_),
     write('Weh masa tokemonmu yang sekarang mau ditinggal :('),
@@ -227,6 +227,7 @@ fight :-
 
 /* ----- KALO TOKEMON UDA PINGSAN TERUS GANTI TOKEMON ----- */
 fightChance :-
+    nl,
     write('Tokemon yang tersedia:'), nl,
     statusInventory,
     write('Pilih Tokemon dengan menggunakan pick(Nama Tokemon).'), nl,
@@ -266,7 +267,7 @@ attackComment :-
     (
         isEnemySkill(_)
         -> retract(isEnemySkill(_))
-        ; tokedex(A,_,_,_,_,_,_,_)
+        ; \+isEnemySkill(_)
     ),
     (
         EnemyType == legendary 
@@ -498,7 +499,6 @@ enemyAttackComment :-
     myTokemon(MyID, MyName, _, _, _, MyHealth, _, _, _, _),
     MyHealth =< 0,
     retract(myTokemon(_, _, _, _, _, _, _, _, _, _)),
-    write(MyID),
     delTokemon(MyID),
     write(MyName), write(' pingsan!'), nl,
     sleep(0.5),

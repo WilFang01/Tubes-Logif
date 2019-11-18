@@ -16,20 +16,18 @@ title :-
     write('  )(   )(_)(  )  (  )__)  )    (  )(_)(  )  ( '),nl,
     write(' (__) (_____)(_)\\_)(____)(_/\\/\\_)(_____)(_)\\_)'),nl,nl,
     write('Gotta catch em all!'),nl,
-    write('Hello there! Welcome to the world of Tokemon! My name is Aril!'),nl,
+    write('Hello there! Welcome to the world of Tokemon! My name is Yoga!'),nl,
     sleep(0.5),
-    write('People call me the Tokemon Professor! This world is inhabited by'),nl,
+    write('People call me the Tokemon Professor! This world is inhabited by creatures called Tokemon!'),nl,
     sleep(0.5),
-    write('creatures called Tokemon! There are hundreds of Tokemon loose in'),nl,
+    write('There are hundreds of Tokemon loose in Labtek 5!'),nl,
     sleep(0.5),
-    write('Labtek 5! You can catch them all to get stronger, but what I\'m'),nl,
+    write('You can catch them all to get stronger.'),nl,
+    sleep(0.5), 
+    write('But what I\'m really interested in are the 2 legendary Tokemons, Icanmon and Sangemon.'),nl,
     sleep(0.5),
-    write('really interested in are the 2 legendary Tokemons, Icanmon dan'),nl,
-    sleep(0.5),
-    write('Sangemon. If you can get rid of  all those Tokemon I will'),nl,
-    sleep(0.5),
-    write('not kill you. Defeat them or capture them, either one works.'),nl,nl,
-    sleep(0.5),
+    write('If you can get rid of  all those Tokemon I will not kill you. Defeat them or capture them, either one works.'), nl,nl,
+    sleep(1),
     write('Available commands:'),nl,
     write('     start. -- start the game!'),nl,
     write('     help. -- show available commands'),nl,
@@ -60,32 +58,32 @@ initFirst :-
     sleep(0.5),
     write('You need your own Tokemon. Fortunately, I provide Tokemon for new trainers like you.'), nl, nl,
     sleep(0.5),
-    write('First, there is bulsabaur, a Grass-type Tokemon that is good against Water- and Electric-'), nl,
-    write('type Tokemon.'), nl,
-    sleep(1),
-    write('Second, there is charamder, a Fire-type Tokemon that does not fear Grass- and Wind-'), nl,
-    write('type Tokemon.'), nl,
-    sleep(1),
-    write('Then there is squirtrel, a Water-type Tokemon for handling Fire- and Earth-type Tokemon.'), nl,
-    sleep(1),
-    write('After that, there is cupi, an Electric-type Tokemon that is not only cute,'), nl,
-    write('but also fierce against Water- and Wind- type Tokemon.'), nl,
-    sleep(1),
-    write('Next, there is pigday, a Wind-type Tokemon that is a good choice for battling'), nl,
-    write('Earth- and Grass- type Tokemon.'), nl,
-    sleep(1),
-    write('Lastly, we have smackhorny, an Earth-type Tokemon perfect for Electric- and Fire-'), nl,
+    write('First, there is bulsabaur, a Grass-type Tokemon that is good against Water- and Electric-'),
     write('type Tokemon.'), nl, nl,
     sleep(1),
+    write('Second, there is charamder, a Fire-type Tokemon that does not fear Grass- and Wind-'), 
+    write('type Tokemon.'), nl, nl,
+    sleep(1),
+    write('Then there is squirtrel, a Water-type Tokemon for handling Fire- and Earth-type Tokemon.'), nl, nl,
+    sleep(1),
+    write('After that, there is cupi, an Electric-type Tokemon that is not only cute,'),  
+    write('but also fierce against Water- and Wind-type Tokemon.'), nl, nl,
+    sleep(1),
+    write('Next, there is pigday, a Wind-type Tokemon that is a good choice for battling'),
+    write('Earth- and Grass-type Tokemon.'), nl, nl,
+    sleep(1),
+    write('Lastly, we have smackhorny, an Earth-type Tokemon perfect for Electric- and Fire-'),
+    write('type Tokemon.'), nl, nl, nl,
+    sleep(1),
     repeat,
-    write('Which one would you like to choose?'), nl,
+    write('Which one would you like to choose?'), nl, nl,
     sleep(1),
     write('1. bulsabaur'), nl,
     write('2. charamder'), nl,
     write('3. squirtrel'), nl,
     write('4. cupi'), nl,
     write('5. pigday'), nl,
-    write('6. smackhorny'), nl,
+    write('6. smackhorny'), nl, nl,
     write('Choose the Tokemon that you want by typing its name below.'), nl,
     write('Example: If you want Bulsabaur, type \'bulsabaur\'.'), nl, nl,
     write('Choose your Tokemon: '), read(Tokemonawal), nl,
@@ -283,6 +281,71 @@ quit :-
     )),
     retract(adaTembok(_)),
     (
+        isEnemyAlive(_)
+        -> retract(isEnemyAlive(_))
+        ;
+        \+isEnemyAlive(_)
+    ),
+    (
+        enemyTokemon(_,_,_,_,_,_,_,_,_)
+        -> retract(enemyTokemon(_,_,_,_,_,_,_,_,_))
+        ;
+        \+enemyTokemon(_,_,_,_,_,_,_,_,_)
+    ),
+    (
+        myTokemon(_,_,_,_,_,_,_,_,_,_)
+        -> retract(myTokemon(_,_,_,_,_,_,_,_,_,_))
+        ;
+        \+myTokemon(_,_,_,_,_,_,_,_,_,_)
+    ),
+    (
+        peluang(_)
+        -> retract(peluang(_))
+        ;
+        \+peluang(_)
+    ),
+    (
+        isRun(_)
+        -> retract(isRun(_))
+        ;
+        \+isRun(_)
+    ),
+    (
+        isPick(_)
+        -> retract(isPick(_))
+        ;
+        \+isPick(_)
+    ),
+    (
+        isFight(_)
+        -> retract(isFight(_))
+        ;
+        \+isFight(_)
+    ),
+    (
+        isEnemySkill(_)
+        -> retract(isEnemySkill(_))
+        ;
+        \+isEnemySkill(_)
+    ),
+    (
+        isSkill(_)
+        -> retract(isSkill(_))
+        ;
+        \+isSkill(_)        
+    ),
+    (
+        temp(_)
+        -> retract(temp(_))
+        ;
+        \+temp(_)
+    ),
+    (
+        ableCaptured(_)
+        -> retract(ableCaptured(_))
+        ; \+ableCaptured(_)
+    ),
+    (
         (legendary1(_,_),legendary2(_,_))
         -> retract(legendary1(_,_)),
         retract(legendary2(_,_)),
@@ -319,6 +382,7 @@ save(FileName) :-
             writeLebarPanjang,
             writePosisiPlayer,
             writeTembok,
+            writeLegendary,
             writeLegendary1,
             writeLegendary2,
         told, !.
@@ -373,20 +437,28 @@ writeInventory:-
         write(Element), write(', '), write(Attack), write(', '), write(Special), write(', '), write(EXP), write(').'), nl
 	)), !.
 
+writeLegendary:-
+    forall(legendary(ID, Name, Type, MaxHealth, Level, Health, Element, Attack, Special),(
+        write('legendary('), write(ID), write(', '), write(Name), write(', '), write(Type), write(', '),
+        write(MaxHealth), write(', '), write(Level), write(', '), write(Health), write(', '), 
+        write(Element), write(', '), write(Attack), write(', '), write(Special), write(').'), nl
+    )), !.
+
 loadGame(_) :-
 	init(_),
 	write('Kamu tidak bisa memulai game lainnya ketika ada game yang sudah dimulai.'), nl, !.
 
 loadGame(FileName):-
 	\+file_exists(FileName),
-	write('File tidak ada woi'), nl, write('Tulis ulang atau start game dong.'), nl, !.
+	write('File tidak ada woi'), nl, write('Tulis ulang atau game dong.'), nl, !.
 
 loadGame(FileName):-
 	open(FileName, read, Stream),
         readFileLines(Stream,Lines),
     close(Stream),
     assertaLine(Lines), 
-    asserta(init(1)), !.
+    asserta(init(1)), 
+    asserta(adaTembok(1)),!.
 
 assertaLine([]) :- !.
 
@@ -400,5 +472,4 @@ readFileLines(Stream,[]) :-
 readFileLines(Stream,[X|L]) :-
     \+ at_end_of_stream(Stream),
     read(Stream,X),
-    readFileLines(Stream,L).
     readFileLines(Stream,L).

@@ -1,0 +1,11 @@
+player(yoga).
+inventory(-999, cheat, normal, 999999, 9, 999999, earth, 9999999, 9999999, 0).
+inventory(4, cupi, normal, 260, 1, 260, electric, 60, 130, 0).
+cure(1).
+lebar(28).
+panjang(23).
+positionX(1).
+positionY(1).
+tembok(4,21,9,14,6,10,15,8,5,8,13,18,14,3,16,10).
+legendary1(18,26).
+legendary2(18,23).

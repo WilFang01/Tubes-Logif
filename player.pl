@@ -38,38 +38,42 @@ initLegendary(ID) :-
     Health is MaxHealth,
     asserta(legendary(ID, Name, Type, MaxHealth, Level, Health, Element, Attack, Special)),!.
 
-makeListPokemon(ListNama,ListHealth,ListElement) :-
+makeListPokemon(ListNama,ListHealth,ListElement,ListLevel) :-
     findall(Name, inventory(_,Name,_,_,_,_,_,_,_,_), ListNama),
     findall(Health, inventory(_,_,_,_,_,Health,_,_,_,_), ListHealth),
-    findall(Element, inventory(_,_,_,_,_,_,Element,_,_,_), ListElement).
+    findall(Element, inventory(_,_,_,_,_,_,Element,_,_,_), ListElement),
+    findall(Level, inventory(_,_,_,_,Level,_,_,_,_,_), ListLevel).
 
-makeListLegendary(ListNama,ListHealth,ListElement) :-
+makeListLegendary(ListNama,ListHealth,ListElement,ListLevel) :-
     findall(Name, legendary(_,Name,_,_,_,_,_,_,_), ListNama),
     findall(Health, legendary(_,_,_,_,_,Health,_,_,_), ListHealth),
-    findall(Element, legendary(_,_,_,_,_,_,Element,_,_), ListElement).
+    findall(Element, legendary(_,_,_,_,_,_,Element,_,_), ListElement),
+    findall(Level, legendary(_,_,_,_,Level,_,_,_,_), ListLevel).
 
-stt([],[],[]).
-stt([A|X],[B|Y],[C|Z]) :-
+stt([],[],[],[]).
+stt([A|X],[B|Y],[C|Z],[D|W]) :-
     write(A),nl,
     write('Health: '),
     write(B),nl,
     write('Element: '),
-    write(C),nl,nl,
-    stt(X,Y,Z).
+    write(C),nl,
+    write('Level: '),
+    write(D),nl,nl,
+    stt(X,Y,Z,W).
 
 status :-
     init(_),
-    player(Username),
+    player(Username), nl,
     write('Your name is '), write(Username), write('.'), nl, nl,
-    makeListPokemon(ListNama,ListHealth,ListElement),
+    makeListPokemon(ListNama,ListHealth,ListElement,ListLevel),
     write('Your Tokemon:'),nl,nl,
-    stt(ListNama,ListHealth,ListElement),
-    makeListLegendary(NamaLegend,HealthLegend,ElementLegend),
+    stt(ListNama,ListHealth,ListElement,ListLevel),
+    makeListLegendary(NamaLegend,HealthLegend,ElementLegend,LevelLegend),
     write('Your Final Enemy:'),nl,nl,
-    stt(NamaLegend,HealthLegend,ElementLegend).
+    stt(NamaLegend,HealthLegend,ElementLegend,LevelLegend).
 
 statusInventory :-
     init(_),
-    makeListPokemon(ListNama,ListHealth,ListElement),
+    makeListPokemon(ListNama,ListHealth,ListElement,ListLevel),
     write('Your Tokemon:'),nl,nl,
-    stt(ListNama,ListHealth,ListElement).
+    stt(ListNama,ListHealth,ListElement,ListLevel).

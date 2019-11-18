@@ -1,0 +1,11 @@
+player(yoga).
+inventory(18, tylite, normal, 310, 1, 310, earth, 65, 80, 0).
+inventory(5, pigday, normal, 300, 1, 227.5, wind, 65, 105, 95).
+cure(1).
+lebar(28).
+panjang(19).
+positionX(4).
+positionY(1).
+tembok(5,11,8,11,9,21,11,17,10,5,7,14,5,10,10,16).
+legendary1(17,25).
+legendary2(15,23).
