@@ -77,9 +77,7 @@ initFirst :-
     write('Lastly, we have smackhorny, an Earth-type Tokemon perfect for Electric- and Fire-'), nl,
     write('type Tokemon.'), nl, nl,
     sleep(1),
-    choiceSeq.
-
-choiceSeq :- 
+    repeat,
     write('Which one would you like to choose?'), nl,
     sleep(1),
     write('1. bulsabaur'), nl,
@@ -88,33 +86,135 @@ choiceSeq :-
     write('4. cupi'), nl,
     write('5. pigday'), nl,
     write('6. smackhorny'), nl,
-    write('Choose the Tokemon that you want by typing its number below.'), nl,
-    write('Example: If you want Bulsabaur, type 1.'), nl, nl,
-    write('Choose your Tokemon: '), read(ID), nl,
-    confirm(ID).
+    write('Choose the Tokemon that you want by typing its name below.'), nl,
+    write('Example: If you want Bulsabaur, type \'bulsabaur\'.'), nl, nl,
+    write('Choose your Tokemon: '), read(Tokemonawal), nl,
+    tokedex(ID,Tokemonawal,_,_,_,_,_,_),
+    (
+        ID =:= 1 ->
+            write('                                           /'), nl,
+            write('                        _,.------....___,.\' \',.-.'), nl,
+            write('                     ,-\'          _,.--"        |'), nl,
+            write('                   ,\'         _.-\'              .'), nl,
+            write('                  /   ,     ,\'                   `'), nl,
+            write('                 .   /     /                     ``.'), nl,
+            write('                 |  |     .                       \\.\\ '), nl,
+            write('       ____      |___._.  |       __               \\ `.'), nl,
+            write('     .\'    `---""       ``"-.--"\'`  \\               .  \\ '), nl,
+            write('    .  ,            __               `              |   .'), nl,
+            write('    `,\'         ,-"\'  .               \\             |    L'), nl,
+            write('   ,\'          \'    _.\'                -._          /    |'), nl,
+            write('  ,`-.    ,".   `--\'                      >.      ,\'     |'), nl,
+            write(' . .\'\'   `-\'       __    ,  ,-.         /  `.__.-      ,\' '), nl,
+            write(' ||:, .           ,\'  ;  /  / \\ `        `.    .      .\'/'), nl,
+            write(' j|:D  \\          `--\'  \' ,\'_  . .         `.__, \\   , /'), nl,
+            write('/ L:_  |                 .  "\' :_;                `.\'.\' '), nl,
+            write('.    ""\'                  """""\'                    V'), nl,
+            write(' `.                                 .    `.   _,..  `'), nl,
+            write('   `,_   .    .                _,-\'/    .. `,\'   __  `'), nl,
+            write('    ) \\`._        ___....----"\'  ,\'   .\'  \\ |   \'  \\  .'), nl,
+            write('   /   `. "`-.--"\'         _,\' ,\'     `---\' |    `./  |'), nl,
+            write('  .   _  `""\'--.._____..--"   ,             \'         |'), nl,
+            write('  | ." `. `-.                /-.           /          ,'), nl,
+            write('  | `._.\'    `,_            ;  /         ,\'          .'), nl,
+            write(' .\'          /| `-.        . ,\'         ,           ,'), nl,
+            write(' \'-.__ __ _,\',\'    \'`-..___;-...__   ,.\'\\ ____.___.\' '), nl,
+            write(' `"^--\'..\'   \'-`-^-\'"--    `-^-\'`.\'\'"""""`.,^.`.--\' '), nl, nl
+            ;
+            (
+                ID =:= 3 ->
+                    write('               _,........__'), nl,
+                    write('            ,-\'            "`-.'), nl,
+                    write('          ,\'                   `-.'), nl,
+                    write('        ,\'                        \\ '), nl,
+                    write('      ,\'                           .'), nl,
+                    write('      .\'\\               ,"".       `'), nl,
+                    write('     ._.\'|             / |  `       \\ '), nl,
+                    write('     |   |            `-.\'  ||       `.'), nl,
+                    write('     |   |            \'-._,\'||       | \\ '), nl,
+                    write('     .`.,\'             `..,\'.\'       , |`-. '), nl,
+                    write('     l                       .\'`.  _/  |   `. '), nl,
+                    write('     `-.._\'-   ,          _ _\'   -" \\  .     `'), nl,
+                    write('`."""""\'-.`-...,---------\',\'         `. `....__.'), nl,
+                    write('.\'        `"-..___      __,\'\\          \\  \\     \\ '), nl,
+                    write('\\_ .          |   `""""\'    `.           . \\     \\ '), nl,
+                    write('  `.          |              `.          |  .     L'), nl,
+                    write('    `.        |`--...________.\'.        j   |     |'), nl,
+                    write('      `._    .\'      |          `.     .|   ,     |'), nl,
+                    write('         `--,\\       .            `7""\' |  ,      |'), nl,
+                    write('            ` `      `            /     |  |      |    _,-\'"""`-.'), nl,
+                    write('             \\ `.     .          /      |  \'      |  ,\'          `.'), nl,
+                    write('              \\  v.__  .        \'       .   \\    /| /              \\ '), nl,
+                    write('               \\/    `""\\"""""""`.       \\   \\  /.\'\'                |'), nl,
+                    write('                `        .        `._ ___,j.  `/ .-       ,---.     |'), nl,
+                    write('                ,`-.      \\         ."     `.  |/        j     `    |'), nl,
+                    write('               /    `.     \\       /         \\ /         |     /    j'), nl,
+                    write('              |       `-.   7-.._ .          |"          \'         /'), nl,
+                    write('              |          `./_    `|          |            .     _,\' '), nl,
+                    write('              `.           / `----|          |-............`---\' '), nl,
+                    write('                \\          \\      |          |'), nl,
+                    write('               ,\'           )     `.         |'), nl,
+                    write('                7____,,..--\'      /          |'), nl,
+                    write('                                  `---.__,--.\' '), nl, nl
+                ;
+                    (
+                    ID =:= 2 ->
+                        write('              _.--""`-..'), nl,
+                        write('            ,\'          `.'), nl,
+                        write('          ,\'          __  `.'), nl,
+                        write('         /|          " __   \\ '), nl,
+                        write('        , |           / |.   .'), nl,
+                        write('        |,\'          !_.\'|   |'), nl,
+                        write('      ,\'             \'   |   |'), nl,
+                        write('     /              |`--\'|   |'), nl,
+                        write('    |                `---\'   |'), nl,
+                        write('     .   ,                   |                       ,".'), nl,
+                        write('      ._     \'           _\'  |                    , \' \\ `'), nl,
+                        write('  `.. `.`-...___,...---""    |       __,.        ,`"   L,|'), nl,
+                        write('  |, `- .`._        _,-,.\'   .  __.-\'-. /        .   ,    \\ '), nl,
+                        write('-:..     `. `-..--_.,.<       `"      / `.        `-/ |   .'), nl,
+                        write('  `,         """"\'     `.              ,\'         |   |  \',,'), nl,
+                        write('    `.      \'            \'            /          \'    |\'. |/'), nl,
+                        write('      `.   |              \\       _,-\'           |       \'\' '), nl,
+                        write('        `._\'               \\   \'"\\                .      |'), nl,
+                        write('           |                \'     \\                `._  ,\' '), nl,
+                        write('           |                 \'     \\                 .\'|'), nl,
+                        write('           |                 .      \\                | |'), nl,
+                        write('           |                 |       L              ,\' |'), nl,
+                        write('           `                 |       |             /   \' '), nl,
+                        write('            \\                |       |           ,\'   /'), nl,
+                        write('          ,\' \\               |  _.._ ,-..___,..-\'    ,\' '), nl,
+                        write('         /     .             .      `!             ,j\' '), nl,
+                        write('        /       `.          /        .           .\'/ '), nl,
+                        write('       .          `.       /         |        _.\'.\' '), nl,
+                        write('        `.          7`\'---\'          |------"\'_.\' '), nl,
+                        write('       _,.`,_     _\'                ,\'\'-----"\' '), nl,
+                        write('   _,-_    \'       `.     .\'      ,\\ '), nl,
+                        write('   -" /`.         _,\'     | _  _  _.| '), nl,
+                        write('    ""--\'---"""""\'        `\' \'! |! / '), nl,
+                        write('                            `" " -\' '), nl, nl
+                        ;
+                        write(' .----------------. '), nl,
+                        write('| .--------------. |'), nl,
+                        write('| |    ______    | |'), nl,
+                        write('| |   / _ __ `.  | |'), nl,
+                        write('| |  |_/____) |  | |'), nl,
+                        write('| |    /  ___.\'  | |'), nl,
+                        write('| |    |_|       | |'), nl,
+                        write('| |    (_)       | |'), nl,
+                        write('| |              | |'), nl,
+                        write('| \'--------------\' |'), nl,
+                        write(' \'----------------\' '), nl, nl
+                        )
+            )
+    ),
+    do(ID), nl,
+    end_condition(ID),
+    status.
 
-confirm(ID) :-
-    ID >= 1, ID =< 6,    
-    tokedex(ID, InitName,_,_,_,_,_,_),
-    write('Are you sure you want to choose '), write(InitName), write('? (y/n)'),
-    read(Ans),
-    nextAct(Ans, ID), !.
-
-confirm(ID) :- 
-    write('Your choice is invalid. Please choose again, but this time, be serious.'),
-    choiceSeq, !.
-
-nextAct(Ans, ID) :-
-    Ans == 'y',
-    nl,
-    end_condition(ID), !.
-
-nextAct(Ans, ID) :-
-    Ans == 'n',
-    nl,
-    choiceSeq, !.
-
+end_condition(end).
 end_condition(ID) :-
+    have(ID), !,
     addTokemon(ID),
     tokedex(ID, TokeName,_,_,_,_,_,_),
     random(15,30,Sizex),
@@ -138,7 +238,14 @@ end_condition(ID) :-
     sleep(0.5),
     write('If you want to capture more Tokemon, you may choose to drop one of your Tokemon.'), nl, nl,
     sleep(1),
-    write('With all of that being said, enjoy the adventures of Tokemon!').
+    write('With all of that being said, enjoy the adventures of Tokemon!'), nl.
+
+do(X) :- have(X), !.
+do(_) :- write('Itu bukan tokemon yang ada di list, cek lagi ya...').
+do(end).
+
+have(X) :-
+    X =< 6, !.
 
 start :- 
     init(_),
