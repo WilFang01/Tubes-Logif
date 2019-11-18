@@ -7,7 +7,7 @@
 :- include('tokedex.pl').
 :- include('battle.pl').
 :- include('map.pl').
-:- include('evolution.pl').
+:- include('evolution.pl.').
 
 
 title :-
@@ -17,12 +17,19 @@ title :-
     write(' (__) (_____)(_)\\_)(____)(_/\\/\\_)(_____)(_)\\_)'),nl,nl,
     write('Gotta catch em all!'),nl,
     write('Hello there! Welcome to the world of Tokemon! My name is Aril!'),nl,
+    sleep(0.5),
     write('People call me the Tokemon Professor! This world is inhabited by'),nl,
+    sleep(0.5),
     write('creatures called Tokemon! There are hundreds of Tokemon loose in'),nl,
-    write('Labtek 5! You can catch them all to get stronger, but what Im'),nl,
+    sleep(0.5),
+    write('Labtek 5! You can catch them all to get stronger, but what I\'m'),nl,
+    sleep(0.5),
     write('really interested in are the 2 legendary Tokemons, Icanmon dan'),nl,
-    write('Sangemon. If you can defeat or capture all those Tokemons I will'),nl,
-    write('not kill you.'),nl,nl,
+    sleep(0.5),
+    write('Sangemon. If you can get rid of  all those Tokemon I will'),nl,
+    sleep(0.5),
+    write('not kill you. Defeat them or capture them, either one works.'),nl,nl,
+    sleep(0.5),
     write('Available commands:'),nl,
     write('     start. -- start the game!'),nl,
     write('     help. -- show available commands'),nl,
@@ -40,163 +47,98 @@ title :-
     write('       - L = Legendary'), nl, nl.
 
 initFirst :-
-    write('We welcome you to Tokemon'), nl,
-    write('What is your name, Tokemon trainer?'), nl,
-    read(Username),
-    asserta(player(Username)), nl,
-    write('Hello '), write(Username), nl,
-    repeat,
-    write('Choose your tokemon!'), nl, nl,
-    write('1. bulsabaur'), nl, write('Type: grass'), nl, nl,
-    write('2. charamder'), nl, write('Type: fire'), nl, nl,
-    write('3. squirtrel'), nl, write('Type: water'), nl, nl,
-    write('4. cupi'), nl, write('Type: electric'), nl, nl,
-    write('5. pigday'), nl, write('Type: wind'), nl, nl,
-    write('6. smackhorny'), nl, write('Type: earth'), nl, nl,
-    write('Insert tokemon: '),
-    read(Tokemonawal), nl,
-    tokedex(ID,Tokemonawal,_,_,_,_,_,_),
-    (
-        ID =:= 1 ->
-            write('                                           /'), nl,
-            write('                        _,.------....___,.\' \',.-.'), nl,
-            write('                     ,-\'          _,.--"        |'), nl,
-            write('                   ,\'         _.-\'              .'), nl,
-            write('                  /   ,     ,\'                   `'), nl,
-            write('                 .   /     /                     ``.'), nl,
-            write('                 |  |     .                       \\.\\ '), nl,
-            write('       ____      |___._.  |       __               \\ `.'), nl,
-            write('     .\'    `---""       ``"-.--"\'`  \\               .  \\ '), nl,
-            write('    .  ,            __               `              |   .'), nl,
-            write('    `,\'         ,-"\'  .               \\             |    L'), nl,
-            write('   ,\'          \'    _.\'                -._          /    |'), nl,
-            write('  ,`-.    ,".   `--\'                      >.      ,\'     |'), nl,
-            write(' . .\'\'   `-\'       __    ,  ,-.         /  `.__.-      ,\' '), nl,
-            write(' ||:, .           ,\'  ;  /  / \\ `        `.    .      .\'/'), nl,
-            write(' j|:D  \\          `--\'  \' ,\'_  . .         `.__, \\   , /'), nl,
-            write('/ L:_  |                 .  "\' :_;                `.\'.\' '), nl,
-            write('.    ""\'                  """""\'                    V'), nl,
-            write(' `.                                 .    `.   _,..  `'), nl,
-            write('   `,_   .    .                _,-\'/    .. `,\'   __  `'), nl,
-            write('    ) \\`._        ___....----"\'  ,\'   .\'  \\ |   \'  \\  .'), nl,
-            write('   /   `. "`-.--"\'         _,\' ,\'     `---\' |    `./  |'), nl,
-            write('  .   _  `""\'--.._____..--"   ,             \'         |'), nl,
-            write('  | ." `. `-.                /-.           /          ,'), nl,
-            write('  | `._.\'    `,_            ;  /         ,\'          .'), nl,
-            write(' .\'          /| `-.        . ,\'         ,           ,'), nl,
-            write(' \'-.__ __ _,\',\'    \'`-..___;-...__   ,.\'\\ ____.___.\' '), nl,
-            write(' `"^--\'..\'   \'-`-^-\'"--    `-^-\'`.\'\'"""""`.,^.`.--\' '), nl, nl
-            ;
-            (
-                ID =:= 3 ->
-                    write('               _,........__'), nl,
-                    write('            ,-\'            "`-.'), nl,
-                    write('          ,\'                   `-.'), nl,
-                    write('        ,\'                        \\ '), nl,
-                    write('      ,\'                           .'), nl,
-                    write('      .\'\\               ,"".       `'), nl,
-                    write('     ._.\'|             / |  `       \\ '), nl,
-                    write('     |   |            `-.\'  ||       `.'), nl,
-                    write('     |   |            \'-._,\'||       | \\ '), nl,
-                    write('     .`.,\'             `..,\'.\'       , |`-. '), nl,
-                    write('     l                       .\'`.  _/  |   `. '), nl,
-                    write('     `-.._\'-   ,          _ _\'   -" \\  .     `'), nl,
-                    write('`."""""\'-.`-...,---------\',\'         `. `....__.'), nl,
-                    write('.\'        `"-..___      __,\'\\          \\  \\     \\ '), nl,
-                    write('\\_ .          |   `""""\'    `.           . \\     \\ '), nl,
-                    write('  `.          |              `.          |  .     L'), nl,
-                    write('    `.        |`--...________.\'.        j   |     |'), nl,
-                    write('      `._    .\'      |          `.     .|   ,     |'), nl,
-                    write('         `--,\\       .            `7""\' |  ,      |'), nl,
-                    write('            ` `      `            /     |  |      |    _,-\'"""`-.'), nl,
-                    write('             \\ `.     .          /      |  \'      |  ,\'          `.'), nl,
-                    write('              \\  v.__  .        \'       .   \\    /| /              \\ '), nl,
-                    write('               \\/    `""\\"""""""`.       \\   \\  /.\'\'                |'), nl,
-                    write('                `        .        `._ ___,j.  `/ .-       ,---.     |'), nl,
-                    write('                ,`-.      \\         ."     `.  |/        j     `    |'), nl,
-                    write('               /    `.     \\       /         \\ /         |     /    j'), nl,
-                    write('              |       `-.   7-.._ .          |"          \'         /'), nl,
-                    write('              |          `./_    `|          |            .     _,\' '), nl,
-                    write('              `.           / `----|          |-............`---\' '), nl,
-                    write('                \\          \\      |          |'), nl,
-                    write('               ,\'           )     `.         |'), nl,
-                    write('                7____,,..--\'      /          |'), nl,
-                    write('                                  `---.__,--.\' '), nl, nl
-                ;
-                (
-                    ID =:= 2 ->
-                    write('              _.--""`-..'), nl,
-                    write('            ,\'          `.'), nl,
-                    write('          ,\'          __  `.'), nl,
-                    write('         /|          " __   \\ '), nl,
-                    write('        , |           / |.   .'), nl,
-                    write('        |,\'          !_.\'|   |'), nl,
-                    write('      ,\'             \'   |   |'), nl,
-                    write('     /              |`--\'|   |'), nl,
-                    write('    |                `---\'   |'), nl,
-                    write('     .   ,                   |                       ,".'), nl,
-                    write('      ._     \'           _\'  |                    , \' \\ `'), nl,
-                    write('  `.. `.`-...___,...---""    |       __,.        ,`"   L,|'), nl,
-                    write('  |, `- .`._        _,-,.\'   .  __.-\'-. /        .   ,    \\ '), nl,
-                    write('-:..     `. `-..--_.,.<       `"      / `.        `-/ |   .'), nl,
-                    write('  `,         """"\'     `.              ,\'         |   |  \',,'), nl,
-                    write('    `.      \'            \'            /          \'    |\'. |/'), nl,
-                    write('      `.   |              \\       _,-\'           |       \'\' '), nl,
-                    write('        `._\'               \\   \'"\\                .      |'), nl,
-                    write('           |                \'     \\                `._  ,\' '), nl,
-                    write('           |                 \'     \\                 .\'|'), nl,
-                    write('           |                 .      \\                | |'), nl,
-                    write('           |                 |       L              ,\' |'), nl,
-                    write('           `                 |       |             /   \' '), nl,
-                    write('            \\                |       |           ,\'   /'), nl,
-                    write('          ,\' \\               |  _.._ ,-..___,..-\'    ,\' '), nl,
-                    write('         /     .             .      `!             ,j\' '), nl,
-                    write('        /       `.          /        .           .\'/ '), nl,
-                    write('       .          `.       /         |        _.\'.\' '), nl,
-                    write('        `.          7`\'---\'          |------"\'_.\' '), nl,
-                    write('       _,.`,_     _\'                ,\'\'-----"\' '), nl,
-                    write('   _,-_    \'       `.     .\'      ,\\ '), nl,
-                    write('   -" /`.         _,\'     | _  _  _.| '), nl,
-                    write('    ""--\'---"""""\'        `\' \'! |! / '), nl,
-                    write('                            `" " -\' '), nl, nl
-                    ;
-                    write(' .----------------. '), nl,
-                    write('| .--------------. |'), nl,
-                    write('| |    ______    | |'), nl,
-                    write('| |   / _ __ `.  | |'), nl,
-                    write('| |  |_/____) |  | |'), nl,
-                    write('| |    /  ___.\'  | |'), nl,
-                    write('| |    |_|       | |'), nl,
-                    write('| |    (_)       | |'), nl,
-                    write('| |              | |'), nl,
-                    write('| \'--------------\' |'), nl,
-                    write(' \'----------------\' '), nl, nl
-                )
-                    
-            )
-    ),
-    do(ID), nl,
-    end_condition(ID),
-    status.
+    write('Trainer, I welcome you to Tokemon.'), nl,
+    sleep(0.5),
+    write('But first, I would like to know your name.'), nl,
+    sleep(0.5),
+    write('What is your name, Tokemon trainer?'), nl, nl,
+    write('Your name: '), read(Username),
+    asserta(player(Username)), nl, nl,
+    write('Hello, '), write(Username), write('!'), nl, nl,
+    sleep(1),
+    write('In order to start your Tokemon journey in the wonderful world of Labtek 5,'), nl,
+    sleep(0.5),
+    write('You need your own Tokemon. Fortunately, I provide Tokemon for new trainers like you.'), nl, nl,
+    sleep(0.5),
+    write('First, there is bulsabaur, a Grass-type Tokemon that is good against Water- and Electric-'), nl,
+    write('type Tokemon.'), nl,
+    sleep(1),
+    write('Second, there is charamder, a Fire-type Tokemon that does not fear Grass- and Wind-'), nl,
+    write('type Tokemon.'), nl,
+    sleep(1),
+    write('Then there is squirtrel, a Water-type Tokemon for handling Fire- and Earth-type Tokemon.'), nl,
+    sleep(1),
+    write('After that, there is cupi, an Electric-type Tokemon that is not only cute,'), nl,
+    write('but also fierce against Water- and Wind- type Tokemon.'), nl,
+    sleep(1),
+    write('Next, there is pigday, a Wind-type Tokemon that is a good choice for battling'), nl,
+    write('Earth- and Grass- type Tokemon.'), nl,
+    sleep(1),
+    write('Lastly, we have smackhorny, an Earth-type Tokemon perfect for Electric- and Fire-'), nl,
+    write('type Tokemon.'), nl, nl,
+    sleep(1),
+    choiceSeq.
 
-end_condition(end).
-end_condition(X) :- 
-    have(X), !,
-    addTokemon(X),
+choiceSeq :- 
+    write('Which one would you like to choose?'), nl,
+    sleep(1),
+    write('1. bulsabaur'), nl,
+    write('2. charamder'), nl,
+    write('3. squirtrel'), nl,
+    write('4. cupi'), nl,
+    write('5. pigday'), nl,
+    write('6. smackhorny'), nl,
+    write('Choose the Tokemon that you want by typing its number below.'), nl,
+    write('Example: If you want Bulsabaur, type 1.'), nl, nl,
+    write('Choose your Tokemon: '), read(ID), nl,
+    confirm(ID).
+
+confirm(ID) :-
+    ID >= 1, ID =< 6,    
+    tokedex(ID, InitName,_,_,_,_,_,_),
+    write('Are you sure you want to choose '), write(InitName), write('? (y/n)'),
+    read(Ans),
+    nextAct(Ans, ID), !.
+
+confirm(ID) :- 
+    write('Your choice is invalid. Please choose again, but this time, be serious.'),
+    choiceSeq, !.
+
+nextAct(Ans, ID) :-
+    Ans == 'y',
+    nl,
+    end_condition(ID), !.
+
+nextAct(Ans, ID) :-
+    Ans == 'n',
+    nl,
+    choiceSeq, !.
+
+end_condition(ID) :-
+    addTokemon(ID),
+    tokedex(ID, TokeName,_,_,_,_,_,_),
     random(15,30,Sizex),
     random(15,30,Sizey),
     initMap(Sizex, Sizey),
     player(Username),
-    write('Your information, trainer'), nl,
-    write('Username: '), write(Username), nl,nl,
-    statusInventory,!.
-
-do(X) :- have(X), !.
-do(_) :- write('Itu bukan tokemon yang ada di list, cek lagi ya...').
-do(end).
-
-have(X) :-
-    X =< 6, !.
+    write('That\'s a good choice!'), nl, nl,
+    sleep(1),
+    write(Username), write(', I know that you and '),
+    write(TokeName), write(' will make great partners!'), nl,
+    sleep(0.5),
+    write('Before you go, I want to tell you some things.'), nl,
+    sleep(0.5),
+    write('There is a Tokemon Gym somewhere in this area.'), nl,
+    sleep(0.5),
+    write('Go there and you can use command \'heal\' to fully heal all your Tokemon.'), nl,
+    sleep(0.5),
+    write('However, you can only do it once, so do it wisely.'), nl,
+    sleep(0.5),
+    write('Also, you can only carry 6 Tokemon with you at the same time.'), nl,   
+    sleep(0.5),
+    write('If you want to capture more Tokemon, you may choose to drop one of your Tokemon.'), nl, nl,
+    sleep(1),
+    write('With all of that being said, enjoy the adventures of Tokemon!').
 
 start :- 
     init(_),
@@ -226,12 +168,9 @@ quit :-
     retract(panjang(_)),
     retract(tembok(_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_)),
     retract(cure(_)),
-    forall(inventory(_, _, _, _, _, _, _, _, _, _), (
+    forall( inventory(ID, Name, Type, MaxHealth, Level, Health, Element, Attack, Special, EXP), (
         retract(inventory(_, _, _, _, _, _, _, _, _, _))
 	)),
-    forall(legendary(_,_,_,_,_,_,_,_,_), (
-        retract(legendary(_,_,_,_,_,_,_,_,_))
-    )),
     (
         (legendary1(_,_),legendary2(_,_))
         -> retract(legendary1(_,_)),
@@ -251,6 +190,7 @@ quit :-
         ;
         retract(player(_)),
         retract(init(_))
+        
     ).
 
 /* EKSTERNAL FILE CONFIG */

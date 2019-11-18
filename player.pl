@@ -15,7 +15,7 @@ addTokemon(_) :-
     cekPanjang(Length),
     maxInventory(Max),
     Length >= Max,
-    write('Sudah Penuh'),
+    write('Sudah Penuh.'),
     !,fail.
 
 addTokemon(ID) :-
@@ -26,7 +26,7 @@ addTokemon(ID) :-
 
 delTokemon(ID) :-
     \+inventory(ID,_,_,_,_,_,_,_,_,_),
-    write('Tidak ada pokemon tersebut di inventory anda'),
+    write('Tidak ada Tokemon tersebut di inventorymu.'),
     !,fail.
 
 delTokemon(ID) :-
@@ -60,16 +60,16 @@ stt([A|X],[B|Y],[C|Z]) :-
 status :-
     init(_),
     player(Username),
-    write('Your username is '), write(Username), nl, nl,
+    write('Your name is '), write(Username), write('.'), nl, nl,
     makeListPokemon(ListNama,ListHealth,ListElement),
-    write('Your Pokemon'),nl,nl,
+    write('Your Tokemon:'),nl,nl,
     stt(ListNama,ListHealth,ListElement),
     makeListLegendary(NamaLegend,HealthLegend,ElementLegend),
-    write('Your Final Enemy'),nl,nl,
+    write('Your Final Enemy:'),nl,nl,
     stt(NamaLegend,HealthLegend,ElementLegend).
 
 statusInventory :-
     init(_),
     makeListPokemon(ListNama,ListHealth,ListElement),
-    write('Your Pokemon:'),nl,nl,
+    write('Your Tokemon:'),nl,nl,
     stt(ListNama,ListHealth,ListElement).

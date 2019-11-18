@@ -1,5 +1,7 @@
 :- dynamic(cure/1).
 
+:- include('map.pl').
+
 s :-
     init(_),
     \+ isEnemyAlive(_),
